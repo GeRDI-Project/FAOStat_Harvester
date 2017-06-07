@@ -76,6 +76,7 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
      */
     public FaoStatHarvester()
     {
+    	// only one document is created per harvested entry
         super( 1 );
 
         super.setProperty( PROPERTY_VERSION, DEFAULT_VERSION );
