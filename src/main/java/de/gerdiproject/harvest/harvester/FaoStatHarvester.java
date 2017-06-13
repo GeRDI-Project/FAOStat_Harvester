@@ -92,7 +92,7 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
 
 
     @Override
-    protected IJsonArray getEntries()
+    protected IJsonArray getJsonArray()
     {
         String version = getProperty( PROPERTY_VERSION );
         String language = getProperty( PROPERTY_LANGUAGE );
@@ -105,7 +105,7 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
 
 
     @Override
-    protected List<IJsonObject> harvestEntry( IJsonObject domainItem )
+    protected List<IJsonObject> harvestJsonArrayEntry( IJsonObject domainItem )
     {
         String version = getProperty( PROPERTY_VERSION );
         String language = getProperty( PROPERTY_LANGUAGE );
