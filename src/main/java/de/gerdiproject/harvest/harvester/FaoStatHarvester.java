@@ -64,11 +64,11 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
     private final static String PROPERTY_VERSION = "version";
     private final static String PROPERTY_LANGUAGE = "language";
 
-    private final static List<String> VALID_PARAMS = Arrays.asList( PROPERTY_VERSION, PROPERTY_LANGUAGE );
+    private final static List<String> VALID_PARAMS = Arrays.asList(PROPERTY_VERSION, PROPERTY_LANGUAGE);
 
     private final static String DEFAULT_VERSION = "v1";
     private final static String DEFAULT_LANGUAGE = "en";
-    
+
 
     /**
      * Default Constructor. Sets language to "en" and version to "v1". Version
@@ -76,11 +76,11 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
      */
     public FaoStatHarvester()
     {
-    	// only one document is created per harvested entry
-        super( 1 );
+        // only one document is created per harvested entry
+        super(1);
 
-        super.setProperty( PROPERTY_VERSION, DEFAULT_VERSION );
-        super.setProperty( PROPERTY_LANGUAGE, DEFAULT_LANGUAGE );
+        super.setProperty(PROPERTY_VERSION, DEFAULT_VERSION);
+        super.setProperty(PROPERTY_LANGUAGE, DEFAULT_LANGUAGE);
     }
 
 
@@ -94,65 +94,65 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
     @Override
     protected IJsonArray getJsonArray()
     {
-        String version = getProperty( PROPERTY_VERSION );
-        String language = getProperty( PROPERTY_LANGUAGE );
-        String sourceUrl = String.format( BASE_URL, version, language );
+        String version = getProperty(PROPERTY_VERSION);
+        String language = getProperty(PROPERTY_LANGUAGE);
+        String sourceUrl = String.format(BASE_URL, version, language);
         String domainsUrl = sourceUrl + DOMAINS_URL_SUFFIX;
 
         // get list of all FAOStat datasets, a.k.a. "domains"
-        return httpRequester.getJsonArrayFromUrl( domainsUrl );
+        return httpRequester.getJsonArrayFromUrl(domainsUrl);
     }
 
 
     @Override
-    protected List<IJsonObject> harvestJsonArrayEntry( IJsonObject domainItem )
+    protected List<IJsonObject> harvestJsonArrayEntry(IJsonObject domainItem)
     {
-        String version = getProperty( PROPERTY_VERSION );
-        String language = getProperty( PROPERTY_LANGUAGE );
+        String version = getProperty(PROPERTY_VERSION);
+        String language = getProperty(PROPERTY_LANGUAGE);
 
-        String sourceUrl = String.format( BASE_URL, version, language );
-        String basicViewUrl = String.format( VIEW_URL, language );
+        String sourceUrl = String.format(BASE_URL, version, language);
+        String basicViewUrl = String.format(VIEW_URL, language);
 
         // get the domainCode, an identifier that is used FAOStat-internally
-        String domainCode = domainItem.getString( CODE_JSON_KEY );
+        String domainCode = domainItem.getString(CODE_JSON_KEY);
 
         // get basic properties
-        String label = domainItem.getString( LABEL_JSON_KEY );
+        String label = domainItem.getString(LABEL_JSON_KEY);
 
         // get the date of the last update
-        Date lastUpdated = Date.valueOf( domainItem.getString( DATE_UPDATE_JSON_KEY ) );
+        Date lastUpdated = Date.valueOf(domainItem.getString(DATE_UPDATE_JSON_KEY));
 
         // get URL that directs the user to the database's website
         String viewUrl = basicViewUrl + domainCode;
 
         // get bulk-download URL
-        IJsonArray downloadUrls = getBulkDownloadLinks( sourceUrl, domainCode );
+        IJsonArray downloadUrls = getBulkDownloadLinks(sourceUrl, domainCode);
 
         // get description
-        IJsonArray descriptions = getDescriptions( sourceUrl, domainCode );
+        IJsonArray descriptions = getDescriptions(sourceUrl, domainCode);
 
         // get search tags
-        IJsonArray searchTags = getSearchTags( sourceUrl, domainCode );
+        IJsonArray searchTags = getSearchTags(sourceUrl, domainCode);
 
         // get documented years
-        IJsonArray years = getYears( sourceUrl, domainCode );
+        IJsonArray years = getYears(sourceUrl, domainCode);
 
         // create document
         final IJsonObject document = searchIndexFactory.createSearchableDocument(
-                label,
-                lastUpdated,
-                viewUrl,
-                downloadUrls,
-                LOGO_URL,
-                descriptions,
-                null,
-                years,
-                searchTags
-        );
+                                         label,
+                                         lastUpdated,
+                                         viewUrl,
+                                         downloadUrls,
+                                         LOGO_URL,
+                                         descriptions,
+                                         null,
+                                         years,
+                                         searchTags
+                                     );
 
         // create documentList
-        final List<IJsonObject> documentList = new ArrayList<>( numberOfDocumentsPerEntry );
-        documentList.add( document );
+        final List<IJsonObject> documentList = new ArrayList<>(numberOfDocumentsPerEntry);
+        documentList.add(document);
 
         return documentList;
     }
@@ -169,16 +169,16 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
      * harvested
      * @return an URL string
      */
-    private IJsonArray getBulkDownloadLinks( String sourceUrl, String domainCode )
+    private IJsonArray getBulkDownloadLinks(String sourceUrl, String domainCode)
     {
         // get list of bulk download infos
-        IJsonArray bulkDownloadInfoArray = httpRequester.getJsonArrayFromUrl( sourceUrl + BULK_DOWNLOAD_URL_SUFFIX + domainCode );
-        
+        IJsonArray bulkDownloadInfoArray = httpRequester.getJsonArrayFromUrl(sourceUrl + BULK_DOWNLOAD_URL_SUFFIX + domainCode);
+
         // extract urls from the info objects
-        List<String> urls = JsonHelper.arrayToStringList( bulkDownloadInfoArray, URL_JSON_KEY );
-        
+        List<String> urls = JsonHelper.arrayToStringList(bulkDownloadInfoArray, URL_JSON_KEY);
+
         // store urls in a new array
-        IJsonArray downloadUrls = jsonBuilder.createArrayFromLists( urls );
+        IJsonArray downloadUrls = jsonBuilder.createArrayFromLists(urls);
         return downloadUrls;
     }
 
@@ -192,17 +192,17 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
      * harvested
      * @return a descriptive text of the domain
      */
-    private IJsonArray getDescriptions( String sourceUrl, String domainCode )
+    private IJsonArray getDescriptions(String sourceUrl, String domainCode)
     {
         // get list of meta data
-        IJsonArray metaDataList = httpRequester.getJsonArrayFromUrl( sourceUrl + META_DATA_URL_SUFFIX + domainCode );
-        IJsonObject descriptionElement = JsonHelper.findObjectInArray( metaDataList, META_DATA_LABEL_JSON_KEY, META_DATA_DESCRIPTION_JSON_VALUE );
+        IJsonArray metaDataList = httpRequester.getJsonArrayFromUrl(sourceUrl + META_DATA_URL_SUFFIX + domainCode);
+        IJsonObject descriptionElement = JsonHelper.findObjectInArray(metaDataList, META_DATA_LABEL_JSON_KEY, META_DATA_DESCRIPTION_JSON_VALUE);
 
-        if(descriptionElement != null)
-        {
-        	String description = descriptionElement.getString( META_DATA_TEXT_JSON_KEY, null );
-        	return description != null ? jsonBuilder.createArrayFromObjects( description ) : null;
+        if (descriptionElement != null) {
+            String description = descriptionElement.getString(META_DATA_TEXT_JSON_KEY, null);
+            return description != null ? jsonBuilder.createArrayFromObjects(description) : null;
         }
+
         return null;
     }
 
@@ -216,11 +216,10 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
      * harvested
      * @return a JsonArray of search tags
      */
-    private IJsonArray getSearchTags( String sourceUrl, String domainCode )
+    private IJsonArray getSearchTags(String sourceUrl, String domainCode)
     {
         IJsonArray searchTags = jsonBuilder.createArray();
-        String[] searchableTagUrls =
-        {
+        String[] searchableTagUrls = {
             sourceUrl + ITEMS_TAGS_URL_SUFFIX,
             sourceUrl + ITEMS_AGGREGATED_TAGS_URL_SUFFIX,
             sourceUrl + ELEMENTS_TAGS_URL_SUFFIX,
@@ -234,20 +233,20 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
 
         // try to add relevant words to searchable tags
         int s = searchableTagUrls.length;
-        while (s != 0)
-        {
+
+        while (s != 0) {
             s--;
 
             // suppress warnings, there will be many non-existent URLs
             httpRequester.suppressWarnings = true;
 
             // get list of stuff
-            IJsonArray jsonArray = httpRequester.getJsonArrayFromUrl( searchableTagUrls[s] + domainCode );
-            if (jsonArray != null)
-            {
-                jsonArray.forEach( (element) ->
-                    searchTags.add( ((IJsonObject) element).getString( LABEL_JSON_KEY ) )
-                );
+            IJsonArray jsonArray = httpRequester.getJsonArrayFromUrl(searchableTagUrls[s] + domainCode);
+
+            if (jsonArray != null) {
+                jsonArray.forEach((element) ->
+                                  searchTags.add(((IJsonObject) element).getString(LABEL_JSON_KEY))
+                                 );
             }
 
             // re-enable warnings
@@ -267,7 +266,7 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
      * harvested
      * @return a JsonArray of years
      */
-    private IJsonArray getYears( String sourceUrl, String domainCode )
+    private IJsonArray getYears(String sourceUrl, String domainCode)
     {
         String yearsUrl = sourceUrl + YEARS_TAGS_URL_SUFFIX + domainCode;
 
@@ -275,29 +274,24 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
         httpRequester.suppressWarnings = true;
 
         // get list of years
-        IJsonArray jsonArray = httpRequester.getJsonArrayFromUrl( yearsUrl );
+        IJsonArray jsonArray = httpRequester.getJsonArrayFromUrl(yearsUrl);
 
         // re-enable warnings
         httpRequester.suppressWarnings = false;
 
-        if (jsonArray != null)
-        {
-        	IJsonArray yearsArray = jsonBuilder.createArray();
+        if (jsonArray != null) {
+            IJsonArray yearsArray = jsonBuilder.createArray();
 
-            jsonArray.forEach( (element) ->
-            {
+            jsonArray.forEach((element) -> {
                 try
                 {
-                    int year = Integer.parseUnsignedInt( ((IJsonObject) element).getString( LABEL_JSON_KEY ) );
-                    yearsArray.add( year );
-                }
-                catch (NumberFormatException e)
+                    int year = Integer.parseUnsignedInt(((IJsonObject) element).getString(LABEL_JSON_KEY));
+                    yearsArray.add(year);
+                } catch (NumberFormatException e)
                 {
                     // skip year, if it is not well-formed
                 }
-            }
-            );
-
+            });
             return yearsArray;
         }
 
