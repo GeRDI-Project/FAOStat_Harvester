@@ -8,7 +8,9 @@
 		<artifactId>GeRDI-parent-harvester</artifactId>
 		<version>1.0.0</version>
 	</parent>
+	
 	<artifactId>FaoStat-HarvesterService</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
 	
 	<name>FAOSTAT Harvester Service</artifactId>
