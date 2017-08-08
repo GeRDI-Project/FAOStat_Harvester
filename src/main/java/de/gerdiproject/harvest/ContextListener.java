@@ -27,20 +27,6 @@ import javax.servlet.annotation.WebListener;
  * @author row
  */
 @WebListener
-public class ContextListener extends AbstractContextListener
+public class ContextListener extends AbstractContextListener<FaoStatHarvester>
 {
-    @Override
-    @SuppressWarnings("unchecked")
-    protected Class<FaoStatHarvester> getMainHarvesterClass()
-    {
-        return FaoStatHarvester.class;
-    }
-
-
-    @Override
-    protected String getServiceName()
-    {
-        return "FaoStatHarvesterService";
-    }
-
 }
