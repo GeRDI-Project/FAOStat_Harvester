@@ -27,6 +27,6 @@ import javax.servlet.annotation.WebListener;
  * @author row
  */
 @WebListener
-public class ContextListener extends AbstractContextListener<FaoStatHarvester>
+public class FaoStatContextListener extends ContextListener<FaoStatHarvester>
 {
 }
