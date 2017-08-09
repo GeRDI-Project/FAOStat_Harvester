@@ -287,7 +287,7 @@ public class FaoStatHarvester extends AbstractJsonArrayHarvester
                 {
                     int year = Integer.parseUnsignedInt(((IJsonObject) element).getString(LABEL_JSON_KEY));
                     yearsArray.add(year);
-                } catch (NumberFormatException e)
+                } catch (NumberFormatException e) // NOPMD - if the element is not a number, we simply want to skip it
                 {
                     // skip year, if it is not well-formed
                 }

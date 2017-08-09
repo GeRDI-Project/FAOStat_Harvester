@@ -18,7 +18,6 @@
  */
 package de.gerdiproject.harvest;
 
-import de.gerdiproject.harvest.harvester.AbstractHarvester;
 import de.gerdiproject.harvest.harvester.FaoStatHarvester;
 import javax.servlet.annotation.WebListener;
 
@@ -28,19 +27,6 @@ import javax.servlet.annotation.WebListener;
  * @author row
  */
 @WebListener
-public class ContextListener extends AbstractContextListener
+public class FaoStatContextListener extends ContextListener<FaoStatHarvester>
 {
-    @Override
-    protected AbstractHarvester createHarvester()
-    {
-        return new FaoStatHarvester();
-    }
-
-
-    @Override
-    protected String createServiceName()
-    {
-        return "FaoStatHarvesterService";
-    }
-
 }
