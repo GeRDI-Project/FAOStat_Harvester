@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>de.gerdi-project</groupId>
 		<artifactId>GeRDI-parent-harvester</artifactId>
-		<version>2.0.0-SNAPSHOT</version>
+		<version>2.1.0-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>FaoStat-HarvesterService</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
+	<version>2.1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 	<name>FAOSTAT Harvester Service</name>
 	<description>This is a restful harvester for retrieving data from: www.fao.org/faostat/en/#data</description>
