@@ -1,8 +1,6 @@
 package de.gerdiproject.harvest.utils;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.json.fao.FaoBulkDownloads;
 import de.gerdiproject.json.fao.FaoDimensions;
@@ -20,8 +18,6 @@ public class FaoStatDownloader
     private static final String METADATA = "%smetadata/%s/";
     private static final String DIMENSIONS = "%sdimensions/%s/?full=true";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FaoStatDownloader.class);
-
     private final String baseUrl;
     private final HttpRequester httpRequester;
 
@@ -35,8 +31,6 @@ public class FaoStatDownloader
     {
         String url = baseUrl + GROUPS_AND_DOMAINS;
         FaoDomains response = httpRequester.getObjectFromUrl(url, FaoDomains.class);
-
-        LOGGER.info(response.getData().get(0).getGroup_name());
         return response;
     }
 

@@ -53,7 +53,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     private final static String DEFAULT_LANGUAGE = "en";
     private final static List<String> VALID_PARAMS = Arrays.asList(PROPERTY_VERSION, PROPERTY_LANGUAGE);
 
-    private final FaoStatDownloader downloader;
+    private FaoStatDownloader downloader;
 
 
     /**
@@ -66,8 +66,6 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         super(1);
         super.setProperty(PROPERTY_VERSION, DEFAULT_VERSION);
         super.setProperty(PROPERTY_LANGUAGE, DEFAULT_LANGUAGE);
-
-        downloader = new FaoStatDownloader(DEFAULT_VERSION, DEFAULT_LANGUAGE);
     }
 
 
@@ -83,6 +81,28 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     {
         FaoDomains domainsObj = downloader.getDomains();
         return domainsObj.getData();
+    }
+
+
+
+
+    @Override
+    protected void init()
+    {
+        downloader = new FaoStatDownloader(DEFAULT_VERSION, DEFAULT_LANGUAGE);
+        super.init();
+    }
+
+
+
+
+    @Override
+    public void setProperty(String key, String value)
+    {
+        super.setProperty(key, value);
+
+        // re-initialize the downloader with a proper language and version
+        downloader = new FaoStatDownloader(getProperty(PROPERTY_VERSION), getProperty(PROPERTY_LANGUAGE));
     }
 
 
@@ -119,7 +139,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         document.setDescriptions(FaoStatDomainParser.parseDescriptions(metadata, language));
 
         // get URLs of all filters that can be applied to the domain
-        document.setSubjects(getSubjectsOfDomain(version, language, domainCode));
+        document.setSubjects(getSubjectsOfDomain(domainCode, version, language));
 
         // get dates
         document.setDates(FaoStatDomainParser.parseDates(metadata, language));

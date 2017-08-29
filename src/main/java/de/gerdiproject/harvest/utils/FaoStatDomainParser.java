@@ -103,7 +103,7 @@ public class FaoStatDomainParser
 
                         // TODO: find a way to accept date ranges in ES
 
-                    } catch (IllegalStateException e) {
+                    } catch (IllegalStateException | NumberFormatException e) {
                         LOGGER.warn(FaoStatConstants.DATE_PARSE_ERROR_PREFIX + dateText);
                     }
 
@@ -249,5 +249,12 @@ public class FaoStatDomainParser
         }
 
         return contributors;
+    }
+
+    /**
+     * Private Constructor, because this is a static class.
+     */
+    private FaoStatDomainParser()
+    {
     }
 }

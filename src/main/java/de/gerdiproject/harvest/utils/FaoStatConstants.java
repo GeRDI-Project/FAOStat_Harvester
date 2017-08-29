@@ -37,7 +37,7 @@ public class FaoStatConstants
     // DATES
     public static final String META_DATA_TIME_COVERAGE = "Time coverage";
     public static final String META_DATA_LAST_UPDATE = "Metadata last update";
-    public static final Pattern TIME_COVERAGE_PATTERN = Pattern.compile("^(\\d\\d\\d\\d)\\s.\\s(\\d\\d\\d\\d)");
+    public static final Pattern TIME_COVERAGE_PATTERN = Pattern.compile("(\\d\\d\\d\\d)");
     public static final String DATE_PARSE_ERROR_PREFIX = "Could not parse date: ";
 
     // DESCRIPTIONS
