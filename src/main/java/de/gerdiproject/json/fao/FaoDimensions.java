@@ -17,7 +17,7 @@ public class FaoDimensions extends FaoJson<Dimension>
 {
     private static final String DIMENSION_URL = "http://fenixservices.fao.org/faostat/api/%s/%s%s%s/?show_lists=true";
 
-    public class Dimension
+    public static class Dimension
     {
         private String id;
         private String label;

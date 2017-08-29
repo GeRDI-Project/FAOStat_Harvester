@@ -1,6 +1,7 @@
 package de.gerdiproject.harvest.utils;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,6 +37,7 @@ import de.gerdiproject.json.fao.FaoMetadata.Metadata;
 public class FaoStatDomainParser
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(FaoStatDomainParser.class);
+    private static final SimpleDateFormat UPDATE_DATE_FORMAT = new SimpleDateFormat("MMM.' 'yyyy");
 
 
     public static List<Description> parseDescriptions(FaoMetadata metadata, String language)
@@ -110,7 +112,7 @@ public class FaoStatDomainParser
                 case FaoStatConstants.META_DATA_LAST_UPDATE:
                     try {
                         // parse update date (e.g. "Nov. 2015")
-                        Date lastUpdate = new Date(FaoStatConstants.UPDATE_DATE_FORMAT.parse(dateText));
+                        Date lastUpdate = new Date(UPDATE_DATE_FORMAT.parse(dateText));
                         lastUpdate.setType(DateType.Updated);
 
                         dates.add(lastUpdate);
@@ -238,6 +240,10 @@ public class FaoStatDomainParser
 
                     case FaoStatConstants.METADATA_CONTACT_ORGANISATION:
                         contactPerson.setAffiliation(m.getMetadata_text());
+                        break;
+
+                    default:
+                        // ignore the metadata
                 }
             }
         }

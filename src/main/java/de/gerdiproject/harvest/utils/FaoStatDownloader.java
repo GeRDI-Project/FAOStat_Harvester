@@ -4,7 +4,6 @@ package de.gerdiproject.harvest.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.gerdiproject.harvest.utils.HttpRequester;
 import de.gerdiproject.json.fao.FaoBulkDownloads;
 import de.gerdiproject.json.fao.FaoDimensions;
 import de.gerdiproject.json.fao.FaoDocuments;

@@ -11,7 +11,7 @@ import de.gerdiproject.json.fao.FaoMetadata.Metadata;
  */
 public class FaoMetadata extends FaoJson<Metadata>
 {
-    public class Metadata
+    public static class Metadata
     {
         private String domain_code;
         private String metadata_group_code;

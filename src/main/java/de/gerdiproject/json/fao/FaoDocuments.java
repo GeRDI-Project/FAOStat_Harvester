@@ -13,7 +13,7 @@ public class FaoDocuments extends FaoJson<Document>
 {
     private static final String DOWNLOAD_PATH_PREFIX = "http://fenixservices.fao.org/faostat/static/documents/";
 
-    public class Document
+    public static class Document
     {
         private String DomainCode;
         private String CreatedDate;

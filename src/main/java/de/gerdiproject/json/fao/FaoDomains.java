@@ -11,7 +11,7 @@ import de.gerdiproject.json.fao.FaoDomains.Domain;
  */
 public class FaoDomains extends FaoJson<Domain>
 {
-    public class Domain
+    public static class Domain
     {
         private String group_code;
         private String group_name;

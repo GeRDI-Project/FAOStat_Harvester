@@ -1,6 +1,5 @@
 package de.gerdiproject.harvest.utils;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +38,6 @@ public class FaoStatConstants
     public static final String META_DATA_TIME_COVERAGE = "Time coverage";
     public static final String META_DATA_LAST_UPDATE = "Metadata last update";
     public static final Pattern TIME_COVERAGE_PATTERN = Pattern.compile("^(\\d\\d\\d\\d)\\s.\\s(\\d\\d\\d\\d)");
-    public static final SimpleDateFormat UPDATE_DATE_FORMAT = new SimpleDateFormat("MMM.' 'yyyy");
     public static final String DATE_PARSE_ERROR_PREFIX = "Could not parse date: ";
 
     // DESCRIPTIONS
@@ -62,7 +60,7 @@ public class FaoStatConstants
     {
         WebLink logoLink = new WebLink("http://data.fao.org/developers/api/catalog/resource/findDatastream?authKey=d30aebf0-ab2a-11e1-afa6-0800200c9a66&version=1.0&type=image&database=faostat&resource=logo&datastream=logo");
         logoLink.setType(WebLinkType.LogoURL);
-        return null;
+        return logoLink;
     }
 
 
