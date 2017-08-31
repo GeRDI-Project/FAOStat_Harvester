@@ -122,6 +122,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         document.setLanguage(language);
         document.setPublicationYear(FaoStatConstants.EARLIEST_PUBLICATION_YEAR);
         document.setResourceType(FaoStatConstants.RESOURCE_TYPE);
+        document.setFormats(FaoStatConstants.FORMATS);
 
         // get source
         document.setSources(FaoStatDomainParser.parseSource(domainCode));

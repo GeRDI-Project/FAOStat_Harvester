@@ -90,12 +90,10 @@ public class FaoStatDomainParser
                         Calendar cal = Calendar.getInstance();
 
                         cal.set(from, 0, 1);
-                        Date timeCoverageFrom = new Date(cal);
-                        timeCoverageFrom.setType(DateType.Collected);
+                        Date timeCoverageFrom = new Date(cal, DateType.Collected);
 
                         cal.set(to, 0, 1);
-                        Date timeCoverageTo = new Date(cal);
-                        timeCoverageTo.setType(DateType.Collected);
+                        Date timeCoverageTo = new Date(cal, DateType.Collected);
 
                         // add dates to list
                         dates.add(timeCoverageFrom);
@@ -112,8 +110,7 @@ public class FaoStatDomainParser
                 case FaoStatConstants.META_DATA_LAST_UPDATE:
                     try {
                         // parse update date (e.g. "Nov. 2015")
-                        Date lastUpdate = new Date(UPDATE_DATE_FORMAT.parse(dateText));
-                        lastUpdate.setType(DateType.Updated);
+                        Date lastUpdate = new Date(UPDATE_DATE_FORMAT.parse(dateText), DateType.Updated);
 
                         dates.add(lastUpdate);
                     } catch (ParseException e) { // NOPMD - if the update cannot be parsed, we simply cannot add it
@@ -151,10 +148,9 @@ public class FaoStatDomainParser
         bulkList.forEach((BulkDownload bdl) -> {
             String url = bdl.getURL();
             String label = bdl.getFileContent();
-            String identifier = String.valueOf(url.hashCode());
             String type = bdl.getFileName().substring(bdl.getFileName().lastIndexOf('.') + 1);
 
-            File file = new File(url, label, identifier);
+            File file = new File(url, label);
             file.setType(type);
 
             files.add(file);
@@ -193,9 +189,13 @@ public class FaoStatDomainParser
         List<String> filterUrls = new LinkedList<>();
         List<Dimension> dimensionList = dimensions.getData();
 
-        dimensionList.forEach((Dimension d) ->
-                              filterUrls.add(d.getDimensionUrl(version, language, domainCode))
-                             );
+        dimensionList.forEach((Dimension d) -> {
+            // exclude the pure numbers of the years filter
+            if (!d.getId().equals("year"))
+            {
+                filterUrls.add(d.getDimensionUrl(version, language, domainCode));
+            }
+        });
 
         return filterUrls;
     }
@@ -247,6 +247,9 @@ public class FaoStatDomainParser
                 }
             }
         }
+
+        if (contactPerson.getName() != null)
+            contributors.add(contactPerson);
 
         return contributors;
     }

@@ -1,6 +1,7 @@
 package de.gerdiproject.harvest.utils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.regex.Pattern;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.ResourceType;
 import de.gerdiproject.json.datacite.Description.DescriptionType;
-import de.gerdiproject.json.datacite.ResourceType.ResourceTypeCategory;
+import de.gerdiproject.json.datacite.ResourceType.GeneralResourceType;
 import de.gerdiproject.json.datacite.WebLink;
 import de.gerdiproject.json.datacite.WebLink.WebLinkType;
 
@@ -44,6 +45,8 @@ public class FaoStatConstants
     public static final String DESCRIPTION_FORMAT = "%s:%n%s";
     public static final Map<String, DescriptionType> RELEVANT_DESCRIPTIONS = createRelevantDescriptions();
 
+    public static final List<String> FORMATS = Collections.unmodifiableList(Arrays.asList("CSV"));
+
 
     private static Map<String, DescriptionType> createRelevantDescriptions()
     {
@@ -59,7 +62,7 @@ public class FaoStatConstants
     private static WebLink createLogoWebLink()
     {
         WebLink logoLink = new WebLink("http://data.fao.org/developers/api/catalog/resource/findDatastream?authKey=d30aebf0-ab2a-11e1-afa6-0800200c9a66&version=1.0&type=image&database=faostat&resource=logo&datastream=logo");
-        logoLink.setType(WebLinkType.LogoURL);
+        logoLink.setType(WebLinkType.ProviderLogoURL);
         return logoLink;
     }
 
@@ -74,7 +77,7 @@ public class FaoStatConstants
     private static ResourceType createResourceType()
     {
         ResourceType resType = new ResourceType();
-        resType.setResourceTypeGeneral(ResourceTypeCategory.Dataset);
+        resType.setGeneralType(GeneralResourceType.Dataset);
         resType.setValue("CSV");
         return resType;
     }
