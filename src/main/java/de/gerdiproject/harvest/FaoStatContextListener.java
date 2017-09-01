@@ -22,9 +22,9 @@ import de.gerdiproject.harvest.harvester.FaoStatHarvester;
 import javax.servlet.annotation.WebListener;
 
 /**
- * This class initializes the FAOSTAT harvester and a logger
+ * This class initializes the FAOSTAT harvester and all objects that are required.
  *
- * @author row
+ * @author Robin Weiss
  */
 @WebListener
 public class FaoStatContextListener extends ContextListener<FaoStatHarvester>
