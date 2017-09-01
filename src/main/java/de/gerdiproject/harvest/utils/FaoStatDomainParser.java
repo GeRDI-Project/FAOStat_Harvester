@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.json.datacite.Contributor;
 import de.gerdiproject.json.datacite.Contributor.ContributorType;
+import de.gerdiproject.json.datacite.DataCiteJson;
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.Date.DateType;
 import de.gerdiproject.json.datacite.Description;
@@ -52,12 +53,28 @@ import de.gerdiproject.json.fao.FaoFilters.Filter;
 import de.gerdiproject.json.fao.FaoMetadata;
 import de.gerdiproject.json.fao.FaoMetadata.Metadata;
 
+
+/**
+ * This class provides parsers for FAOSTAT JSON responses retrieved via a {@linkplain FaoStatDownloader}.
+ * The parser functions generate {@linkplain DataCiteJson} compliant fields.
+ *
+ * @author Robin Weiss
+ */
 public class FaoStatDomainParser
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(FaoStatDomainParser.class);
     private static final SimpleDateFormat UPDATE_DATE_FORMAT = new SimpleDateFormat("MMM.' 'yyyy");
 
 
+    /**
+     * Parses a {@linkplain FaoMetadata} object, looking for relevant descriptions and returning
+     * them in a list.
+     *
+     * @param metadata the domain metadata that is to be parsed
+     * @param language the language that is set for harvesting FAOSTAT
+     *
+     * @return a list of descriptions of a domain
+     */
     public static List<Description> parseDescriptions(FaoMetadata metadata, String language)
     {
         List<Description> descriptions = new LinkedList<>();
@@ -81,6 +98,14 @@ public class FaoStatDomainParser
     }
 
 
+    /**
+     * Parses a {@linkplain FaoMetadata} object, looking for relevant dates and returning
+     * them in a list.
+     *
+     * @param metadata the domain metadata that is to be parsed
+     * @param language the language that is set for harvesting FAOSTAT
+     * @return a list of dates of a domain
+     */
     public static List<Date> parseDates(FaoMetadata metadata, String language)
     {
         List<Date> dates = new LinkedList<>();
@@ -141,6 +166,16 @@ public class FaoStatDomainParser
         return dates;
     }
 
+
+    /**
+     * Parses a {@linkplain Domain} object, looking for relevant titles and returning
+     * them in a list.
+     *
+     * @param domain the domain that is to be parsed
+     * @param language the language that is set for harvesting FAOSTAT
+     *
+     * @return a list of titles of a domain
+     */
     public static List<Title> parseTitles(Domain domain, String language)
     {
         List<Title> titles = new LinkedList<>();
@@ -158,6 +193,14 @@ public class FaoStatDomainParser
     }
 
 
+    /**
+     * Parses a {@linkplain FaoBulkDownloads} object, converting each {@linkplain BulkDownload}
+     * to a {@linkplain File} and returning all files in a list.
+     *
+     * @param bulkDownloads the bulkDownloads object that is to be parsed
+     *
+     * @return a list of downloadable files of a domain
+     */
     public static List<File> parseFiles(FaoBulkDownloads bulkDownloads)
     {
         List<File> files = new LinkedList<>();
@@ -177,6 +220,16 @@ public class FaoStatDomainParser
         return files;
     }
 
+
+    /**
+     * Parses a {@linkplain FaoDocuments} and {@linkplain Domain} object, looking for relevant web links and returning
+     * them in a list.
+     *
+     * @param documents the documents that are to be parsed
+     * @param domain the domain that is to be parsed
+     *
+     * @return a list of web links that are related to a domain
+     */
     public static List<WebLink> parseWebLinks(FaoDocuments documents, Domain domain)
     {
         List<WebLink> webLinks = new LinkedList<>();
@@ -193,15 +246,31 @@ public class FaoStatDomainParser
 
         // add related documents
         documentList.forEach((Document d) -> {
-            WebLink link = new WebLink(d.getDownloadPath());
-            link.setName(d.getFileTitle());
-            link.setType(WebLinkType.Related);
-            webLinks.add(link);
+            // filter out the dummy document
+            if (!d.getFileTitle().equals(FaoStatConstants.TEMPLATE_DOCUMENT_NAME))
+            {
+                WebLink link = new WebLink(d.getDownloadPath());
+                link.setName(d.getFileTitle());
+                link.setType(WebLinkType.Related);
+                webLinks.add(link);
+            }
         });
 
         return webLinks;
     }
 
+
+    /**
+     * Parses a {@linkplain FaoDimensions} object, looking for relevant filter categories and returning
+     * the URLs that lead to {@linkplain FaoFilters} responses in a list.
+     *
+     * @param dimensions the dimensions that are to be parsed
+     * @param version the version that is set for harvesting FAOSTAT
+     * @param language the language that is set for harvesting FAOSTAT
+     * @param domainCode a unique ID of the domain of which the filter URLs are retrieved
+     *
+     * @return a list of URLs of a domain's filter categories
+     */
     public static List<String> parseFilterUrls(FaoDimensions dimensions, String version, String language, String domainCode)
     {
         List<String> filterUrls = new LinkedList<>();
@@ -219,6 +288,15 @@ public class FaoStatDomainParser
     }
 
 
+    /**
+     * Parses a {@linkplain FaoFilters} object, converting each filter term to a {@linkplain Subject}
+     * and returning them in a list.
+     *
+     * @param filters the filter category that is to be parsed
+     * @param language the language that is set for harvesting FAOSTAT
+     *
+     * @return a list of subjects of a domain filter category
+     */
     public static List<Subject> parseSubjects(FaoFilters filters, String language)
     {
         List<Subject> subjects = new LinkedList<>();
@@ -234,6 +312,13 @@ public class FaoStatDomainParser
     }
 
 
+    /**
+     * Generates a {@linkplain Source} object that leads to the FAOSTAT dataset of a specified domain.
+     *
+     * @param domainCode a unique ID of the domain of which the filter URLs are retrieved
+     *
+     * @return a source object of a domain
+     */
     public static Source parseSource(String domainCode)
     {
         Source source = new Source(FaoStatConstants.VIEW_URL_PREFIX + domainCode, FaoStatConstants.PROVIDER);
@@ -242,6 +327,14 @@ public class FaoStatDomainParser
     }
 
 
+    /**
+     * Parses a {@linkplain FaoMetadata} object, looking for a contact person and returning
+     * it in a list.
+     *
+     * @param metadata the domain metadata that is to be parsed
+     *
+     * @return a list of contributors of a domain
+     */
     public static List<Contributor> parseContributors(FaoMetadata metadata)
     {
         List<Contributor> contributors = new LinkedList<>();

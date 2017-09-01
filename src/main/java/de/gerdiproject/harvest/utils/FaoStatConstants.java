@@ -31,7 +31,13 @@ import de.gerdiproject.json.datacite.Description.DescriptionType;
 import de.gerdiproject.json.datacite.ResourceType.GeneralResourceType;
 import de.gerdiproject.json.datacite.WebLink;
 import de.gerdiproject.json.datacite.WebLink.WebLinkType;
+import de.gerdiproject.json.fao.FaoMetadata;
 
+/**
+ * This static class contains constants that are used for harvesting FAOSTAT.
+ *
+ * @author Robin Weiss
+ */
 public class FaoStatConstants
 {
     // RESOURCE TYPE
@@ -52,6 +58,7 @@ public class FaoStatConstants
     // WEB LINKS
     public static final String VIEW_URL_PREFIX = "http://www.fao.org/faostat/en/#data/";
     public static final WebLink LOGO_WEB_LINK = createLogoWebLink();
+    public static final String TEMPLATE_DOCUMENT_NAME = "About";
 
     // DATES
     public static final String META_DATA_TIME_COVERAGE = "Time coverage";
@@ -63,9 +70,23 @@ public class FaoStatConstants
     public static final String DESCRIPTION_FORMAT = "%s:%n%s";
     public static final Map<String, DescriptionType> RELEVANT_DESCRIPTIONS = createRelevantDescriptions();
 
+    // FORMATS
     public static final List<String> FORMATS = Collections.unmodifiableList(Arrays.asList("CSV"));
 
+    // Download URLS
+    public static final String BASE_URL = "http://fenixservices.fao.org/faostat/api/%s/%s/";
+    public static final String GROUPS_AND_DOMAINS_URL = "groupsanddomains?section=download";
+    public static final String DOCUMENTS_URL = "%sdocuments/%s/";
+    public static final String BULK_DOWNLOADS_URL = "%sbulkdownloads/%s/";
+    public static final String METADATA_URL = "%smetadata/%s/";
+    public static final String DIMENSIONS_URL = "%sdimensions/%s/?full=true";
 
+
+
+    /**
+     * Initializes a map of metadata names that contain descriptions that are relevant for documents.
+     * @return a map of {@linkplain FaoMetadata} metadata_label field values
+     */
     private static Map<String, DescriptionType> createRelevantDescriptions()
     {
         Map<String, DescriptionType> relavantDescriptions = new HashMap<>();
@@ -77,6 +98,10 @@ public class FaoStatConstants
     }
 
 
+    /**
+     * Initializes a WebLink that leads to the FAOSTAT logo.
+     * @return a link to the FAOSTAT logo
+     */
     private static WebLink createLogoWebLink()
     {
         WebLink logoLink = new WebLink("http://data.fao.org/developers/api/catalog/resource/findDatastream?authKey=d30aebf0-ab2a-11e1-afa6-0800200c9a66&version=1.0&type=image&database=faostat&resource=logo&datastream=logo");
@@ -85,6 +110,10 @@ public class FaoStatConstants
     }
 
 
+    /**
+     * Initializes a Creator dummy for all FAOSTAT documents.
+     * @return a Creator that has "FAO" as name
+     */
     private static List<Creator> createCreators()
     {
         Creator creator = new Creator(PROVIDER);
@@ -92,11 +121,22 @@ public class FaoStatConstants
     }
 
 
+    /**
+     * Initializes the only ResourceType of all FAOSTAT documents.
+     * @return a ResourceType representing CSV datasets
+     */
     private static ResourceType createResourceType()
     {
         ResourceType resType = new ResourceType();
         resType.setGeneralType(GeneralResourceType.Dataset);
         resType.setValue("CSV");
         return resType;
+    }
+
+    /**
+     * Private constructor, because this is a static class.
+     */
+    private FaoStatConstants()
+    {
     }
 }

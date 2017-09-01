@@ -19,10 +19,9 @@
 package de.gerdiproject.harvest.harvester;
 
 import de.gerdiproject.harvest.utils.FaoStatDownloader;
+import de.gerdiproject.harvest.IDocument;
 import de.gerdiproject.harvest.utils.FaoStatConstants;
 import de.gerdiproject.harvest.utils.FaoStatDomainParser;
-import de.gerdiproject.json.GsonUtils;
-import de.gerdiproject.json.IJsonObject;
 import de.gerdiproject.json.datacite.DataCiteJson;
 import de.gerdiproject.json.datacite.Subject;
 import de.gerdiproject.json.fao.FaoBulkDownloads;
@@ -32,18 +31,16 @@ import de.gerdiproject.json.fao.FaoDomains;
 import de.gerdiproject.json.fao.FaoDomains.Domain;
 import de.gerdiproject.json.fao.FaoFilters;
 import de.gerdiproject.json.fao.FaoMetadata;
-import de.gerdiproject.json.impl.GsonObject;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gson.JsonObject;
 
 /**
  * A harvester for FAOSTAT (http://www.fao.org/faostat/en/#data).
  *
- * @author row
+ * @author Robin Weiss
  */
 public class FaoStatHarvester extends AbstractListHarvester<Domain>
 {
@@ -84,16 +81,12 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     }
 
 
-
-
     @Override
     protected void init()
     {
         downloader = new FaoStatDownloader(DEFAULT_VERSION, DEFAULT_LANGUAGE);
         super.init();
     }
-
-
 
 
     @Override
@@ -107,7 +100,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
 
 
     @Override
-    protected List<IJsonObject> harvestEntry(Domain domain)
+    protected List<IDocument> harvestEntry(Domain domain)
     {
         String language = getProperty(PROPERTY_LANGUAGE);
         String version = getProperty(PROPERTY_VERSION);
@@ -155,12 +148,20 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         // get creator
         document.setCreators(FaoStatConstants.CREATORS);
 
-        // create documentList TODO remove after SAI-112
-        IJsonObject docWorkAround = new GsonObject((JsonObject) GsonUtils.getGson().toJsonTree(document));
-        return Arrays.asList(docWorkAround);
+        return Arrays.asList(document);
     }
 
 
+    /**
+     * Iterates through a list of so called dimensions of a domain. Dimensions are filter categories
+     * for the dataset. Each dimension contains an array of filter strings that are converted to subjects.
+     *
+     * @param domainCode the domainCode of the domain for which the subjects are harvested
+     * @param version the version of FAOSTAT that is to be harvested
+     * @param language the language for which the subjects are retrieved
+     *
+     * @return a list of DataCite subjects
+     */
     private List<Subject> getSubjectsOfDomain(String domainCode, String version, String language)
     {
         // get URLs of all filters that can be applied to the domain

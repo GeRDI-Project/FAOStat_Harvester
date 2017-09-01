@@ -29,4 +29,5 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class FaoStatContextListener extends ContextListener<FaoStatHarvester>
 {
+    // nothing to do here. No special adapters are needed to parse FAOSTAT JSON objects
 }
