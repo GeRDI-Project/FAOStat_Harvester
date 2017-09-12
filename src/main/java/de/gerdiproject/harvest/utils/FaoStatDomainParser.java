@@ -27,6 +27,7 @@ import java.util.regex.Matcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.gerdiproject.harvest.constants.FaoStatDataCiteConstants;
 import de.gerdiproject.json.datacite.Contributor;
 import de.gerdiproject.json.datacite.Contributor.ContributorType;
 import de.gerdiproject.json.datacite.DataCiteJson;
@@ -83,11 +84,11 @@ public class FaoStatDomainParser
 
         metadataList.forEach((Metadata m) -> {
             String label = m.getMetadata_label();
-            DescriptionType type = FaoStatConstants.RELEVANT_DESCRIPTIONS.get(label);
+            DescriptionType type = FaoStatDataCiteConstants.RELEVANT_DESCRIPTIONS.get(label);
 
             if (type != null)
             {
-                String descriptionText = String.format(FaoStatConstants.DESCRIPTION_FORMAT, label, m.getMetadata_text());
+                String descriptionText = String.format(FaoStatDataCiteConstants.DESCRIPTION_FORMAT, label, m.getMetadata_text());
                 Description desc = new Description(descriptionText, type);
                 desc.setLang(language);
                 descriptions.add(desc);
@@ -117,8 +118,8 @@ public class FaoStatDomainParser
 
             switch (m.getMetadata_label())
             {
-                case FaoStatConstants.META_DATA_TIME_COVERAGE:
-                    Matcher matcher = FaoStatConstants.TIME_COVERAGE_PATTERN.matcher(dateText);
+                case FaoStatDataCiteConstants.META_DATA_TIME_COVERAGE:
+                    Matcher matcher = FaoStatDataCiteConstants.TIME_COVERAGE_PATTERN.matcher(dateText);
 
                     try {
                         // retrieve first date from text
@@ -145,19 +146,19 @@ public class FaoStatDomainParser
                         // TODO: find a way to accept date ranges in ES
 
                     } catch (IllegalStateException | NumberFormatException e) {
-                        LOGGER.warn(FaoStatConstants.DATE_PARSE_ERROR_PREFIX + dateText);
+                        LOGGER.warn(String.format(FaoStatDataCiteConstants.DATE_PARSE_ERROR, dateText));
                     }
 
                     break;
 
-                case FaoStatConstants.META_DATA_LAST_UPDATE:
+                case FaoStatDataCiteConstants.META_DATA_LAST_UPDATE:
                     try {
                         // parse update date (e.g. "Nov. 2015")
                         Date lastUpdate = new Date(UPDATE_DATE_FORMAT.parse(dateText), DateType.Updated);
 
                         dates.add(lastUpdate);
                     } catch (ParseException e) { // NOPMD - if the update cannot be parsed, we simply cannot add it
-                        LOGGER.warn(FaoStatConstants.DATE_PARSE_ERROR_PREFIX + dateText);
+                        LOGGER.warn(String.format(FaoStatDataCiteConstants.DATE_PARSE_ERROR, dateText));
                     }
 
                     break;
@@ -236,18 +237,19 @@ public class FaoStatDomainParser
         List<Document> documentList = documents.getData();
 
         // add view url
-        WebLink viewLink = new WebLink(FaoStatConstants.VIEW_URL_PREFIX + domain.getDomain_code());
+        String viewUrl = String.format(FaoStatDataCiteConstants.VIEW_URL, domain.getDomain_code());
+        WebLink viewLink = new WebLink(viewUrl);
         viewLink.setName(domain.getDomain_name());
         viewLink.setType(WebLinkType.ViewURL);
         webLinks.add(viewLink);
 
         // add logo url
-        webLinks.add(FaoStatConstants.LOGO_WEB_LINK);
+        webLinks.add(FaoStatDataCiteConstants.LOGO_WEB_LINK);
 
         // add related documents
         documentList.forEach((Document d) -> {
             // filter out the dummy document
-            if (!d.getFileTitle().equals(FaoStatConstants.TEMPLATE_DOCUMENT_NAME))
+            if (!d.getFileTitle().equals(FaoStatDataCiteConstants.TEMPLATE_DOCUMENT_NAME))
             {
                 WebLink link = new WebLink(d.getDownloadPath());
                 link.setName(d.getFileTitle());
@@ -321,8 +323,9 @@ public class FaoStatDomainParser
      */
     public static Source parseSource(String domainCode)
     {
-        Source source = new Source(FaoStatConstants.VIEW_URL_PREFIX + domainCode, FaoStatConstants.PROVIDER);
-        source.setProviderURI(FaoStatConstants.PROVIDER_URI);
+        String viewUrl = String.format(FaoStatDataCiteConstants.VIEW_URL, domainCode);
+        Source source = new Source(viewUrl, FaoStatDataCiteConstants.PROVIDER);
+        source.setProviderURI(FaoStatDataCiteConstants.PROVIDER_URI);
         return source;
     }
 
@@ -345,11 +348,11 @@ public class FaoStatDomainParser
         for (Metadata m : metadataList) {
             if (m.getMetadata_group_code().equals("1")) {
                 switch (m.getMetadata_label()) {
-                    case FaoStatConstants.METADATA_CONTACT_NAME:
+                    case FaoStatDataCiteConstants.METADATA_CONTACT_NAME:
                         contactPerson.setName(m.getMetadata_text());
                         break;
 
-                    case FaoStatConstants.METADATA_CONTACT_ORGANISATION:
+                    case FaoStatDataCiteConstants.METADATA_CONTACT_ORGANISATION:
                         contactPerson.setAffiliation(m.getMetadata_text());
                         break;
 

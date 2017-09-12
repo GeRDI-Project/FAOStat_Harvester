@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest.utils;
+package de.gerdiproject.harvest.constants;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,11 +34,11 @@ import de.gerdiproject.json.datacite.WebLink.WebLinkType;
 import de.gerdiproject.json.fao.FaoMetadata;
 
 /**
- * This static class contains constants that are used for harvesting FAOSTAT.
+ * This static class contains constants that are used for creating DataCite documents of FAOSTAT.
  *
  * @author Robin Weiss
  */
-public class FaoStatConstants
+public class FaoStatDataCiteConstants
 {
     // RESOURCE TYPE
     public static final ResourceType RESOURCE_TYPE = createResourceType();
@@ -56,7 +56,7 @@ public class FaoStatConstants
     public static final short EARLIEST_PUBLICATION_YEAR = 1961;
 
     // WEB LINKS
-    public static final String VIEW_URL_PREFIX = "http://www.fao.org/faostat/en/#data/";
+    public static final String VIEW_URL = "http://www.fao.org/faostat/en/#data/%s";
     public static final WebLink LOGO_WEB_LINK = createLogoWebLink();
     public static final String TEMPLATE_DOCUMENT_NAME = "About";
 
@@ -64,7 +64,7 @@ public class FaoStatConstants
     public static final String META_DATA_TIME_COVERAGE = "Time coverage";
     public static final String META_DATA_LAST_UPDATE = "Metadata last update";
     public static final Pattern TIME_COVERAGE_PATTERN = Pattern.compile("(\\d\\d\\d\\d)");
-    public static final String DATE_PARSE_ERROR_PREFIX = "Could not parse date: ";
+    public static final String DATE_PARSE_ERROR = "Could not parse date: %s";
 
     // DESCRIPTIONS
     public static final String DESCRIPTION_FORMAT = "%s:%n%s";
@@ -73,15 +73,11 @@ public class FaoStatConstants
     // FORMATS
     public static final List<String> FORMATS = Collections.unmodifiableList(Arrays.asList("CSV"));
 
-    // Download URLS
-    public static final String BASE_URL = "http://fenixservices.fao.org/faostat/api/%s/%s/";
-    public static final String GROUPS_AND_DOMAINS_URL = "groupsanddomains?section=download";
-    public static final String DOCUMENTS_URL = "%sdocuments/%s/";
-    public static final String BULK_DOWNLOADS_URL = "%sbulkdownloads/%s/";
-    public static final String METADATA_URL = "%smetadata/%s/";
-    public static final String DIMENSIONS_URL = "%sdimensions/%s/?full=true";
+    // DOCUMENTS
+    public static final String DOCUMENT_URL = "http://fenixservices.fao.org/faostat/static/documents/%s";
 
-
+    // DIMENSIONS
+    public static final String DIMENSION_URL = "http://fenixservices.fao.org/faostat/api/%s/%s%s%s/?show_lists=true";
 
     /**
      * Initializes a map of metadata names that contain descriptions that are relevant for documents.
@@ -136,7 +132,7 @@ public class FaoStatConstants
     /**
      * Private constructor, because this is a static class.
      */
-    private FaoStatConstants()
+    private FaoStatDataCiteConstants()
     {
     }
 }

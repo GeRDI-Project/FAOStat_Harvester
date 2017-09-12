@@ -20,7 +20,7 @@ package de.gerdiproject.harvest.harvester;
 
 import de.gerdiproject.harvest.utils.FaoStatDownloader;
 import de.gerdiproject.harvest.IDocument;
-import de.gerdiproject.harvest.utils.FaoStatConstants;
+import de.gerdiproject.harvest.constants.FaoStatDataCiteConstants;
 import de.gerdiproject.harvest.utils.FaoStatDomainParser;
 import de.gerdiproject.json.datacite.DataCiteJson;
 import de.gerdiproject.json.datacite.Subject;
@@ -50,7 +50,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     private final static String DEFAULT_LANGUAGE = "en";
     private final static List<String> VALID_PARAMS = Arrays.asList(PROPERTY_VERSION, PROPERTY_LANGUAGE);
 
-    private FaoStatDownloader downloader;
+    private final FaoStatDownloader downloader;
 
 
     /**
@@ -61,8 +61,10 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     {
         // only one document is created per harvested entry
         super(1);
-        super.setProperty(PROPERTY_VERSION, DEFAULT_VERSION);
-        super.setProperty(PROPERTY_LANGUAGE, DEFAULT_LANGUAGE);
+
+        downloader = new FaoStatDownloader();
+        setProperty(PROPERTY_VERSION, DEFAULT_VERSION);
+        setProperty(PROPERTY_LANGUAGE, DEFAULT_LANGUAGE);
     }
 
 
@@ -82,20 +84,15 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
 
 
     @Override
-    protected void init()
-    {
-        downloader = new FaoStatDownloader(DEFAULT_VERSION, DEFAULT_LANGUAGE);
-        super.init();
-    }
-
-
-    @Override
     public void setProperty(String key, String value)
     {
         super.setProperty(key, value);
 
-        // re-initialize the downloader with a proper language and version
-        downloader = new FaoStatDownloader(getProperty(PROPERTY_VERSION), getProperty(PROPERTY_LANGUAGE));
+        if (key.equals(PROPERTY_VERSION))
+            downloader.setVersion(value);
+
+        if (key.equals(PROPERTY_LANGUAGE))
+            downloader.setLanguage(value);
     }
 
 
@@ -108,14 +105,17 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         // get the domainCode, an identifier that is used FAOStat-internally
         String domainCode = domain.getDomain_code();
 
+        // set the downloader's domain code
+        downloader.setDomainCode(domainCode);
+
         // create the document
         DataCiteJson document = new DataCiteJson();
 
         document.setVersion(version);
         document.setLanguage(language);
-        document.setPublicationYear(FaoStatConstants.EARLIEST_PUBLICATION_YEAR);
-        document.setResourceType(FaoStatConstants.RESOURCE_TYPE);
-        document.setFormats(FaoStatConstants.FORMATS);
+        document.setPublicationYear(FaoStatDataCiteConstants.EARLIEST_PUBLICATION_YEAR);
+        document.setResourceType(FaoStatDataCiteConstants.RESOURCE_TYPE);
+        document.setFormats(FaoStatDataCiteConstants.FORMATS);
 
         // get source
         document.setSources(FaoStatDomainParser.parseSource(domainCode));
@@ -125,11 +125,11 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         document.setTitles(FaoStatDomainParser.parseTitles(domain, language));
 
         // get bulk-download URL
-        FaoBulkDownloads bulkDownloads = downloader.getBulkDownloads(domainCode);
+        FaoBulkDownloads bulkDownloads = downloader.getBulkDownloads();
         document.setFiles(FaoStatDomainParser.parseFiles(bulkDownloads));
 
         // get description
-        FaoMetadata metadata = downloader.getMetaData(domainCode);
+        FaoMetadata metadata = downloader.getMetaData();
         document.setDescriptions(FaoStatDomainParser.parseDescriptions(metadata, language));
 
         // get URLs of all filters that can be applied to the domain
@@ -139,14 +139,14 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         document.setDates(FaoStatDomainParser.parseDates(metadata, language));
 
         // get web links
-        FaoDocuments documents = downloader.getDocuments(domainCode);
+        FaoDocuments documents = downloader.getDocuments();
         document.setWebLinks(FaoStatDomainParser.parseWebLinks(documents, domain));
 
         // get contact person
         document.setContributors(FaoStatDomainParser.parseContributors(metadata));
 
         // get creator
-        document.setCreators(FaoStatConstants.CREATORS);
+        document.setCreators(FaoStatDataCiteConstants.CREATORS);
 
         return Arrays.asList(document);
     }
@@ -165,7 +165,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     private List<Subject> getSubjectsOfDomain(String domainCode, String version, String language)
     {
         // get URLs of all filters that can be applied to the domain
-        FaoDimensions dimensions = downloader.getDimensions(domainCode);
+        FaoDimensions dimensions = downloader.getDimensions();
         List<String> filterUrls = FaoStatDomainParser.parseFilterUrls(dimensions, version, language, domainCode);
 
         // initialize empty subjects list
