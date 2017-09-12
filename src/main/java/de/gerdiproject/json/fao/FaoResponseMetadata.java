@@ -24,7 +24,7 @@ package de.gerdiproject.json.fao;
  * @author Robin Weiss
  *
  */
-public class FaoResponseMetadata
+public final class FaoResponseMetadata
 {
     private double processing_time;
     private String output_type;

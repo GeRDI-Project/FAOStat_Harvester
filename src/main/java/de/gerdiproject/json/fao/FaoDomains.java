@@ -27,9 +27,9 @@ import de.gerdiproject.json.fao.FaoDomains.Domain;
  * @author Robin Weiss
  *
  */
-public class FaoDomains extends FaoJson<Domain>
+public final class FaoDomains extends FaoJson<Domain>
 {
-    public static class Domain
+    public final static class Domain
     {
         private String group_code;
         private String group_name;

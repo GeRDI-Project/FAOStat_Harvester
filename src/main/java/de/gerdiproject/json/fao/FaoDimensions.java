@@ -21,6 +21,7 @@ package de.gerdiproject.json.fao;
 
 import com.google.gson.JsonArray;
 
+import de.gerdiproject.harvest.constants.FaoStatDataCiteConstants;
 import de.gerdiproject.json.fao.FaoDimensions.Dimension;
 
 
@@ -31,11 +32,9 @@ import de.gerdiproject.json.fao.FaoDimensions.Dimension;
  * @author Robin Weiss
  *
  */
-public class FaoDimensions extends FaoJson<Dimension>
+public final class FaoDimensions extends FaoJson<Dimension>
 {
-    private static final String DIMENSION_URL = "http://fenixservices.fao.org/faostat/api/%s/%s%s%s/?show_lists=true";
-
-    public static class Dimension
+    public final static class Dimension
     {
         private String id;
         private String label;
@@ -48,13 +47,13 @@ public class FaoDimensions extends FaoJson<Dimension>
 
         /**
          * Retrieves the URL that points to the JSON data of this dimension.
-         * e.g. e.g. http://fenixservices.fao.org/faostat/api/v1/en/codes/countries/QC/?show_lists=true
+         * e.g. http://fenixservices.fao.org/faostat/api/v1/en/codes/countries/QC/?show_lists=true
          *
          * @return the URL that points to the JSON data of this dimension
          */
         public String getDimensionUrl(String version, String language, String domainCode)
         {
-            return String.format(DIMENSION_URL, version, language, href, domainCode);
+            return String.format(FaoStatDataCiteConstants.DIMENSION_URL, version, language, href, domainCode);
         }
 
         public String getId()

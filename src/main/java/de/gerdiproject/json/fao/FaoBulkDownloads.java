@@ -27,9 +27,9 @@ import de.gerdiproject.json.fao.FaoBulkDownloads.BulkDownload;
  * @author Robin Weiss
  *
  */
-public class FaoBulkDownloads extends FaoJson<BulkDownload>
+public final class FaoBulkDownloads extends FaoJson<BulkDownload>
 {
-    public static class BulkDownload
+    public final static class BulkDownload
     {
         private String DomainCode;
         private String Source;

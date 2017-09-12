@@ -27,9 +27,9 @@ import de.gerdiproject.json.fao.FaoFilters.Filter;
  * @author Robin Weiss
  *
  */
-public class FaoFilters extends FaoJson<Filter>
+public final class FaoFilters extends FaoJson<Filter>
 {
-    public static class Filter
+    public final static class Filter
     {
         private String code;
         private String label;

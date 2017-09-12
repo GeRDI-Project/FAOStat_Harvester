@@ -18,6 +18,7 @@
  */
 package de.gerdiproject.json.fao;
 
+import de.gerdiproject.harvest.constants.FaoStatDataCiteConstants;
 import de.gerdiproject.json.fao.FaoDocuments.Document;
 
 /**
@@ -27,11 +28,9 @@ import de.gerdiproject.json.fao.FaoDocuments.Document;
  * @author Robin Weiss
  *
  */
-public class FaoDocuments extends FaoJson<Document>
+public final class FaoDocuments extends FaoJson<Document>
 {
-    private static final String DOWNLOAD_PATH_PREFIX = "http://fenixservices.fao.org/faostat/static/documents/";
-
-    public static class Document
+    public final static class Document
     {
         private String DomainCode;
         private String CreatedDate;
@@ -41,12 +40,13 @@ public class FaoDocuments extends FaoJson<Document>
 
         /**
          * Returns a path that leads to the download of the document.
-         * @return a path that leads to the download of the file
+         * <br>e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
+         *
+         * @return a path that leads to the download of the document
          */
         public String getDownloadPath()
         {
-            // e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
-            return DOWNLOAD_PATH_PREFIX + FileName;
+            return String.format(FaoStatDataCiteConstants.DOCUMENT_URL, FileName);
         }
 
         public String getDomainCode()
