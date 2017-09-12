@@ -16,9 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.fao;
+package de.gerdiproject.harvest.fao.json;
 
-import de.gerdiproject.json.fao.FaoBulkDownloads.BulkDownload;
+import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
 
 /**
  * This class represents the JSON response of FaoSTAT bulk download links.
@@ -27,7 +27,7 @@ import de.gerdiproject.json.fao.FaoBulkDownloads.BulkDownload;
  * @author Robin Weiss
  *
  */
-public final class FaoBulkDownloads extends FaoJson<BulkDownload>
+public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload>
 {
     public final static class BulkDownload
     {

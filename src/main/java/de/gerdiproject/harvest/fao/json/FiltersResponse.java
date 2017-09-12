@@ -16,9 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.fao;
+package de.gerdiproject.harvest.fao.json;
 
-import de.gerdiproject.json.fao.FaoFilters.Filter;
+import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
 
 /**
  * This class represents the JSON response of a FaoSTAT codes request.
@@ -27,7 +27,7 @@ import de.gerdiproject.json.fao.FaoFilters.Filter;
  * @author Robin Weiss
  *
  */
-public final class FaoFilters extends FaoJson<Filter>
+public final class FiltersResponse extends GenericJsonResponse<Filter>
 {
     public final static class Filter
     {

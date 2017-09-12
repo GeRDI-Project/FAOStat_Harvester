@@ -16,10 +16,10 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.fao;
+package de.gerdiproject.harvest.fao.json;
 
-import de.gerdiproject.harvest.constants.FaoStatDataCiteConstants;
-import de.gerdiproject.json.fao.FaoDocuments.Document;
+import de.gerdiproject.harvest.fao.constants.DataCiteConstants;
+import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
 
 /**
  * This class represents the JSON response of a FaoSTAT documents request.
@@ -28,7 +28,7 @@ import de.gerdiproject.json.fao.FaoDocuments.Document;
  * @author Robin Weiss
  *
  */
-public final class FaoDocuments extends FaoJson<Document>
+public final class DocumentsResponse extends GenericJsonResponse<Document>
 {
     public final static class Document
     {
@@ -46,7 +46,7 @@ public final class FaoDocuments extends FaoJson<Document>
          */
         public String getDownloadPath()
         {
-            return String.format(FaoStatDataCiteConstants.DOCUMENT_URL, FileName);
+            return String.format(DataCiteConstants.DOCUMENT_URL, FileName);
         }
 
         public String getDomainCode()

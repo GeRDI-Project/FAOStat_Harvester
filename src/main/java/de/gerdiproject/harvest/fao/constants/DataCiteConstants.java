@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest.constants;
+package de.gerdiproject.harvest.fao.constants;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,20 +25,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.ResourceType;
 import de.gerdiproject.json.datacite.Description.DescriptionType;
 import de.gerdiproject.json.datacite.ResourceType.GeneralResourceType;
 import de.gerdiproject.json.datacite.WebLink;
 import de.gerdiproject.json.datacite.WebLink.WebLinkType;
-import de.gerdiproject.json.fao.FaoMetadata;
 
 /**
  * This static class contains constants that are used for creating DataCite documents of FAOSTAT.
  *
  * @author Robin Weiss
  */
-public class FaoStatDataCiteConstants
+public class DataCiteConstants
 {
     // RESOURCE TYPE
     public static final ResourceType RESOURCE_TYPE = createResourceType();
@@ -81,7 +81,7 @@ public class FaoStatDataCiteConstants
 
     /**
      * Initializes a map of metadata names that contain descriptions that are relevant for documents.
-     * @return a map of {@linkplain FaoMetadata} metadata_label field values
+     * @return a map of {@linkplain MetadataResponse} metadata_label field values
      */
     private static Map<String, DescriptionType> createRelevantDescriptions()
     {
@@ -132,7 +132,7 @@ public class FaoStatDataCiteConstants
     /**
      * Private constructor, because this is a static class.
      */
-    private FaoStatDataCiteConstants()
+    private DataCiteConstants()
     {
     }
 }

@@ -16,13 +16,13 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.fao;
+package de.gerdiproject.harvest.fao.json;
 
 
 import com.google.gson.JsonArray;
 
-import de.gerdiproject.harvest.constants.FaoStatDataCiteConstants;
-import de.gerdiproject.json.fao.FaoDimensions.Dimension;
+import de.gerdiproject.harvest.fao.constants.DataCiteConstants;
+import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
 
 
 /**
@@ -32,7 +32,7 @@ import de.gerdiproject.json.fao.FaoDimensions.Dimension;
  * @author Robin Weiss
  *
  */
-public final class FaoDimensions extends FaoJson<Dimension>
+public final class DimensionsResponse extends GenericJsonResponse<Dimension>
 {
     public final static class Dimension
     {
@@ -53,7 +53,7 @@ public final class FaoDimensions extends FaoJson<Dimension>
          */
         public String getDimensionUrl(String version, String language, String domainCode)
         {
-            return String.format(FaoStatDataCiteConstants.DIMENSION_URL, version, language, href, domainCode);
+            return String.format(DataCiteConstants.DIMENSION_URL, version, language, href, domainCode);
         }
 
         public String getId()

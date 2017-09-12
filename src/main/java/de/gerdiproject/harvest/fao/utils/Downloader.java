@@ -16,22 +16,23 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest.utils;
+package de.gerdiproject.harvest.fao.utils;
 
-import de.gerdiproject.harvest.constants.FaoStatDownloaderConstants;
-import de.gerdiproject.json.fao.FaoBulkDownloads;
-import de.gerdiproject.json.fao.FaoDimensions;
-import de.gerdiproject.json.fao.FaoDocuments;
-import de.gerdiproject.json.fao.FaoDomains;
-import de.gerdiproject.json.fao.FaoFilters;
-import de.gerdiproject.json.fao.FaoMetadata;
+import de.gerdiproject.harvest.fao.constants.DownloaderConstants;
+import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
+import de.gerdiproject.harvest.fao.json.DimensionsResponse;
+import de.gerdiproject.harvest.fao.json.DocumentsResponse;
+import de.gerdiproject.harvest.fao.json.DomainsResponse;
+import de.gerdiproject.harvest.fao.json.FiltersResponse;
+import de.gerdiproject.harvest.fao.json.MetadataResponse;
+import de.gerdiproject.harvest.utils.HttpRequester;
 
 /**
  * This class provides functions for downloading FAOSTAT JSON objects.
  *
  * @author Robin Weiss
  */
-public class FaoStatDownloader
+public class Downloader
 {
     private String version;
     private String language;
@@ -48,7 +49,7 @@ public class FaoStatDownloader
     public void setVersion(String version)
     {
         this.version = version;
-        this.baseUrl = String.format(FaoStatDownloaderConstants.BASE_URL, version, language);
+        this.baseUrl = String.format(DownloaderConstants.BASE_URL, version, language);
     }
 
 
@@ -60,7 +61,7 @@ public class FaoStatDownloader
     public void setLanguage(String language)
     {
         this.language = language;
-        this.baseUrl = String.format(FaoStatDownloaderConstants.BASE_URL, version, language);
+        this.baseUrl = String.format(DownloaderConstants.BASE_URL, version, language);
     }
 
 
@@ -80,10 +81,10 @@ public class FaoStatDownloader
      *
      * @return an object representation of the JSON server response to a groupsAndDomains request
      */
-    public FaoDomains getDomains()
+    public DomainsResponse getDomains()
     {
-        String url = baseUrl + FaoStatDownloaderConstants.GROUPS_AND_DOMAINS_URL;
-        FaoDomains response = httpRequester.getObjectFromUrl(url, FaoDomains.class);
+        String url = baseUrl + DownloaderConstants.GROUPS_AND_DOMAINS_URL;
+        DomainsResponse response = httpRequester.getObjectFromUrl(url, DomainsResponse.class);
         return response;
     }
 
@@ -94,10 +95,10 @@ public class FaoStatDownloader
      *
      * @return an object representation of the JSON server response to a documents request
      */
-    public FaoDocuments getDocuments()
+    public DocumentsResponse getDocuments()
     {
-        String url = String.format(FaoStatDownloaderConstants.DOCUMENTS_URL, baseUrl, domainCode);
-        FaoDocuments response = httpRequester.getObjectFromUrl(url, FaoDocuments.class);
+        String url = String.format(DownloaderConstants.DOCUMENTS_URL, baseUrl, domainCode);
+        DocumentsResponse response = httpRequester.getObjectFromUrl(url, DocumentsResponse.class);
         return response;
     }
 
@@ -108,10 +109,10 @@ public class FaoStatDownloader
      *
      * @return an object representation of the JSON server response to a bulkDownloads request
      */
-    public FaoBulkDownloads getBulkDownloads()
+    public BulkDownloadResponse getBulkDownloads()
     {
-        String url = String.format(FaoStatDownloaderConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
-        FaoBulkDownloads response = httpRequester.getObjectFromUrl(url, FaoBulkDownloads.class);
+        String url = String.format(DownloaderConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
+        BulkDownloadResponse response = httpRequester.getObjectFromUrl(url, BulkDownloadResponse.class);
         return response;
     }
 
@@ -121,10 +122,10 @@ public class FaoStatDownloader
      *
      * @return an object representation of the JSON server response to a metadata request
      */
-    public FaoMetadata getMetaData()
+    public MetadataResponse getMetaData()
     {
-        String url = String.format(FaoStatDownloaderConstants.METADATA_URL, baseUrl, domainCode);
-        FaoMetadata response = httpRequester.getObjectFromUrl(url, FaoMetadata.class);
+        String url = String.format(DownloaderConstants.METADATA_URL, baseUrl, domainCode);
+        MetadataResponse response = httpRequester.getObjectFromUrl(url, MetadataResponse.class);
         return response;
     }
 
@@ -135,10 +136,10 @@ public class FaoStatDownloader
      *
      * @return an object representation of the JSON server response to a dimensions request
      */
-    public FaoDimensions getDimensions()
+    public DimensionsResponse getDimensions()
     {
-        String url = String.format(FaoStatDownloaderConstants.DIMENSIONS_URL, baseUrl, domainCode);
-        FaoDimensions response = httpRequester.getObjectFromUrl(url, FaoDimensions.class);
+        String url = String.format(DownloaderConstants.DIMENSIONS_URL, baseUrl, domainCode);
+        DimensionsResponse response = httpRequester.getObjectFromUrl(url, DimensionsResponse.class);
         return response;
     }
 
@@ -151,9 +152,9 @@ public class FaoStatDownloader
      *
      * @return an object representation of the JSON server response to a request of the filterUrl
      */
-    public FaoFilters getFilters(String filterUrl)
+    public FiltersResponse getFilters(String filterUrl)
     {
-        FaoFilters response = httpRequester.getObjectFromUrl(filterUrl, FaoFilters.class);
+        FiltersResponse response = httpRequester.getObjectFromUrl(filterUrl, FiltersResponse.class);
         return response;
     }
 }

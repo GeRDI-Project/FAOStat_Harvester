@@ -16,36 +16,27 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.fao;
+package de.gerdiproject.harvest.fao.constants;
 
 /**
- * This class represents the the metadata object, that is part of every JSON response from FaoSTAT.
+ * This static class contains download URLs that are used for downloading (meta-) data from FAOSTAT.
  *
  * @author Robin Weiss
- *
  */
-public final class FaoResponseMetadata
+public class DownloaderConstants
 {
-    private double processing_time;
-    private String output_type;
+    public static final String BASE_URL = "http://fenixservices.fao.org/faostat/api/%s/%s/";
+    public static final String GROUPS_AND_DOMAINS_URL = "groupsanddomains?section=download";
+    public static final String DOCUMENTS_URL = "%sdocuments/%s/";
+    public static final String BULK_DOWNLOADS_URL = "%sbulkdownloads/%s/";
+    public static final String METADATA_URL = "%smetadata/%s/";
+    public static final String DIMENSIONS_URL = "%sdimensions/%s/?full=true";
 
-    public double getProcessing_time()
-    {
-        return processing_time;
-    }
 
-    public void setProcessing_time(double processing_time)
+    /**
+     * Private constructor, because this is a static class.
+     */
+    private DownloaderConstants()
     {
-        this.processing_time = processing_time;
-    }
-
-    public String getOutput_type()
-    {
-        return output_type;
-    }
-
-    public void setOutput_type(String output_type)
-    {
-        this.output_type = output_type;
     }
 }

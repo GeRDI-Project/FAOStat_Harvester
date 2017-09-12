@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.fao;
+package de.gerdiproject.harvest.fao.json;
 
 import java.util.List;
 
@@ -26,18 +26,18 @@ import java.util.List;
  *
  * @param <T> the type of data, carried by the response
  */
-public class FaoJson <T>
+public class GenericJsonResponse <T>
 {
-    private FaoResponseMetadata metadata;
+    private GenericJsonResponseMetadata metadata;
     private List<T> data;
 
 
-    public FaoResponseMetadata getMetadata()
+    public GenericJsonResponseMetadata getMetadata()
     {
         return metadata;
     }
 
-    public void setMetadata(FaoResponseMetadata metadata)
+    public void setMetadata(GenericJsonResponseMetadata metadata)
     {
         this.metadata = metadata;
     }

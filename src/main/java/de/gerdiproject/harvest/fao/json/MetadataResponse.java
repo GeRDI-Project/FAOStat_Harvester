@@ -16,9 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.fao;
+package de.gerdiproject.harvest.fao.json;
 
-import de.gerdiproject.json.fao.FaoMetadata.Metadata;
+import de.gerdiproject.harvest.fao.json.MetadataResponse.Metadata;
 
 /**
  * This class represents the JSON response of a FaoSTAT metadata request.
@@ -27,7 +27,7 @@ import de.gerdiproject.json.fao.FaoMetadata.Metadata;
  * @author Robin Weiss
  *
  */
-public final class FaoMetadata extends FaoJson<Metadata>
+public final class MetadataResponse extends GenericJsonResponse<Metadata>
 {
     public final static class Metadata
     {

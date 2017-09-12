@@ -16,9 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.fao;
+package de.gerdiproject.harvest.fao.json;
 
-import de.gerdiproject.json.fao.FaoDomains.Domain;
+import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
 
 /**
  * This class represents the JSON response of a FaoSTAT groups and domains request.
@@ -27,7 +27,7 @@ import de.gerdiproject.json.fao.FaoDomains.Domain;
  * @author Robin Weiss
  *
  */
-public final class FaoDomains extends FaoJson<Domain>
+public final class DomainsResponse extends GenericJsonResponse<Domain>
 {
     public final static class Domain
     {
