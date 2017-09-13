@@ -1,6 +1,25 @@
-package de.gerdiproject.json.fao;
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+package de.gerdiproject.harvest.fao.json;
 
-import de.gerdiproject.json.fao.FaoDocuments.Document;
+import de.gerdiproject.harvest.fao.constants.DataCiteConstants;
+import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
 
 /**
  * This class represents the JSON response of a FaoSTAT documents request.
@@ -9,11 +28,9 @@ import de.gerdiproject.json.fao.FaoDocuments.Document;
  * @author Robin Weiss
  *
  */
-public class FaoDocuments extends FaoJson<Document>
+public final class DocumentsResponse extends GenericJsonResponse<Document>
 {
-    private static final String DOWNLOAD_PATH_PREFIX = "http://fenixservices.fao.org/faostat/static/documents/";
-
-    public static class Document
+    public final static class Document
     {
         private String DomainCode;
         private String CreatedDate;
@@ -23,12 +40,13 @@ public class FaoDocuments extends FaoJson<Document>
 
         /**
          * Returns a path that leads to the download of the document.
-         * @return a path that leads to the download of the file
+         * <br>e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
+         *
+         * @return a path that leads to the download of the document
          */
         public String getDownloadPath()
         {
-            // e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
-            return DOWNLOAD_PATH_PREFIX + FileName;
+            return String.format(DataCiteConstants.DOCUMENT_URL, FileName);
         }
 
         public String getDomainCode()

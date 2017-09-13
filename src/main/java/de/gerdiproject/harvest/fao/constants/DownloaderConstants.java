@@ -16,18 +16,27 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest;
-
-import de.gerdiproject.harvest.harvester.FaoStatHarvester;
-import javax.servlet.annotation.WebListener;
+package de.gerdiproject.harvest.fao.constants;
 
 /**
- * This class initializes the FAOSTAT harvester and all objects that are required.
+ * This static class contains download URLs that are used for downloading (meta-) data from FAOSTAT.
  *
  * @author Robin Weiss
  */
-@WebListener
-public class FaoStatContextListener extends ContextListener<FaoStatHarvester>
+public class DownloaderConstants
 {
-    // nothing to do here. No special adapters are needed to parse FAOSTAT JSON objects
+    public static final String BASE_URL = "http://fenixservices.fao.org/faostat/api/%s/%s/";
+    public static final String GROUPS_AND_DOMAINS_URL = "groupsanddomains?section=download";
+    public static final String DOCUMENTS_URL = "%sdocuments/%s/";
+    public static final String BULK_DOWNLOADS_URL = "%sbulkdownloads/%s/";
+    public static final String METADATA_URL = "%smetadata/%s/";
+    public static final String DIMENSIONS_URL = "%sdimensions/%s/?full=true";
+
+
+    /**
+     * Private constructor, because this is a static class.
+     */
+    private DownloaderConstants()
+    {
+    }
 }

@@ -16,18 +16,36 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest;
-
-import de.gerdiproject.harvest.harvester.FaoStatHarvester;
-import javax.servlet.annotation.WebListener;
+package de.gerdiproject.harvest.fao.json;
 
 /**
- * This class initializes the FAOSTAT harvester and all objects that are required.
+ * This class represents the the metadata object, that is part of every JSON response from FaoSTAT.
  *
  * @author Robin Weiss
+ *
  */
-@WebListener
-public class FaoStatContextListener extends ContextListener<FaoStatHarvester>
+public final class GenericJsonResponseMetadata
 {
-    // nothing to do here. No special adapters are needed to parse FAOSTAT JSON objects
+    private double processing_time;
+    private String output_type;
+
+    public double getProcessing_time()
+    {
+        return processing_time;
+    }
+
+    public void setProcessing_time(double processing_time)
+    {
+        this.processing_time = processing_time;
+    }
+
+    public String getOutput_type()
+    {
+        return output_type;
+    }
+
+    public void setOutput_type(String output_type)
+    {
+        this.output_type = output_type;
+    }
 }

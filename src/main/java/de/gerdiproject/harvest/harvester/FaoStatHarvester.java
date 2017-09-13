@@ -18,32 +18,30 @@
  */
 package de.gerdiproject.harvest.harvester;
 
-import de.gerdiproject.harvest.utils.FaoStatDownloader;
-import de.gerdiproject.harvest.utils.FaoStatConstants;
-import de.gerdiproject.harvest.utils.FaoStatDomainParser;
-import de.gerdiproject.json.GsonUtils;
-import de.gerdiproject.json.IJsonObject;
+import de.gerdiproject.harvest.IDocument;
+import de.gerdiproject.harvest.fao.constants.DataCiteConstants;
+import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
+import de.gerdiproject.harvest.fao.json.DimensionsResponse;
+import de.gerdiproject.harvest.fao.json.DocumentsResponse;
+import de.gerdiproject.harvest.fao.json.DomainsResponse;
+import de.gerdiproject.harvest.fao.json.FiltersResponse;
+import de.gerdiproject.harvest.fao.json.MetadataResponse;
+import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
+import de.gerdiproject.harvest.fao.utils.DomainParser;
+import de.gerdiproject.harvest.fao.utils.Downloader;
 import de.gerdiproject.json.datacite.DataCiteJson;
 import de.gerdiproject.json.datacite.Subject;
-import de.gerdiproject.json.fao.FaoBulkDownloads;
-import de.gerdiproject.json.fao.FaoDimensions;
-import de.gerdiproject.json.fao.FaoDocuments;
-import de.gerdiproject.json.fao.FaoDomains;
-import de.gerdiproject.json.fao.FaoDomains.Domain;
-import de.gerdiproject.json.fao.FaoFilters;
-import de.gerdiproject.json.fao.FaoMetadata;
-import de.gerdiproject.json.impl.GsonObject;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gson.JsonObject;
 
 /**
  * A harvester for FAOSTAT (http://www.fao.org/faostat/en/#data).
  *
- * @author row
+ * @author Robin Weiss
  */
 public class FaoStatHarvester extends AbstractListHarvester<Domain>
 {
@@ -53,7 +51,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     private final static String DEFAULT_LANGUAGE = "en";
     private final static List<String> VALID_PARAMS = Arrays.asList(PROPERTY_VERSION, PROPERTY_LANGUAGE);
 
-    private FaoStatDownloader downloader;
+    private final Downloader downloader;
 
 
     /**
@@ -64,8 +62,10 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     {
         // only one document is created per harvested entry
         super(1);
-        super.setProperty(PROPERTY_VERSION, DEFAULT_VERSION);
-        super.setProperty(PROPERTY_LANGUAGE, DEFAULT_LANGUAGE);
+
+        downloader = new Downloader();
+        setProperty(PROPERTY_VERSION, DEFAULT_VERSION);
+        setProperty(PROPERTY_LANGUAGE, DEFAULT_LANGUAGE);
     }
 
 
@@ -79,21 +79,9 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     @Override
     protected Collection<Domain> loadEntries()
     {
-        FaoDomains domainsObj = downloader.getDomains();
+        DomainsResponse domainsObj = downloader.getDomains();
         return domainsObj.getData();
     }
-
-
-
-
-    @Override
-    protected void init()
-    {
-        downloader = new FaoStatDownloader(DEFAULT_VERSION, DEFAULT_LANGUAGE);
-        super.init();
-    }
-
-
 
 
     @Override
@@ -101,13 +89,16 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     {
         super.setProperty(key, value);
 
-        // re-initialize the downloader with a proper language and version
-        downloader = new FaoStatDownloader(getProperty(PROPERTY_VERSION), getProperty(PROPERTY_LANGUAGE));
+        if (key.equals(PROPERTY_VERSION))
+            downloader.setVersion(value);
+
+        if (key.equals(PROPERTY_LANGUAGE))
+            downloader.setLanguage(value);
     }
 
 
     @Override
-    protected List<IJsonObject> harvestEntry(Domain domain)
+    protected List<IDocument> harvestEntry(Domain domain)
     {
         String language = getProperty(PROPERTY_LANGUAGE);
         String version = getProperty(PROPERTY_VERSION);
@@ -115,65 +106,76 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         // get the domainCode, an identifier that is used FAOStat-internally
         String domainCode = domain.getDomain_code();
 
+        // set the downloader's domain code
+        downloader.setDomainCode(domainCode);
+
         // create the document
         DataCiteJson document = new DataCiteJson();
 
         document.setVersion(version);
         document.setLanguage(language);
-        document.setPublicationYear(FaoStatConstants.EARLIEST_PUBLICATION_YEAR);
-        document.setResourceType(FaoStatConstants.RESOURCE_TYPE);
-        document.setFormats(FaoStatConstants.FORMATS);
+        document.setPublicationYear(DataCiteConstants.EARLIEST_PUBLICATION_YEAR);
+        document.setResourceType(DataCiteConstants.RESOURCE_TYPE);
+        document.setFormats(DataCiteConstants.FORMATS);
 
         // get source
-        document.setSources(FaoStatDomainParser.parseSource(domainCode));
+        document.setSources(DomainParser.parseSource(domainCode));
         document.setPublisher(document.getSources().getProvider());
 
         // get a readable name of the domain
-        document.setTitles(FaoStatDomainParser.parseTitles(domain, language));
+        document.setTitles(DomainParser.parseTitles(domain, language));
 
         // get bulk-download URL
-        FaoBulkDownloads bulkDownloads = downloader.getBulkDownloads(domainCode);
-        document.setFiles(FaoStatDomainParser.parseFiles(bulkDownloads));
+        BulkDownloadResponse bulkDownloads = downloader.getBulkDownloads();
+        document.setFiles(DomainParser.parseFiles(bulkDownloads));
 
         // get description
-        FaoMetadata metadata = downloader.getMetaData(domainCode);
-        document.setDescriptions(FaoStatDomainParser.parseDescriptions(metadata, language));
+        MetadataResponse metadata = downloader.getMetaData();
+        document.setDescriptions(DomainParser.parseDescriptions(metadata, language));
 
         // get URLs of all filters that can be applied to the domain
         document.setSubjects(getSubjectsOfDomain(domainCode, version, language));
 
         // get dates
-        document.setDates(FaoStatDomainParser.parseDates(metadata, language));
+        document.setDates(DomainParser.parseDates(metadata, language));
 
         // get web links
-        FaoDocuments documents = downloader.getDocuments(domainCode);
-        document.setWebLinks(FaoStatDomainParser.parseWebLinks(documents, domain));
+        DocumentsResponse documents = downloader.getDocuments();
+        document.setWebLinks(DomainParser.parseWebLinks(documents, domain));
 
         // get contact person
-        document.setContributors(FaoStatDomainParser.parseContributors(metadata));
+        document.setContributors(DomainParser.parseContributors(metadata));
 
         // get creator
-        document.setCreators(FaoStatConstants.CREATORS);
+        document.setCreators(DataCiteConstants.CREATORS);
 
-        // create documentList TODO remove after SAI-112
-        IJsonObject docWorkAround = new GsonObject((JsonObject) GsonUtils.getGson().toJsonTree(document));
-        return Arrays.asList(docWorkAround);
+        return Arrays.asList(document);
     }
 
 
+    /**
+     * Iterates through a list of so called dimensions of a domain. Dimensions are filter categories
+     * for the dataset. Each dimension contains an array of filter strings that are converted to subjects.
+     *
+     * @param domainCode the domainCode of the domain for which the subjects are harvested
+     * @param version the version of FAOSTAT that is to be harvested
+     * @param language the language for which the subjects are retrieved
+     *
+     * @return a list of DataCite subjects
+     */
     private List<Subject> getSubjectsOfDomain(String domainCode, String version, String language)
     {
         // get URLs of all filters that can be applied to the domain
-        FaoDimensions dimensions = downloader.getDimensions(domainCode);
-        List<String> filterUrls = FaoStatDomainParser.parseFilterUrls(dimensions, version, language, domainCode);
+        DimensionsResponse dimensions = downloader.getDimensions();
+        List<String> filterUrls = DomainParser.parseFilterUrls(dimensions, version, language, domainCode);
 
         // initialize empty subjects list
         List<Subject> subjects = new LinkedList<>();
 
         // add every filter option to the subjects
         filterUrls.forEach((String filterUrl) -> {
-            FaoFilters filters = downloader.getFilters(filterUrl);
-            subjects.addAll(FaoStatDomainParser.parseSubjects(filters, language));
+            FiltersResponse filters = downloader.getFilters(filterUrl);
+            subjects.addAll(DomainParser.parseSubjects(filters, language));
         });
 
         return subjects;
