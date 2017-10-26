@@ -115,6 +115,9 @@ public class DomainParser
 
         metadataList.forEach((Metadata m) -> {
             String dateText = m.getMetadata_text();
+            
+            if(dateText == null || dateText.isEmpty())
+            	return; // skip this date and go to the next
 
             switch (m.getMetadata_label())
             {

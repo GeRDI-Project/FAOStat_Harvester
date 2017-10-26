@@ -18,14 +18,20 @@
  */
 package de.gerdiproject.harvest.fao.utils;
 
+import java.util.function.Consumer;
+
+import de.gerdiproject.harvest.config.events.HarvesterParameterChangedEvent;
+import de.gerdiproject.harvest.config.parameters.AbstractParameter;
+import de.gerdiproject.harvest.event.EventSystem;
 import de.gerdiproject.harvest.fao.constants.DownloaderConstants;
+import de.gerdiproject.harvest.fao.constants.ParameterConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse;
 import de.gerdiproject.harvest.fao.json.DomainsResponse;
 import de.gerdiproject.harvest.fao.json.FiltersResponse;
 import de.gerdiproject.harvest.fao.json.MetadataResponse;
-import de.gerdiproject.harvest.utils.HttpRequester;
+import de.gerdiproject.harvest.utils.data.HttpRequester;
 
 /**
  * This class provides functions for downloading FAOSTAT JSON objects.
@@ -34,11 +40,36 @@ import de.gerdiproject.harvest.utils.HttpRequester;
  */
 public class Downloader
 {
+    /**
+     * Event callback for harvester parameter changes.
+     * Sets the language or version of the download URLs.
+     */
+    private final Consumer<HarvesterParameterChangedEvent> onParameterChanged =
+    (HarvesterParameterChangedEvent event) -> {
+        AbstractParameter<?> param = event.getParameter();
+
+        if (param.getKey().equals(ParameterConstants.LANGUAGE_KEY))
+            setLanguage(param.getValue().toString());
+
+
+        if (param.getKey().equals(ParameterConstants.VERSION_KEY))
+            setVersion(param.getValue().toString());
+    };
+
     private String version;
     private String language;
     private String domainCode;
     private String baseUrl;
     private final HttpRequester httpRequester = new HttpRequester();
+
+
+    /**
+     * Constructor that registers an event listener for harvester parameter changes.
+     */
+    public Downloader()
+    {
+        EventSystem.addListener(HarvesterParameterChangedEvent.class, onParameterChanged);
+    }
 
 
     /**

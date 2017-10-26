@@ -20,6 +20,7 @@ package de.gerdiproject.harvest.harvester;
 
 import de.gerdiproject.harvest.IDocument;
 import de.gerdiproject.harvest.fao.constants.DataCiteConstants;
+import de.gerdiproject.harvest.fao.constants.ParameterConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse;
@@ -45,12 +46,6 @@ import java.util.List;
  */
 public class FaoStatHarvester extends AbstractListHarvester<Domain>
 {
-    private final static String PROPERTY_VERSION = "version";
-    private final static String PROPERTY_LANGUAGE = "language";
-    private final static String DEFAULT_VERSION = "v1";
-    private final static String DEFAULT_LANGUAGE = "en";
-    private final static List<String> VALID_PARAMS = Arrays.asList(PROPERTY_VERSION, PROPERTY_LANGUAGE);
-
     private final Downloader downloader;
 
 
@@ -62,17 +57,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     {
         // only one document is created per harvested entry
         super(1);
-
         downloader = new Downloader();
-        setProperty(PROPERTY_VERSION, DEFAULT_VERSION);
-        setProperty(PROPERTY_LANGUAGE, DEFAULT_LANGUAGE);
-    }
-
-
-    @Override
-    public List<String> getValidProperties()
-    {
-        return VALID_PARAMS;
     }
 
 
@@ -85,23 +70,10 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
 
 
     @Override
-    public void setProperty(String key, String value)
-    {
-        super.setProperty(key, value);
-
-        if (key.equals(PROPERTY_VERSION))
-            downloader.setVersion(value);
-
-        if (key.equals(PROPERTY_LANGUAGE))
-            downloader.setLanguage(value);
-    }
-
-
-    @Override
     protected List<IDocument> harvestEntry(Domain domain)
     {
-        String language = getProperty(PROPERTY_LANGUAGE);
-        String version = getProperty(PROPERTY_VERSION);
+        String language = getProperty(ParameterConstants.LANGUAGE_KEY);
+        String version = getProperty(ParameterConstants.VERSION_KEY);
 
         // get the domainCode, an identifier that is used FAOStat-internally
         String domainCode = domain.getDomain_code();

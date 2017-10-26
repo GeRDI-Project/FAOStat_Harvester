@@ -18,7 +18,14 @@
  */
 package de.gerdiproject.harvest;
 
+import de.gerdiproject.harvest.config.parameters.AbstractParameter;
+import de.gerdiproject.harvest.config.parameters.StringParameter;
+import de.gerdiproject.harvest.fao.constants.ParameterConstants;
 import de.gerdiproject.harvest.harvester.FaoStatHarvester;
+
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.annotation.WebListener;
 
 /**
@@ -29,5 +36,12 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class FaoStatContextListener extends ContextListener<FaoStatHarvester>
 {
-    // nothing to do here. No special adapters are needed to parse FAOSTAT JSON objects
+    @Override
+    protected List<AbstractParameter<?>> getHarvesterSpecificParameters()
+    {
+        StringParameter versionParam = new StringParameter(ParameterConstants.VERSION_KEY, ParameterConstants.VERSION_DEFAULT);
+        StringParameter languageParam = new StringParameter(ParameterConstants.LANGUAGE_KEY, ParameterConstants.LANGUAGE_DEFAULT);
+
+        return Arrays.asList(versionParam, languageParam);
+    }
 }
