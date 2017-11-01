@@ -23,8 +23,8 @@ import java.util.function.Consumer;
 import de.gerdiproject.harvest.config.events.HarvesterParameterChangedEvent;
 import de.gerdiproject.harvest.config.parameters.AbstractParameter;
 import de.gerdiproject.harvest.event.EventSystem;
-import de.gerdiproject.harvest.fao.constants.DownloaderConstants;
-import de.gerdiproject.harvest.fao.constants.ParameterConstants;
+import de.gerdiproject.harvest.fao.constants.FaoDownloaderConstants;
+import de.gerdiproject.harvest.fao.constants.FaoParameterConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse;
@@ -40,6 +40,13 @@ import de.gerdiproject.harvest.utils.data.HttpRequester;
  */
 public class Downloader
 {
+    private String version;
+    private String language;
+    private String domainCode;
+    private String baseUrl;
+    private final HttpRequester httpRequester = new HttpRequester();
+
+
     /**
      * Event callback for harvester parameter changes.
      * Sets the language or version of the download URLs.
@@ -48,19 +55,13 @@ public class Downloader
     (HarvesterParameterChangedEvent event) -> {
         AbstractParameter<?> param = event.getParameter();
 
-        if (param.getKey().equals(ParameterConstants.LANGUAGE_KEY))
+        if (param.getKey().equals(FaoParameterConstants.LANGUAGE_KEY))
             setLanguage(param.getValue().toString());
 
 
-        if (param.getKey().equals(ParameterConstants.VERSION_KEY))
+        if (param.getKey().equals(FaoParameterConstants.VERSION_KEY))
             setVersion(param.getValue().toString());
     };
-
-    private String version;
-    private String language;
-    private String domainCode;
-    private String baseUrl;
-    private final HttpRequester httpRequester = new HttpRequester();
 
 
     /**
@@ -80,7 +81,7 @@ public class Downloader
     public void setVersion(String version)
     {
         this.version = version;
-        this.baseUrl = String.format(DownloaderConstants.BASE_URL, version, language);
+        this.baseUrl = String.format(FaoDownloaderConstants.BASE_URL, version, language);
     }
 
 
@@ -92,7 +93,7 @@ public class Downloader
     public void setLanguage(String language)
     {
         this.language = language;
-        this.baseUrl = String.format(DownloaderConstants.BASE_URL, version, language);
+        this.baseUrl = String.format(FaoDownloaderConstants.BASE_URL, version, language);
     }
 
 
@@ -114,7 +115,7 @@ public class Downloader
      */
     public DomainsResponse getDomains()
     {
-        String url = baseUrl + DownloaderConstants.GROUPS_AND_DOMAINS_URL;
+        String url = baseUrl + FaoDownloaderConstants.GROUPS_AND_DOMAINS_URL;
         DomainsResponse response = httpRequester.getObjectFromUrl(url, DomainsResponse.class);
         return response;
     }
@@ -128,7 +129,7 @@ public class Downloader
      */
     public DocumentsResponse getDocuments()
     {
-        String url = String.format(DownloaderConstants.DOCUMENTS_URL, baseUrl, domainCode);
+        String url = String.format(FaoDownloaderConstants.DOCUMENTS_URL, baseUrl, domainCode);
         DocumentsResponse response = httpRequester.getObjectFromUrl(url, DocumentsResponse.class);
         return response;
     }
@@ -142,7 +143,7 @@ public class Downloader
      */
     public BulkDownloadResponse getBulkDownloads()
     {
-        String url = String.format(DownloaderConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
+        String url = String.format(FaoDownloaderConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
         BulkDownloadResponse response = httpRequester.getObjectFromUrl(url, BulkDownloadResponse.class);
         return response;
     }
@@ -155,7 +156,7 @@ public class Downloader
      */
     public MetadataResponse getMetaData()
     {
-        String url = String.format(DownloaderConstants.METADATA_URL, baseUrl, domainCode);
+        String url = String.format(FaoDownloaderConstants.METADATA_URL, baseUrl, domainCode);
         MetadataResponse response = httpRequester.getObjectFromUrl(url, MetadataResponse.class);
         return response;
     }
@@ -169,7 +170,7 @@ public class Downloader
      */
     public DimensionsResponse getDimensions()
     {
-        String url = String.format(DownloaderConstants.DIMENSIONS_URL, baseUrl, domainCode);
+        String url = String.format(FaoDownloaderConstants.DIMENSIONS_URL, baseUrl, domainCode);
         DimensionsResponse response = httpRequester.getObjectFromUrl(url, DimensionsResponse.class);
         return response;
     }

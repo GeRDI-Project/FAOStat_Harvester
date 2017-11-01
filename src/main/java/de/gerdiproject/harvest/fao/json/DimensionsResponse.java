@@ -21,7 +21,7 @@ package de.gerdiproject.harvest.fao.json;
 
 import com.google.gson.JsonArray;
 
-import de.gerdiproject.harvest.fao.constants.DataCiteConstants;
+import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
 
 
@@ -30,7 +30,6 @@ import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
  * e.g. http://fenixservices.fao.org/faostat/api/v1/en/dimensions/QC/?full=true
  *
  * @author Robin Weiss
- *
  */
 public final class DimensionsResponse extends GenericJsonResponse<Dimension>
 {
@@ -53,7 +52,7 @@ public final class DimensionsResponse extends GenericJsonResponse<Dimension>
          */
         public String getDimensionUrl(String version, String language, String domainCode)
         {
-            return String.format(DataCiteConstants.DIMENSION_URL, version, language, href, domainCode);
+            return String.format(FaoDataCiteConstants.DIMENSION_URL, version, language, href, domainCode);
         }
 
         public String getId()

@@ -19,21 +19,22 @@
 package de.gerdiproject.harvest.fao.constants;
 
 /**
- * This static class contains constants of FAO harvesterparameters.
+ * This static class contains constants of FAO harvester parameters.
  *
  * @author Robin Weiss
  */
-public class ParameterConstants
+public class FaoParameterConstants
 {
     public static final String VERSION_KEY = "version";
     public static final String LANGUAGE_KEY = "language";
     public static final String VERSION_DEFAULT = "v1";
     public static final String LANGUAGE_DEFAULT = "en";
 
+
     /**
      * Private constructor, because this is a static class.
      */
-    private ParameterConstants()
+    private FaoParameterConstants()
     {
     }
 }

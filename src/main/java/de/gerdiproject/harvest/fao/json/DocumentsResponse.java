@@ -18,7 +18,7 @@
  */
 package de.gerdiproject.harvest.fao.json;
 
-import de.gerdiproject.harvest.fao.constants.DataCiteConstants;
+import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
 
 /**
@@ -26,7 +26,6 @@ import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
  * e.g. http://fenixservices.fao.org/faostat/api/v1/en/documents/QC/
  *
  * @author Robin Weiss
- *
  */
 public final class DocumentsResponse extends GenericJsonResponse<Document>
 {
@@ -46,7 +45,7 @@ public final class DocumentsResponse extends GenericJsonResponse<Document>
          */
         public String getDownloadPath()
         {
-            return String.format(DataCiteConstants.DOCUMENT_URL, FileName);
+            return String.format(FaoDataCiteConstants.DOCUMENT_URL, FileName);
         }
 
         public String getDomainCode()

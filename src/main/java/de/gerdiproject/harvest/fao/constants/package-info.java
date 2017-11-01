@@ -16,40 +16,11 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest.fao.json;
-
-import java.util.List;
 
 /**
- * This class represents a generic FaoSTAT JSON response.
- *
- * @param <T> the type of data, carried by the response
+ * This package contains static classes of constants concerning
+ * the FAOSTAT source data.
  *
  * @author Robin Weiss
  */
-public class GenericJsonResponse <T>
-{
-    private GenericJsonResponseMetadata metadata;
-    private List<T> data;
-
-
-    public GenericJsonResponseMetadata getMetadata()
-    {
-        return metadata;
-    }
-
-    public void setMetadata(GenericJsonResponseMetadata metadata)
-    {
-        this.metadata = metadata;
-    }
-
-    public List<T> getData()
-    {
-        return data;
-    }
-
-    public void setData(List<T> data)
-    {
-        this.data = data;
-    }
-}
+package de.gerdiproject.harvest.fao.constants;

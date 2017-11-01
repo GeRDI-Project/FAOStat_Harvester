@@ -25,7 +25,6 @@ import de.gerdiproject.harvest.fao.json.MetadataResponse.Metadata;
  * e.g. http://fenixservices.fao.org/faostat/api/v1/en/metadata/QC
  *
  * @author Robin Weiss
- *
  */
 public final class MetadataResponse extends GenericJsonResponse<Metadata>
 {

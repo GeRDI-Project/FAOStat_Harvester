@@ -20,7 +20,7 @@ package de.gerdiproject.harvest;
 
 import de.gerdiproject.harvest.config.parameters.AbstractParameter;
 import de.gerdiproject.harvest.config.parameters.StringParameter;
-import de.gerdiproject.harvest.fao.constants.ParameterConstants;
+import de.gerdiproject.harvest.fao.constants.FaoParameterConstants;
 import de.gerdiproject.harvest.harvester.FaoStatHarvester;
 
 import java.util.Arrays;
@@ -39,8 +39,8 @@ public class FaoStatContextListener extends ContextListener<FaoStatHarvester>
     @Override
     protected List<AbstractParameter<?>> getHarvesterSpecificParameters()
     {
-        StringParameter versionParam = new StringParameter(ParameterConstants.VERSION_KEY, ParameterConstants.VERSION_DEFAULT);
-        StringParameter languageParam = new StringParameter(ParameterConstants.LANGUAGE_KEY, ParameterConstants.LANGUAGE_DEFAULT);
+        StringParameter versionParam = new StringParameter(FaoParameterConstants.VERSION_KEY, FaoParameterConstants.VERSION_DEFAULT);
+        StringParameter languageParam = new StringParameter(FaoParameterConstants.LANGUAGE_KEY, FaoParameterConstants.LANGUAGE_DEFAULT);
 
         return Arrays.asList(versionParam, languageParam);
     }

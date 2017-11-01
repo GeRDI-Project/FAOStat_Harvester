@@ -25,7 +25,6 @@ import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
  * e.g. http://fenixservices.fao.org/faostat/api/v1/en/codes/years/QC/?show_lists=true
  *
  * @author Robin Weiss
- *
  */
 public final class FiltersResponse extends GenericJsonResponse<Filter>
 {

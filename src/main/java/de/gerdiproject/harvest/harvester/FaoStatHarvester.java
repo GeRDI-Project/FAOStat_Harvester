@@ -19,8 +19,8 @@
 package de.gerdiproject.harvest.harvester;
 
 import de.gerdiproject.harvest.IDocument;
-import de.gerdiproject.harvest.fao.constants.DataCiteConstants;
-import de.gerdiproject.harvest.fao.constants.ParameterConstants;
+import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
+import de.gerdiproject.harvest.fao.constants.FaoParameterConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse;
@@ -72,8 +72,8 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     @Override
     protected List<IDocument> harvestEntry(Domain domain)
     {
-        String language = getProperty(ParameterConstants.LANGUAGE_KEY);
-        String version = getProperty(ParameterConstants.VERSION_KEY);
+        String language = getProperty(FaoParameterConstants.LANGUAGE_KEY);
+        String version = getProperty(FaoParameterConstants.VERSION_KEY);
 
         // get the domainCode, an identifier that is used FAOStat-internally
         String domainCode = domain.getDomain_code();
@@ -86,9 +86,9 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
 
         document.setVersion(version);
         document.setLanguage(language);
-        document.setPublicationYear(DataCiteConstants.EARLIEST_PUBLICATION_YEAR);
-        document.setResourceType(DataCiteConstants.RESOURCE_TYPE);
-        document.setFormats(DataCiteConstants.FORMATS);
+        document.setPublicationYear(FaoDataCiteConstants.EARLIEST_PUBLICATION_YEAR);
+        document.setResourceType(FaoDataCiteConstants.RESOURCE_TYPE);
+        document.setFormats(FaoDataCiteConstants.FORMATS);
 
         // get source
         document.setSources(DomainParser.parseSource(domainCode));
@@ -119,7 +119,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         document.setContributors(DomainParser.parseContributors(metadata));
 
         // get creator
-        document.setCreators(DataCiteConstants.CREATORS);
+        document.setCreators(FaoDataCiteConstants.CREATORS);
 
         return Arrays.asList(document);
     }

@@ -22,7 +22,6 @@ package de.gerdiproject.harvest.fao.json;
  * This class represents the the metadata object, that is part of every JSON response from FaoSTAT.
  *
  * @author Robin Weiss
- *
  */
 public final class GenericJsonResponseMetadata
 {
