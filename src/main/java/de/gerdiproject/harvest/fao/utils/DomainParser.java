@@ -20,6 +20,7 @@ package de.gerdiproject.harvest.fao.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,19 +41,20 @@ import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
 import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
 import de.gerdiproject.harvest.fao.json.MetadataResponse.Metadata;
 import de.gerdiproject.json.datacite.Contributor;
-import de.gerdiproject.json.datacite.Contributor.ContributorType;
 import de.gerdiproject.json.datacite.DataCiteJson;
 import de.gerdiproject.json.datacite.Date;
-import de.gerdiproject.json.datacite.Date.DateType;
 import de.gerdiproject.json.datacite.Description;
-import de.gerdiproject.json.datacite.Description.DescriptionType;
-import de.gerdiproject.json.datacite.File;
-import de.gerdiproject.json.datacite.Source;
 import de.gerdiproject.json.datacite.Subject;
 import de.gerdiproject.json.datacite.Title;
-import de.gerdiproject.json.datacite.Title.TitleType;
-import de.gerdiproject.json.datacite.WebLink.WebLinkType;
-import de.gerdiproject.json.datacite.WebLink;
+import de.gerdiproject.json.datacite.enums.ContributorType;
+import de.gerdiproject.json.datacite.enums.DateType;
+import de.gerdiproject.json.datacite.enums.DescriptionType;
+import de.gerdiproject.json.datacite.enums.NameType;
+import de.gerdiproject.json.datacite.enums.TitleType;
+import de.gerdiproject.json.datacite.extension.ResearchData;
+import de.gerdiproject.json.datacite.extension.WebLink;
+import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
+import de.gerdiproject.json.datacite.nested.PersonName;
 
 
 /**
@@ -213,9 +215,9 @@ public class DomainParser
      *
      * @return a list of downloadable files of a domain
      */
-    public static List<File> parseFiles(BulkDownloadResponse bulkDownloads)
+    public static List<ResearchData> parseFiles(BulkDownloadResponse bulkDownloads)
     {
-        List<File> files = new LinkedList<>();
+        List<ResearchData> files = new LinkedList<>();
         List<BulkDownload> bulkList = bulkDownloads.getData();
 
         bulkList.forEach((BulkDownload bdl) -> {
@@ -223,7 +225,7 @@ public class DomainParser
             String label = bdl.getFileContent();
             String type = bdl.getFileName().substring(bdl.getFileName().lastIndexOf('.') + 1);
 
-            File file = new File(url, label);
+            ResearchData file = new ResearchData(url, label);
             file.setType(type);
 
             files.add(file);
@@ -326,23 +328,6 @@ public class DomainParser
 
 
     /**
-     * Generates a {@linkplain Source} object that leads to the FAOSTAT dataset of a specified domain.
-     *
-     * @param domainCode a unique ID of the domain of which the filter URLs are retrieved
-     *
-     * @return a source object of a domain
-     */
-    public static Source parseSource(String domainCode)
-    {
-        String viewUrl = String.format(FaoDataCiteConstants.VIEW_URL, domainCode);
-        Source source = new Source(viewUrl, FaoDataCiteConstants.PROVIDER);
-        source.setProviderURI(FaoDataCiteConstants.PROVIDER_URI);
-
-        return source;
-    }
-
-
-    /**
      * Parses a {@linkplain MetadataResponse} object, looking for a contact person and returning
      * it in a list.
      *
@@ -361,11 +346,11 @@ public class DomainParser
             if (m.getMetadata_group_code().equals("1")) {
                 switch (m.getMetadata_label()) {
                     case FaoDataCiteConstants.METADATA_CONTACT_NAME:
-                        contactPerson.setName(m.getMetadata_text());
+                        contactPerson.setName(new PersonName(m.getMetadata_text(), NameType.Personal));
                         break;
 
                     case FaoDataCiteConstants.METADATA_CONTACT_ORGANISATION:
-                        contactPerson.setAffiliation(m.getMetadata_text());
+                        contactPerson.setAffiliation(Arrays.asList(m.getMetadata_text()));
                         break;
 
                     default:

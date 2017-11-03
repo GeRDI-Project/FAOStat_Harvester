@@ -86,13 +86,14 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
 
         document.setVersion(version);
         document.setLanguage(language);
+        document.setRepositoryIdentifier(FaoDataCiteConstants.REPOSITORY_ID);
         document.setPublicationYear(FaoDataCiteConstants.EARLIEST_PUBLICATION_YEAR);
         document.setResourceType(FaoDataCiteConstants.RESOURCE_TYPE);
         document.setFormats(FaoDataCiteConstants.FORMATS);
+        document.setResearchDisciplines(FaoDataCiteConstants.DISCIPLINES);
 
         // get source
-        document.setSources(DomainParser.parseSource(domainCode));
-        document.setPublisher(document.getSources().getProvider());
+        document.setPublisher(FaoDataCiteConstants.PROVIDER);
 
         // get a readable name of the domain
         document.setTitles(DomainParser.parseTitles(domain, language));

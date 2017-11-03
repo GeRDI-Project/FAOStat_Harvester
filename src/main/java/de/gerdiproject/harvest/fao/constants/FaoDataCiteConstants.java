@@ -28,10 +28,11 @@ import java.util.regex.Pattern;
 import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.ResourceType;
-import de.gerdiproject.json.datacite.Description.DescriptionType;
-import de.gerdiproject.json.datacite.ResourceType.GeneralResourceType;
-import de.gerdiproject.json.datacite.WebLink;
-import de.gerdiproject.json.datacite.WebLink.WebLinkType;
+import de.gerdiproject.json.datacite.enums.DescriptionType;
+import de.gerdiproject.json.datacite.enums.NameType;
+import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
+import de.gerdiproject.json.datacite.extension.WebLink;
+import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
 
 /**
  * This static class contains constants that are used for creating DataCite documents of FAOSTAT.
@@ -49,6 +50,8 @@ public class FaoDataCiteConstants
     // SOURCE
     public static final String PROVIDER = "Food and Agriculture Organization of the United Nations (FAO)";
     public static final String PROVIDER_URI = "http://www.fao.org/faostat/en/#home";
+    public static final String REPOSITORY_ID = "FAOSTAT";
+    public static final List<String> DISCIPLINES = Collections.unmodifiableList(Arrays.asList("Statistics"));
 
     // CONTRIBUTORS
     public static final String METADATA_CONTACT_NAME = "Contact name";
@@ -90,6 +93,7 @@ public class FaoDataCiteConstants
 
     /**
      * Initializes a map of metadata names that contain descriptions that are relevant for documents.
+     *
      * @return a map of {@linkplain MetadataResponse} metadata_label field values
      */
     private static Map<String, DescriptionType> createRelevantDescriptions()
@@ -105,6 +109,7 @@ public class FaoDataCiteConstants
 
     /**
      * Initializes a WebLink that leads to the FAOSTAT logo.
+     *
      * @return a link to the FAOSTAT logo
      */
     private static WebLink createLogoWebLink()
@@ -117,24 +122,26 @@ public class FaoDataCiteConstants
 
     /**
      * Initializes a Creator dummy for all FAOSTAT documents.
+     *
      * @return a Creator that has "FAO" as name
      */
     private static List<Creator> createCreators()
     {
         Creator creator = new Creator(PROVIDER);
+        creator.getName().setNameType(NameType.Organisational);
+
         return Arrays.asList(creator);
     }
 
 
     /**
      * Initializes the only ResourceType of all FAOSTAT documents.
+     *
      * @return a ResourceType representing CSV datasets
      */
     private static ResourceType createResourceType()
     {
-        ResourceType resType = new ResourceType();
-        resType.setGeneralType(GeneralResourceType.Dataset);
-        resType.setValue("CSV");
+        ResourceType resType = new ResourceType("CSV", ResourceTypeGeneral.Dataset);
         return resType;
     }
 }
