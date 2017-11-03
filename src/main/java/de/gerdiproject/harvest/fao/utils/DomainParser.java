@@ -340,7 +340,7 @@ public class DomainParser
         List<Contributor> contributors = new LinkedList<>();
         List<Metadata> metadataList = metadata.getData();
 
-        Contributor contactPerson = new Contributor(null, ContributorType.ContactPerson);
+        Contributor contactPerson = new Contributor("", ContributorType.ContactPerson);
 
         for (Metadata m : metadataList) {
             if (m.getMetadata_group_code().equals("1")) {
@@ -350,7 +350,7 @@ public class DomainParser
                         break;
 
                     case FaoDataCiteConstants.METADATA_CONTACT_ORGANISATION:
-                        contactPerson.setAffiliation(Arrays.asList(m.getMetadata_text()));
+                        contactPerson.setAffiliations(Arrays.asList(m.getMetadata_text()));
                         break;
 
                     default:
@@ -359,7 +359,7 @@ public class DomainParser
             }
         }
 
-        if (contactPerson.getName() != null)
+        if (!contactPerson.getName().getValue().isEmpty())
             contributors.add(contactPerson);
 
         return contributors;

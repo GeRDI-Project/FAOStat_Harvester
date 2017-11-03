@@ -33,6 +33,7 @@ import de.gerdiproject.json.datacite.enums.NameType;
 import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
 import de.gerdiproject.json.datacite.extension.WebLink;
 import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
+import de.gerdiproject.json.datacite.nested.PersonName;
 
 /**
  * This static class contains constants that are used for creating DataCite documents of FAOSTAT.
@@ -127,9 +128,7 @@ public class FaoDataCiteConstants
      */
     private static List<Creator> createCreators()
     {
-        Creator creator = new Creator(PROVIDER);
-        creator.getName().setNameType(NameType.Organisational);
-
+        Creator creator = new Creator(new PersonName(PROVIDER, NameType.Organisational));
         return Arrays.asList(creator);
     }
 
