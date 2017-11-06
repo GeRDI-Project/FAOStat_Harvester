@@ -27,7 +27,7 @@ import java.util.regex.Matcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.gerdiproject.harvest.fao.constants.DataCiteConstants;
+import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse;
@@ -68,6 +68,14 @@ public class DomainParser
 
 
     /**
+     * Private Constructor, because this is a static class.
+     */
+    private DomainParser()
+    {
+    }
+
+
+    /**
      * Parses a {@linkplain MetadataResponse} object, looking for relevant descriptions and returning
      * them in a list.
      *
@@ -84,17 +92,16 @@ public class DomainParser
 
         metadataList.forEach((Metadata m) -> {
             String label = m.getMetadata_label();
-            DescriptionType type = DataCiteConstants.RELEVANT_DESCRIPTIONS.get(label);
+            DescriptionType type = FaoDataCiteConstants.RELEVANT_DESCRIPTIONS.get(label);
 
             if (type != null)
             {
-                String descriptionText = String.format(DataCiteConstants.DESCRIPTION_FORMAT, label, m.getMetadata_text());
+                String descriptionText = String.format(FaoDataCiteConstants.DESCRIPTION_FORMAT, label, m.getMetadata_text());
                 Description desc = new Description(descriptionText, type);
                 desc.setLang(language);
                 descriptions.add(desc);
             }
         });
-
         return descriptions;
     }
 
@@ -105,6 +112,7 @@ public class DomainParser
      *
      * @param metadata the domain metadata that is to be parsed
      * @param language the language that is set for harvesting FAOSTAT
+     *
      * @return a list of dates of a domain
      */
     public static List<Date> parseDates(MetadataResponse metadata, String language)
@@ -116,10 +124,13 @@ public class DomainParser
         metadataList.forEach((Metadata m) -> {
             String dateText = m.getMetadata_text();
 
+            if (dateText == null || dateText.isEmpty())
+                return; // skip this date and go to the next
+
             switch (m.getMetadata_label())
             {
-                case DataCiteConstants.META_DATA_TIME_COVERAGE:
-                    Matcher matcher = DataCiteConstants.TIME_COVERAGE_PATTERN.matcher(dateText);
+                case FaoDataCiteConstants.META_DATA_TIME_COVERAGE:
+                    Matcher matcher = FaoDataCiteConstants.TIME_COVERAGE_PATTERN.matcher(dateText);
 
                     try {
                         // retrieve first date from text
@@ -146,19 +157,19 @@ public class DomainParser
                         // TODO: find a way to accept date ranges in ES
 
                     } catch (IllegalStateException | NumberFormatException e) {
-                        LOGGER.warn(String.format(DataCiteConstants.DATE_PARSE_ERROR, dateText));
+                        LOGGER.warn(String.format(FaoDataCiteConstants.DATE_PARSE_ERROR, dateText));
                     }
 
                     break;
 
-                case DataCiteConstants.META_DATA_LAST_UPDATE:
+                case FaoDataCiteConstants.META_DATA_LAST_UPDATE:
                     try {
                         // parse update date (e.g. "Nov. 2015")
                         Date lastUpdate = new Date(UPDATE_DATE_FORMAT.parse(dateText), DateType.Updated);
 
                         dates.add(lastUpdate);
                     } catch (ParseException e) { // NOPMD - if the update cannot be parsed, we simply cannot add it
-                        LOGGER.warn(String.format(DataCiteConstants.DATE_PARSE_ERROR, dateText));
+                        LOGGER.warn(String.format(FaoDataCiteConstants.DATE_PARSE_ERROR, dateText));
                     }
 
                     break;
@@ -237,19 +248,19 @@ public class DomainParser
         List<Document> documentList = documents.getData();
 
         // add view url
-        String viewUrl = String.format(DataCiteConstants.VIEW_URL, domain.getDomain_code());
+        String viewUrl = String.format(FaoDataCiteConstants.VIEW_URL, domain.getDomain_code());
         WebLink viewLink = new WebLink(viewUrl);
         viewLink.setName(domain.getDomain_name());
         viewLink.setType(WebLinkType.ViewURL);
         webLinks.add(viewLink);
 
         // add logo url
-        webLinks.add(DataCiteConstants.LOGO_WEB_LINK);
+        webLinks.add(FaoDataCiteConstants.LOGO_WEB_LINK);
 
         // add related documents
         documentList.forEach((Document d) -> {
             // filter out the dummy document
-            if (!d.getFileTitle().equals(DataCiteConstants.TEMPLATE_DOCUMENT_NAME))
+            if (!d.getFileTitle().equals(FaoDataCiteConstants.TEMPLATE_DOCUMENT_NAME))
             {
                 WebLink link = new WebLink(d.getDownloadPath());
                 link.setName(d.getFileTitle());
@@ -323,9 +334,10 @@ public class DomainParser
      */
     public static Source parseSource(String domainCode)
     {
-        String viewUrl = String.format(DataCiteConstants.VIEW_URL, domainCode);
-        Source source = new Source(viewUrl, DataCiteConstants.PROVIDER);
-        source.setProviderURI(DataCiteConstants.PROVIDER_URI);
+        String viewUrl = String.format(FaoDataCiteConstants.VIEW_URL, domainCode);
+        Source source = new Source(viewUrl, FaoDataCiteConstants.PROVIDER);
+        source.setProviderURI(FaoDataCiteConstants.PROVIDER_URI);
+
         return source;
     }
 
@@ -348,11 +360,11 @@ public class DomainParser
         for (Metadata m : metadataList) {
             if (m.getMetadata_group_code().equals("1")) {
                 switch (m.getMetadata_label()) {
-                    case DataCiteConstants.METADATA_CONTACT_NAME:
+                    case FaoDataCiteConstants.METADATA_CONTACT_NAME:
                         contactPerson.setName(m.getMetadata_text());
                         break;
 
-                    case DataCiteConstants.METADATA_CONTACT_ORGANISATION:
+                    case FaoDataCiteConstants.METADATA_CONTACT_ORGANISATION:
                         contactPerson.setAffiliation(m.getMetadata_text());
                         break;
 
@@ -366,12 +378,5 @@ public class DomainParser
             contributors.add(contactPerson);
 
         return contributors;
-    }
-
-    /**
-     * Private Constructor, because this is a static class.
-     */
-    private DomainParser()
-    {
     }
 }

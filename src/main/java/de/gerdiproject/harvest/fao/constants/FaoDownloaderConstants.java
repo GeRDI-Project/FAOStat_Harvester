@@ -23,7 +23,7 @@ package de.gerdiproject.harvest.fao.constants;
  *
  * @author Robin Weiss
  */
-public class DownloaderConstants
+public class FaoDownloaderConstants
 {
     public static final String BASE_URL = "http://fenixservices.fao.org/faostat/api/%s/%s/";
     public static final String GROUPS_AND_DOMAINS_URL = "groupsanddomains?section=download";
@@ -36,7 +36,7 @@ public class DownloaderConstants
     /**
      * Private constructor, because this is a static class.
      */
-    private DownloaderConstants()
+    private FaoDownloaderConstants()
     {
     }
 }

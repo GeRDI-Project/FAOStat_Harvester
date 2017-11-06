@@ -25,7 +25,6 @@ import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
  * http://fenixservices.fao.org/faostat/api/v1/en/groupsanddomains?section=download
  *
  * @author Robin Weiss
- *
  */
 public final class DomainsResponse extends GenericJsonResponse<Domain>
 {

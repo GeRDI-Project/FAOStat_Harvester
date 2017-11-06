@@ -38,7 +38,7 @@ import de.gerdiproject.json.datacite.WebLink.WebLinkType;
  *
  * @author Robin Weiss
  */
-public class DataCiteConstants
+public class FaoDataCiteConstants
 {
     // RESOURCE TYPE
     public static final ResourceType RESOURCE_TYPE = createResourceType();
@@ -78,6 +78,15 @@ public class DataCiteConstants
 
     // DIMENSIONS
     public static final String DIMENSION_URL = "http://fenixservices.fao.org/faostat/api/%s/%s%s%s/?show_lists=true";
+
+
+    /**
+     * Private constructor, because this is a static class.
+     */
+    private FaoDataCiteConstants()
+    {
+    }
+
 
     /**
      * Initializes a map of metadata names that contain descriptions that are relevant for documents.
@@ -127,12 +136,5 @@ public class DataCiteConstants
         resType.setGeneralType(GeneralResourceType.Dataset);
         resType.setValue("CSV");
         return resType;
-    }
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private DataCiteConstants()
-    {
     }
 }

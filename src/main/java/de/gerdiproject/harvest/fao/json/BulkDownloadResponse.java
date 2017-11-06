@@ -25,7 +25,6 @@ import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
  * e.g. http://fenixservices.fao.org/faostat/api/v1/en/bulkdownloads/QC/
  *
  * @author Robin Weiss
- *
  */
 public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload>
 {
