@@ -100,7 +100,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
 
         // get bulk-download URL
         BulkDownloadResponse bulkDownloads = downloader.getBulkDownloads();
-        document.setFiles(DomainParser.parseFiles(bulkDownloads));
+        document.setResearchDataList(DomainParser.parseFiles(bulkDownloads));
 
         // get description
         MetadataResponse metadata = downloader.getMetaData();
