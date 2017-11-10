@@ -28,10 +28,12 @@ import java.util.regex.Pattern;
 import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.ResourceType;
-import de.gerdiproject.json.datacite.Description.DescriptionType;
-import de.gerdiproject.json.datacite.ResourceType.GeneralResourceType;
-import de.gerdiproject.json.datacite.WebLink;
-import de.gerdiproject.json.datacite.WebLink.WebLinkType;
+import de.gerdiproject.json.datacite.enums.DescriptionType;
+import de.gerdiproject.json.datacite.enums.NameType;
+import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
+import de.gerdiproject.json.datacite.extension.WebLink;
+import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
+import de.gerdiproject.json.datacite.nested.PersonName;
 
 /**
  * This static class contains constants that are used for creating DataCite documents of FAOSTAT.
@@ -49,6 +51,8 @@ public class FaoDataCiteConstants
     // SOURCE
     public static final String PROVIDER = "Food and Agriculture Organization of the United Nations (FAO)";
     public static final String PROVIDER_URI = "http://www.fao.org/faostat/en/#home";
+    public static final String REPOSITORY_ID = "FAOSTAT";
+    public static final List<String> DISCIPLINES = Collections.unmodifiableList(Arrays.asList("Statistics"));
 
     // CONTRIBUTORS
     public static final String METADATA_CONTACT_NAME = "Contact name";
@@ -63,7 +67,7 @@ public class FaoDataCiteConstants
     // DATES
     public static final String META_DATA_TIME_COVERAGE = "Time coverage";
     public static final String META_DATA_LAST_UPDATE = "Metadata last update";
-    public static final Pattern TIME_COVERAGE_PATTERN = Pattern.compile("(\\d\\d\\d\\d)");
+    public static final Pattern TIME_COVERAGE_PATTERN = Pattern.compile("\\D+(\\d\\d\\d\\d)\\D(\\d\\d\\d\\d)[\\d\\D]+$");
     public static final String DATE_PARSE_ERROR = "Could not parse date: %s";
 
     // DESCRIPTIONS
@@ -90,6 +94,7 @@ public class FaoDataCiteConstants
 
     /**
      * Initializes a map of metadata names that contain descriptions that are relevant for documents.
+     *
      * @return a map of {@linkplain MetadataResponse} metadata_label field values
      */
     private static Map<String, DescriptionType> createRelevantDescriptions()
@@ -105,6 +110,7 @@ public class FaoDataCiteConstants
 
     /**
      * Initializes a WebLink that leads to the FAOSTAT logo.
+     *
      * @return a link to the FAOSTAT logo
      */
     private static WebLink createLogoWebLink()
@@ -117,24 +123,24 @@ public class FaoDataCiteConstants
 
     /**
      * Initializes a Creator dummy for all FAOSTAT documents.
+     *
      * @return a Creator that has "FAO" as name
      */
     private static List<Creator> createCreators()
     {
-        Creator creator = new Creator(PROVIDER);
+        Creator creator = new Creator(new PersonName(PROVIDER, NameType.Organisational));
         return Arrays.asList(creator);
     }
 
 
     /**
      * Initializes the only ResourceType of all FAOSTAT documents.
+     *
      * @return a ResourceType representing CSV datasets
      */
     private static ResourceType createResourceType()
     {
-        ResourceType resType = new ResourceType();
-        resType.setGeneralType(GeneralResourceType.Dataset);
-        resType.setValue("CSV");
+        ResourceType resType = new ResourceType("CSV", ResourceTypeGeneral.Dataset);
         return resType;
     }
 }

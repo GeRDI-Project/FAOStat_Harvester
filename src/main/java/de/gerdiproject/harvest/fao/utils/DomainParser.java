@@ -18,14 +18,10 @@
  */
 package de.gerdiproject.harvest.fao.utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
@@ -40,19 +36,22 @@ import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
 import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
 import de.gerdiproject.harvest.fao.json.MetadataResponse.Metadata;
 import de.gerdiproject.json.datacite.Contributor;
-import de.gerdiproject.json.datacite.Contributor.ContributorType;
 import de.gerdiproject.json.datacite.DataCiteJson;
 import de.gerdiproject.json.datacite.Date;
-import de.gerdiproject.json.datacite.Date.DateType;
+import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.Description;
-import de.gerdiproject.json.datacite.Description.DescriptionType;
-import de.gerdiproject.json.datacite.File;
-import de.gerdiproject.json.datacite.Source;
 import de.gerdiproject.json.datacite.Subject;
 import de.gerdiproject.json.datacite.Title;
-import de.gerdiproject.json.datacite.Title.TitleType;
-import de.gerdiproject.json.datacite.WebLink.WebLinkType;
-import de.gerdiproject.json.datacite.WebLink;
+import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.enums.ContributorType;
+import de.gerdiproject.json.datacite.enums.DateType;
+import de.gerdiproject.json.datacite.enums.DescriptionType;
+import de.gerdiproject.json.datacite.enums.NameType;
+import de.gerdiproject.json.datacite.enums.TitleType;
+import de.gerdiproject.json.datacite.extension.ResearchData;
+import de.gerdiproject.json.datacite.extension.WebLink;
+import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
+import de.gerdiproject.json.datacite.nested.PersonName;
 
 
 /**
@@ -63,10 +62,6 @@ import de.gerdiproject.json.datacite.WebLink;
  */
 public class DomainParser
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DomainParser.class);
-    private static final SimpleDateFormat UPDATE_DATE_FORMAT = new SimpleDateFormat("MMM.' 'yyyy");
-
-
     /**
      * Private Constructor, because this is a static class.
      */
@@ -115,9 +110,9 @@ public class DomainParser
      *
      * @return a list of dates of a domain
      */
-    public static List<Date> parseDates(MetadataResponse metadata, String language)
+    public static List<AbstractDate> parseDates(MetadataResponse metadata, String language)
     {
-        List<Date> dates = new LinkedList<>();
+        List<AbstractDate> dates = new LinkedList<>();
 
         List<Metadata> metadataList = metadata.getData();
 
@@ -132,46 +127,19 @@ public class DomainParser
                 case FaoDataCiteConstants.META_DATA_TIME_COVERAGE:
                     Matcher matcher = FaoDataCiteConstants.TIME_COVERAGE_PATTERN.matcher(dateText);
 
-                    try {
-                        // retrieve first date from text
-                        matcher.find();
-                        int from = Integer.parseInt(matcher.group());
-
-                        // retrieve second date from text
-                        matcher.find();
-                        int to = Integer.parseInt(matcher.group());
-
-                        // convert years to dates
-                        Calendar cal = Calendar.getInstance();
-
-                        cal.set(from, 0, 1);
-                        Date timeCoverageFrom = new Date(cal, DateType.Collected);
-
-                        cal.set(to, 0, 1);
-                        Date timeCoverageTo = new Date(cal, DateType.Collected);
-
-                        // add dates to list
-                        dates.add(timeCoverageFrom);
-                        dates.add(timeCoverageTo);
-
-                        // TODO: find a way to accept date ranges in ES
-
-                    } catch (IllegalStateException | NumberFormatException e) {
-                        LOGGER.warn(String.format(FaoDataCiteConstants.DATE_PARSE_ERROR, dateText));
-                    }
+                    // check if it is a date range
+                    if (matcher.find()) {
+                        String startYear = matcher.group(1);
+                        String endYear = matcher.group(2);
+                        dates.add(new DateRange(startYear, endYear, DateType.Other));
+                    } else
+                        dates.add(new Date(dateText, DateType.Other));
 
                     break;
 
                 case FaoDataCiteConstants.META_DATA_LAST_UPDATE:
-                    try {
-                        // parse update date (e.g. "Nov. 2015")
-                        Date lastUpdate = new Date(UPDATE_DATE_FORMAT.parse(dateText), DateType.Updated);
-
-                        dates.add(lastUpdate);
-                    } catch (ParseException e) { // NOPMD - if the update cannot be parsed, we simply cannot add it
-                        LOGGER.warn(String.format(FaoDataCiteConstants.DATE_PARSE_ERROR, dateText));
-                    }
-
+                    Date lastUpdate = new Date(dateText, DateType.Updated);
+                    dates.add(lastUpdate);
                     break;
             }
         });
@@ -213,9 +181,9 @@ public class DomainParser
      *
      * @return a list of downloadable files of a domain
      */
-    public static List<File> parseFiles(BulkDownloadResponse bulkDownloads)
+    public static List<ResearchData> parseFiles(BulkDownloadResponse bulkDownloads)
     {
-        List<File> files = new LinkedList<>();
+        List<ResearchData> files = new LinkedList<>();
         List<BulkDownload> bulkList = bulkDownloads.getData();
 
         bulkList.forEach((BulkDownload bdl) -> {
@@ -223,7 +191,7 @@ public class DomainParser
             String label = bdl.getFileContent();
             String type = bdl.getFileName().substring(bdl.getFileName().lastIndexOf('.') + 1);
 
-            File file = new File(url, label);
+            ResearchData file = new ResearchData(url, label);
             file.setType(type);
 
             files.add(file);
@@ -326,23 +294,6 @@ public class DomainParser
 
 
     /**
-     * Generates a {@linkplain Source} object that leads to the FAOSTAT dataset of a specified domain.
-     *
-     * @param domainCode a unique ID of the domain of which the filter URLs are retrieved
-     *
-     * @return a source object of a domain
-     */
-    public static Source parseSource(String domainCode)
-    {
-        String viewUrl = String.format(FaoDataCiteConstants.VIEW_URL, domainCode);
-        Source source = new Source(viewUrl, FaoDataCiteConstants.PROVIDER);
-        source.setProviderURI(FaoDataCiteConstants.PROVIDER_URI);
-
-        return source;
-    }
-
-
-    /**
      * Parses a {@linkplain MetadataResponse} object, looking for a contact person and returning
      * it in a list.
      *
@@ -355,17 +306,17 @@ public class DomainParser
         List<Contributor> contributors = new LinkedList<>();
         List<Metadata> metadataList = metadata.getData();
 
-        Contributor contactPerson = new Contributor(null, ContributorType.ContactPerson);
+        Contributor contactPerson = new Contributor("", ContributorType.ContactPerson);
 
         for (Metadata m : metadataList) {
             if (m.getMetadata_group_code().equals("1")) {
                 switch (m.getMetadata_label()) {
                     case FaoDataCiteConstants.METADATA_CONTACT_NAME:
-                        contactPerson.setName(m.getMetadata_text());
+                        contactPerson.setName(new PersonName(m.getMetadata_text(), NameType.Personal));
                         break;
 
                     case FaoDataCiteConstants.METADATA_CONTACT_ORGANISATION:
-                        contactPerson.setAffiliation(m.getMetadata_text());
+                        contactPerson.setAffiliations(Arrays.asList(m.getMetadata_text()));
                         break;
 
                     default:
@@ -374,7 +325,7 @@ public class DomainParser
             }
         }
 
-        if (contactPerson.getName() != null)
+        if (!contactPerson.getName().getValue().isEmpty())
             contributors.add(contactPerson);
 
         return contributors;
