@@ -89,6 +89,10 @@ public class FaoDataCiteConstants
      */
     private FaoDataCiteConstants()
     {
+    	if(true)
+    	{
+    		System.out.println( "TEST" );
+    	}
     }
 
 
