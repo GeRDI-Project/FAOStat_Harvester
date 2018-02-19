@@ -25,13 +25,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.ResourceType;
 import de.gerdiproject.json.datacite.enums.DescriptionType;
 import de.gerdiproject.json.datacite.enums.NameType;
 import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
 import de.gerdiproject.json.datacite.extension.WebLink;
+import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
+import de.gerdiproject.json.datacite.extension.constants.ResearchDisciplineConstants;
 import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
 import de.gerdiproject.json.datacite.nested.PersonName;
 
@@ -52,7 +53,7 @@ public class FaoDataCiteConstants
     public static final String PROVIDER = "Food and Agriculture Organization of the United Nations (FAO)";
     public static final String PROVIDER_URI = "http://www.fao.org/faostat/en/#home";
     public static final String REPOSITORY_ID = "FAOSTAT";
-    public static final List<String> DISCIPLINES = Collections.unmodifiableList(Arrays.asList("Statistics"));
+    public static final List<AbstractResearch> DISCIPLINES = createResearchDisciplines();
 
     // CONTRIBUTORS
     public static final String METADATA_CONTACT_NAME = "Contact name";
@@ -89,6 +90,19 @@ public class FaoDataCiteConstants
      */
     private FaoDataCiteConstants()
     {
+    }
+
+
+    /**
+     * @return
+     */
+    private static List<AbstractResearch> createResearchDisciplines()
+    {
+        return Collections.unmodifiableList(Arrays.asList(
+                                                ResearchDisciplineConstants.AGRICULTURAL_ECONOMICS_AND_SOCIOLOGY,
+                                                ResearchDisciplineConstants.STATISTICS_AND_ECONOMETRICS,
+                                                ResearchDisciplineConstants.ECOLOGY_OF_AGRICULTURAL_LANDSCAPES
+                                            ));
     }
 
 
