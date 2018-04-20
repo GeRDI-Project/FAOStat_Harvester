@@ -17,6 +17,7 @@ package de.gerdiproject.harvest.fao.json;
 
 import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
+import de.gerdiproject.harvest.harvester.AbstractListHarvester;
 
 /**
  * This class represents the JSON response of a FaoSTAT groups and domains
@@ -187,6 +188,11 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
+        /**
+         * The string is only used to uniquely identify the domain inside a list
+         * to guarantee proper functionality of the
+         * {@linkplain AbstractListHarvester}'s initHash() function.
+         */
         @Override
         public String toString()
         {
