@@ -15,10 +15,13 @@
  */
 package de.gerdiproject.harvest.fao.json;
 
+import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
+import de.gerdiproject.harvest.harvester.AbstractListHarvester;
 
 /**
- * This class represents the JSON response of a FaoSTAT groups and domains request.
+ * This class represents the JSON response of a FaoSTAT groups and domains
+ * request.
  * http://fenixservices.fao.org/faostat/api/v1/en/groupsanddomains?section=download
  *
  * @author Robin Weiss
@@ -46,119 +49,171 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
             return group_code;
         }
 
+
         public void setGroup_code(String group_code)
         {
             this.group_code = group_code;
         }
+
 
         public String getGroup_name()
         {
             return group_name;
         }
 
+
         public void setGroup_name(String group_name)
         {
             this.group_name = group_name;
         }
+
 
         public String getDomain_code()
         {
             return domain_code;
         }
 
+
         public void setDomain_code(String domain_code)
         {
             this.domain_code = domain_code;
         }
+
 
         public String getDomain_name()
         {
             return domain_name;
         }
 
+
         public void setDomain_name(String domain_name)
         {
             this.domain_name = domain_name;
         }
+
 
         public String getDate_update()
         {
             return date_update;
         }
 
+
         public void setDate_update(String date_update)
         {
             this.date_update = date_update;
         }
+
 
         public String getNote_update()
         {
             return note_update;
         }
 
+
         public void setNote_update(String note_update)
         {
             this.note_update = note_update;
         }
+
 
         public String getRelease_current()
         {
             return release_current;
         }
 
+
         public void setRelease_current(String release_current)
         {
             this.release_current = release_current;
         }
+
 
         public String getState_current()
         {
             return state_current;
         }
 
+
         public void setState_current(String state_current)
         {
             this.state_current = state_current;
         }
+
 
         public String getYear_current()
         {
             return year_current;
         }
 
+
         public void setYear_current(String year_current)
         {
             this.year_current = year_current;
         }
+
 
         public String getRelease_next()
         {
             return release_next;
         }
 
+
         public void setRelease_next(String release_next)
         {
             this.release_next = release_next;
         }
+
 
         public String getState_next()
         {
             return state_next;
         }
 
+
         public void setState_next(String state_next)
         {
             this.state_next = state_next;
         }
+
 
         public String getYear_next()
         {
             return year_next;
         }
 
+
         public void setYear_next(String year_next)
         {
             this.year_next = year_next;
+        }
+
+
+        /**
+         * The string is only used to uniquely identify the domain inside a list
+         * to guarantee proper functionality of the
+         * {@linkplain AbstractListHarvester}'s initHash() function.
+         */
+        @Override
+        public String toString()
+        {
+            return group_code + domain_code + date_update;
+        }
+
+
+        /**
+         * Creates a unique identifier of this domain within FAOSTAT.
+         *
+         * @param language the language that is harvested
+         *
+         * @return a unique identifier of this domain within FAOSTAT
+         */
+        public String createIdentifier(String language)
+        {
+            return String.format(
+                       FaoDataCiteConstants.SOURCE_ID,
+                       group_code,
+                       domain_code,
+                       language);
         }
     }
 }
