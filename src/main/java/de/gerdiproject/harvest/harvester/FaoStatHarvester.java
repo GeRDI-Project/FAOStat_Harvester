@@ -15,6 +15,11 @@
  */
 package de.gerdiproject.harvest.harvester;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 import de.gerdiproject.harvest.IDocument;
 import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.constants.FaoParameterConstants;
@@ -22,18 +27,13 @@ import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse;
 import de.gerdiproject.harvest.fao.json.DomainsResponse;
+import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
 import de.gerdiproject.harvest.fao.json.FiltersResponse;
 import de.gerdiproject.harvest.fao.json.MetadataResponse;
-import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
 import de.gerdiproject.harvest.fao.utils.DomainParser;
-import de.gerdiproject.harvest.fao.utils.Downloader;
+import de.gerdiproject.harvest.fao.utils.FaoStatDownloader;
 import de.gerdiproject.json.datacite.DataCiteJson;
 import de.gerdiproject.json.datacite.Subject;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 
 /**
@@ -43,7 +43,7 @@ import java.util.List;
  */
 public class FaoStatHarvester extends AbstractListHarvester<Domain>
 {
-    private final Downloader downloader;
+    private final FaoStatDownloader downloader;
 
 
     /**
@@ -54,7 +54,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
     {
         // only one document is created per harvested entry
         super(1);
-        downloader = new Downloader();
+        downloader = new FaoStatDownloader();
     }
 
 
@@ -79,7 +79,7 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
         downloader.setDomainCode(domainCode);
 
         // create the document
-        DataCiteJson document = new DataCiteJson();
+        DataCiteJson document = new DataCiteJson(domain.createIdentifier(language));
 
         document.setVersion(version);
         document.setLanguage(language);
@@ -124,10 +124,12 @@ public class FaoStatHarvester extends AbstractListHarvester<Domain>
 
 
     /**
-     * Iterates through a list of so called dimensions of a domain. Dimensions are filter categories
-     * for the dataset. Each dimension contains an array of filter strings that are converted to subjects.
+     * Iterates through a list of so called dimensions of a domain. Dimensions
+     * are filter categories for the dataset. Each dimension contains an array
+     * of filter strings that are converted to subjects.
      *
-     * @param domainCode the domainCode of the domain for which the subjects are harvested
+     * @param domainCode the domainCode of the domain for which the subjects are
+     *            harvested
      * @param version the version of FAOSTAT that is to be harvested
      * @param language the language for which the subjects are retrieved
      *

@@ -35,7 +35,7 @@ import de.gerdiproject.harvest.utils.data.HttpRequester;
  *
  * @author Robin Weiss
  */
-public class Downloader
+public class FaoStatDownloader
 {
     private String version;
     private String language;
@@ -64,7 +64,7 @@ public class Downloader
     /**
      * Constructor that registers an event listener for harvester parameter changes.
      */
-    public Downloader()
+    public FaoStatDownloader()
     {
         EventSystem.addListener(HarvesterParameterChangedEvent.class, onParameterChanged);
     }

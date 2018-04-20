@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.ResourceType;
 import de.gerdiproject.json.datacite.enums.DescriptionType;
@@ -34,12 +35,17 @@ import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
 import de.gerdiproject.json.datacite.nested.PersonName;
 
 /**
- * This static class contains constants that are used for creating DataCite documents of FAOSTAT.
+ * This static class contains constants that are used for creating DataCite
+ * documents of FAOSTAT.
  *
  * @author Robin Weiss
  */
 public class FaoDataCiteConstants
 {
+    // source id
+    public static final String SOURCE_ID = "%s_%s_%s";
+
+
     // RESOURCE TYPE
     public static final ResourceType RESOURCE_TYPE = createResourceType();
 
@@ -65,7 +71,8 @@ public class FaoDataCiteConstants
     // DATES
     public static final String META_DATA_TIME_COVERAGE = "Time coverage";
     public static final String META_DATA_LAST_UPDATE = "Metadata last update";
-    public static final Pattern TIME_COVERAGE_PATTERN = Pattern.compile("\\D+(\\d\\d\\d\\d)\\D(\\d\\d\\d\\d)[\\d\\D]+$");
+    public static final Pattern TIME_COVERAGE_PATTERN =
+        Pattern.compile("\\D+(\\d\\d\\d\\d)\\D(\\d\\d\\d\\d)[\\d\\D]+$");
     public static final String DATE_PARSE_ERROR = "Could not parse date: %s";
 
     // DESCRIPTIONS
@@ -95,18 +102,20 @@ public class FaoDataCiteConstants
      */
     private static List<AbstractResearch> createResearchDisciplines()
     {
-        return Collections.unmodifiableList(Arrays.asList(
-                                                ResearchDisciplineConstants.AGRICULTURAL_ECONOMICS_AND_SOCIOLOGY,
-                                                ResearchDisciplineConstants.STATISTICS_AND_ECONOMETRICS,
-                                                ResearchDisciplineConstants.ECOLOGY_OF_AGRICULTURAL_LANDSCAPES
-                                            ));
+        return Collections.unmodifiableList(
+                   Arrays.asList(
+                       ResearchDisciplineConstants.AGRICULTURAL_ECONOMICS_AND_SOCIOLOGY,
+                       ResearchDisciplineConstants.STATISTICS_AND_ECONOMETRICS,
+                       ResearchDisciplineConstants.ECOLOGY_OF_AGRICULTURAL_LANDSCAPES));
     }
 
 
     /**
-     * Initializes a map of metadata names that contain descriptions that are relevant for documents.
+     * Initializes a map of metadata names that contain descriptions that are
+     * relevant for documents.
      *
-     * @return a map of {@linkplain MetadataResponse} metadata_label field values
+     * @return a map of {@linkplain MetadataResponse} metadata_label field
+     *         values
      */
     private static Map<String, DescriptionType> createRelevantDescriptions()
     {
@@ -126,7 +135,8 @@ public class FaoDataCiteConstants
      */
     private static WebLink createLogoWebLink()
     {
-        WebLink logoLink = new WebLink("http://data.fao.org/developers/api/catalog/resource/findDatastream?authKey=d30aebf0-ab2a-11e1-afa6-0800200c9a66&version=1.0&type=image&database=faostat&resource=logo&datastream=logo");
+        WebLink logoLink = new WebLink(
+            "http://data.fao.org/developers/api/catalog/resource/findDatastream?authKey=d30aebf0-ab2a-11e1-afa6-0800200c9a66&version=1.0&type=image&database=faostat&resource=logo&datastream=logo");
         logoLink.setType(WebLinkType.ProviderLogoURL);
         return logoLink;
     }

@@ -52,7 +52,7 @@ import de.gerdiproject.json.datacite.nested.PersonName;
 
 
 /**
- * This class provides parsers for FAOSTAT JSON responses retrieved via a {@linkplain Downloader}.
+ * This class provides parsers for FAOSTAT JSON responses retrieved via a {@linkplain FaoStatDownloader}.
  * The parser functions generate {@linkplain DataCiteJson} compliant fields.
  *
  * @author Robin Weiss
