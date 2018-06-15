@@ -10,7 +10,7 @@
 	</parent>
 	
 	<artifactId>FaoStat-HarvesterService</artifactId>
-	<version>6.8.3-SNAPSHOT</version>
+	<version>6.8.4-SNAPSHOT</version>
     <packaging>war</packaging>
 	<name>FAOSTAT Harvester Service</name>
 	<description>This is a restful harvester for retrieving data from: www.fao.org/faostat/en/#data</description>
