@@ -136,7 +136,7 @@ public class FaoDataCiteConstants
     private static WebLink createLogoWebLink()
     {
         WebLink logoLink = new WebLink(
-            "http://data.fao.org/developers/api/catalog/resource/findDatastream?authKey=d30aebf0-ab2a-11e1-afa6-0800200c9a66&version=1.0&type=image&database=faostat&resource=logo&datastream=logo");
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/FAO_logo.svg/257px-FAO_logo.svg.png");
         logoLink.setType(WebLinkType.ProviderLogoURL);
         return logoLink;
     }
