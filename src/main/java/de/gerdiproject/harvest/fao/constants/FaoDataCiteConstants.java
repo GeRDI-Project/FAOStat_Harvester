@@ -86,7 +86,7 @@ public class FaoDataCiteConstants
     public static final String DOCUMENT_URL = "http://fenixservices.fao.org/faostat/static/documents/%s";
 
     // DIMENSIONS
-    public static final String DIMENSION_URL = "http://fenixservices.fao.org/faostat/api/%s/%s%s%s/?show_lists=true";
+    public static final String DIMENSION_URL = "http://fenixservices.fao.org/faostat/api/v1/%s%s%s/?show_lists=true";
 
 
     /**

@@ -15,17 +15,14 @@
  */
 package de.gerdiproject.harvest.fao.utils;
 
-import java.util.function.Consumer;
+import java.nio.charset.StandardCharsets;
 
-import de.gerdiproject.harvest.config.events.HarvesterParameterChangedEvent;
-import de.gerdiproject.harvest.config.parameters.AbstractParameter;
-import de.gerdiproject.harvest.event.EventSystem;
+import com.google.gson.Gson;
+
 import de.gerdiproject.harvest.fao.constants.FaoDownloaderConstants;
-import de.gerdiproject.harvest.fao.constants.FaoParameterConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse;
-import de.gerdiproject.harvest.fao.json.DomainsResponse;
 import de.gerdiproject.harvest.fao.json.FiltersResponse;
 import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.harvest.utils.data.HttpRequester;
@@ -37,48 +34,13 @@ import de.gerdiproject.harvest.utils.data.HttpRequester;
  */
 public class FaoStatDownloader
 {
-    private String version;
-    private String language;
     private String domainCode;
     private String baseUrl;
-    private final HttpRequester httpRequester = new HttpRequester();
+    private final HttpRequester httpRequester;
 
-
-    /**
-     * Event callback for harvester parameter changes.
-     * Sets the language or version of the download URLs.
-     */
-    private final Consumer<HarvesterParameterChangedEvent> onParameterChanged =
-    (HarvesterParameterChangedEvent event) -> {
-        AbstractParameter<?> param = event.getParameter();
-
-        if (param.getKey().equals(FaoParameterConstants.LANGUAGE_KEY))
-            setLanguage(param.getValue().toString());
-
-
-        if (param.getKey().equals(FaoParameterConstants.VERSION_KEY))
-            setVersion(param.getValue().toString());
-    };
-
-
-    /**
-     * Constructor that registers an event listener for harvester parameter changes.
-     */
     public FaoStatDownloader()
     {
-        EventSystem.addListener(HarvesterParameterChangedEvent.class, onParameterChanged);
-    }
-
-
-    /**
-     * Changes the "version" part of the FAOSTAT URL.
-     *
-     * @param version the "version" part of the FAOSTAT URL
-     */
-    public void setVersion(String version)
-    {
-        this.version = version;
-        this.baseUrl = String.format(FaoDownloaderConstants.BASE_URL, version, language);
+        this.httpRequester = new HttpRequester(new Gson(), StandardCharsets.UTF_8);
     }
 
 
@@ -89,8 +51,7 @@ public class FaoStatDownloader
      */
     public void setLanguage(String language)
     {
-        this.language = language;
-        this.baseUrl = String.format(FaoDownloaderConstants.BASE_URL, version, language);
+        this.baseUrl = String.format(FaoDownloaderConstants.BASE_URL, language);
     }
 
 
@@ -102,19 +63,6 @@ public class FaoStatDownloader
     public void setDomainCode(String domainCode)
     {
         this.domainCode = domainCode;
-    }
-
-
-    /**
-     * Retrieves an array of "domains". Each domain represents a unique dataset.
-     *
-     * @return an object representation of the JSON server response to a groupsAndDomains request
-     */
-    public DomainsResponse getDomains()
-    {
-        String url = baseUrl + FaoDownloaderConstants.GROUPS_AND_DOMAINS_URL;
-        DomainsResponse response = httpRequester.getObjectFromUrl(url, DomainsResponse.class);
-        return response;
     }
 
 

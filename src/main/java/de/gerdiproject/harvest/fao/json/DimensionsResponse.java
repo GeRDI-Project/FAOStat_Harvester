@@ -47,9 +47,9 @@ public final class DimensionsResponse extends GenericJsonResponse<Dimension>
          *
          * @return the URL that points to the JSON data of this dimension
          */
-        public String getDimensionUrl(String version, String language, String domainCode)
+        public String getDimensionUrl(String language, String domainCode)
         {
-            return String.format(FaoDataCiteConstants.DIMENSION_URL, version, language, href, domainCode);
+            return String.format(FaoDataCiteConstants.DIMENSION_URL, language, href, domainCode);
         }
 
         public String getId()

@@ -15,6 +15,7 @@
  */
 package de.gerdiproject.harvest.fao.utils;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,15 +23,15 @@ import java.util.regex.Matcher;
 
 import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
-import de.gerdiproject.harvest.fao.json.DimensionsResponse;
-import de.gerdiproject.harvest.fao.json.DocumentsResponse;
-import de.gerdiproject.harvest.fao.json.FiltersResponse;
-import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
+import de.gerdiproject.harvest.fao.json.DimensionsResponse;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
+import de.gerdiproject.harvest.fao.json.DocumentsResponse;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
 import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
+import de.gerdiproject.harvest.fao.json.FiltersResponse;
 import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
+import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.harvest.fao.json.MetadataResponse.Metadata;
 import de.gerdiproject.json.datacite.Contributor;
 import de.gerdiproject.json.datacite.DataCiteJson;
@@ -243,13 +244,12 @@ public class DomainParser
      * the URLs that lead to {@linkplain FiltersResponse} responses in a list.
      *
      * @param dimensions the dimensions that are to be parsed
-     * @param version the version that is set for harvesting FAOSTAT
      * @param language the language that is set for harvesting FAOSTAT
      * @param domainCode a unique ID of the domain of which the filter URLs are retrieved
      *
      * @return a list of URLs of a domain's filter categories
      */
-    public static List<String> parseFilterUrls(DimensionsResponse dimensions, String version, String language, String domainCode)
+    public static List<String> parseFilterUrls(DimensionsResponse dimensions, String language, String domainCode)
     {
         List<String> filterUrls = new LinkedList<>();
         List<Dimension> dimensionList = dimensions.getData();
@@ -258,7 +258,7 @@ public class DomainParser
             // exclude the pure numbers of the years filter
             if (!d.getId().equals("year"))
             {
-                filterUrls.add(d.getDimensionUrl(version, language, domainCode));
+                filterUrls.add(d.getDimensionUrl(language, domainCode));
             }
         });
 
