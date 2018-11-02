@@ -49,7 +49,7 @@ public class FaoStatETL extends StaticIteratorETL<Domain, DataCiteJson>
         this.languageParameter =
             Configuration.registerParameter(new StringParameter(
                                                 FaoParameterConstants.LANGUAGE_KEY,
-                                                harvesterCategory,
+                                                getName(),
                                                 FaoParameterConstants.LANGUAGE_DEFAULT));
     }
 
