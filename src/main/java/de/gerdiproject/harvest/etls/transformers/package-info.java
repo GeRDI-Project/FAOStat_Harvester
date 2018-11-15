@@ -15,9 +15,9 @@
  *  under the License.
  */
 /**
- * This package contains {@linkplain de.gerdiproject.harvest.etls.extractors.IExtractor}s
+ * This package contains {@linkplain de.gerdiproject.harvest.etls.transformers.ITransformer}s
  * for FAOSTAT data.
  * 
  * @author Robin Weiss
  */
-package de.gerdiproject.harvest.etls.extractors;
+package de.gerdiproject.harvest.etls.transformers;

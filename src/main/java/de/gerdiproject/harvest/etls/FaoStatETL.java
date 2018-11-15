@@ -20,6 +20,7 @@ import de.gerdiproject.harvest.config.Configuration;
 import de.gerdiproject.harvest.config.parameters.StringParameter;
 import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
 import de.gerdiproject.harvest.etls.extractors.FaoStatExtractor;
+import de.gerdiproject.harvest.etls.transformers.FaoStatTransformer;
 import de.gerdiproject.harvest.fao.constants.FaoParameterConstants;
 import de.gerdiproject.json.datacite.DataCiteJson;
 
