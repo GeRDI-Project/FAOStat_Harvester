@@ -15,7 +15,6 @@
  */
 package de.gerdiproject.harvest.fao.json;
 
-import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
 
 /**
@@ -196,23 +195,6 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         public String toString()
         {
             return group_code + domain_code + date_update;
-        }
-
-
-        /**
-         * Creates a unique identifier of this domain within FAOSTAT.
-         *
-         * @param language the language that is harvested
-         *
-         * @return a unique identifier of this domain within FAOSTAT
-         */
-        public String createIdentifier(String language)
-        {
-            return String.format(
-                       FaoDataCiteConstants.SOURCE_ID,
-                       group_code,
-                       domain_code,
-                       language);
         }
     }
 }

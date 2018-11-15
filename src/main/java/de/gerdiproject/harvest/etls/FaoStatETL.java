@@ -14,13 +14,13 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest.etl;
+package de.gerdiproject.harvest.etls;
 
 import de.gerdiproject.harvest.config.Configuration;
 import de.gerdiproject.harvest.config.parameters.StringParameter;
-import de.gerdiproject.harvest.etls.StaticIteratorETL;
+import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
+import de.gerdiproject.harvest.etls.extractors.FaoStatExtractor;
 import de.gerdiproject.harvest.fao.constants.FaoParameterConstants;
-import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
 import de.gerdiproject.json.datacite.DataCiteJson;
 
 /**
@@ -28,7 +28,7 @@ import de.gerdiproject.json.datacite.DataCiteJson;
  *
  * @author Robin Weiss
  */
-public class FaoStatETL extends StaticIteratorETL<Domain, DataCiteJson>
+public class FaoStatETL extends StaticIteratorETL<FaoStatDomainVO, DataCiteJson>
 {
     private volatile StringParameter languageParameter;
 

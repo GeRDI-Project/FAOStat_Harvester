@@ -21,8 +21,8 @@ import java.util.List;
 import javax.servlet.annotation.WebListener;
 
 import de.gerdiproject.harvest.application.ContextListener;
-import de.gerdiproject.harvest.etl.FaoStatETL;
 import de.gerdiproject.harvest.etls.AbstractETL;
+import de.gerdiproject.harvest.etls.FaoStatETL;
 
 /**
  * This class initializes the FAOSTAT harvester and all objects that are required.

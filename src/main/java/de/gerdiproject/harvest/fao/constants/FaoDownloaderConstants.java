@@ -28,6 +28,7 @@ public class FaoDownloaderConstants
     public static final String BULK_DOWNLOADS_URL = "%sbulkdownloads/%s/";
     public static final String METADATA_URL = "%smetadata/%s/";
     public static final String DIMENSIONS_URL = "%sdimensions/%s/?full=true";
+    public static final String SHOW_LIST_SUFFIX = "/?show_lists=true";
 
 
     /**
