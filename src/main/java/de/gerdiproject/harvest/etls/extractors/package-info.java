@@ -17,7 +17,7 @@
 /**
  * This package contains {@linkplain de.gerdiproject.harvest.etls.extractors.IExtractor}s
  * for FAOSTAT data.
- * 
+ *
  * @author Robin Weiss
  */
 package de.gerdiproject.harvest.etls.extractors;

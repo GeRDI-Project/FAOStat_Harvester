@@ -24,7 +24,6 @@ import java.util.regex.Matcher;
 import de.gerdiproject.harvest.etls.AbstractETL;
 import de.gerdiproject.harvest.etls.FaoStatETL;
 import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
-import de.gerdiproject.harvest.etls.transformers.AbstractIteratorTransformer;
 import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
@@ -79,35 +78,35 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
         document.setRepositoryIdentifier(FaoDataCiteConstants.REPOSITORY_ID);
         document.setPublicationYear(FaoDataCiteConstants.EARLIEST_PUBLICATION_YEAR);
         document.setResourceType(FaoDataCiteConstants.RESOURCE_TYPE);
-        document.setFormats(FaoDataCiteConstants.FORMATS);
-        document.setResearchDisciplines(FaoDataCiteConstants.DISCIPLINES);
+        document.addFormats(FaoDataCiteConstants.FORMATS);
+        document.addResearchDisciplines(FaoDataCiteConstants.DISCIPLINES);
 
         // get source
         document.setPublisher(FaoDataCiteConstants.PROVIDER);
 
         // get a readable name of the domain
-        document.setTitles(parseTitles(source.getDomain()));
+        document.addTitles(parseTitles(source.getDomain()));
 
         // get bulk-download URL
-        document.setResearchDataList(parseFiles(source.getBulkDownloads()));
+        document.addResearchDataList(parseFiles(source.getBulkDownloads()));
 
         // get description
-        document.setDescriptions(parseDescriptions(source.getMetadata()));
+        document.addDescriptions(parseDescriptions(source.getMetadata()));
 
         // get URLs of all filters that can be applied to the domain
-        document.setSubjects(parseSubjects(source.getFilters()));
+        document.addSubjects(parseSubjects(source.getFilters()));
 
         // get dates
-        document.setDates(parseDates(source.getMetadata()));
+        document.addDates(parseDates(source.getMetadata()));
 
         // get web links
-        document.setWebLinks(parseWebLinks(source));
+        document.addWebLinks(parseWebLinks(source));
 
         // get contact person
-        document.setContributors(parseContributors(source.getMetadata()));
+        document.addContributors(parseContributors(source.getMetadata()));
 
         // get creator
-        document.setCreators(FaoDataCiteConstants.CREATORS);
+        document.addCreators(FaoDataCiteConstants.CREATORS);
 
         return document;
     }
@@ -340,7 +339,7 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
                     break;
 
                 case FaoDataCiteConstants.METADATA_CONTACT_ORGANISATION:
-                    contactPerson.setAffiliations(Arrays.asList(m.getMetadata_text()));
+                    contactPerson.addAffiliations(Arrays.asList(m.getMetadata_text()));
                     break;
 
                 default:
