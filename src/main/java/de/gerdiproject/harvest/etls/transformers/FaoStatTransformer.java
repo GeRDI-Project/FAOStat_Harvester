@@ -165,7 +165,7 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
      *
      * @return a list of dates of a domain
      */
-    private  List<AbstractDate> parseDates(List<Metadata> metadata)
+    private List<AbstractDate> parseDates(List<Metadata> metadata)
     {
         List<AbstractDate> dates = new LinkedList<>();
 
