@@ -52,7 +52,7 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
     private Iterator<Domain> domainIterator;
     private String baseUrl;
     private int size = -1;
-    
+
 
     @Override
     public void init(AbstractETL<?, ?> etl)
