@@ -16,12 +16,9 @@
  */
 package de.gerdiproject.harvest.etls.extractors;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.google.gson.Gson;
 
 import de.gerdiproject.harvest.etls.AbstractETL;
 import de.gerdiproject.harvest.etls.FaoStatETL;
@@ -49,21 +46,13 @@ import de.gerdiproject.harvest.utils.data.HttpRequester;
  */
 public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
 {
-    private final HttpRequester httpRequester;
+    private final HttpRequester httpRequester = new HttpRequester();
 
     private String version;
     private Iterator<Domain> domainIterator;
     private String baseUrl;
     private int size = -1;
-
-    /**
-     * Simple constructor.
-     */
-    public FaoStatExtractor()
-    {
-        this.httpRequester = new HttpRequester(new Gson(), StandardCharsets.UTF_8);
-    }
-
+    
 
     @Override
     public void init(AbstractETL<?, ?> etl)

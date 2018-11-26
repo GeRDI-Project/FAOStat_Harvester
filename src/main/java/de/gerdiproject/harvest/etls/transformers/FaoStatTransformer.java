@@ -88,7 +88,7 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
         document.addTitles(parseTitles(source.getDomain()));
 
         // get bulk-download URL
-        document.addResearchDataList(parseFiles(source.getBulkDownloads()));
+        document.addResearchData(parseFiles(source.getBulkDownloads()));
 
         // get description
         document.addDescriptions(parseDescriptions(source.getMetadata()));
