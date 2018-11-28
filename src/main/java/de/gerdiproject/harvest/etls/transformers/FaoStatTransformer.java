@@ -16,7 +16,6 @@
  */
 package de.gerdiproject.harvest.etls.transformers;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -325,9 +324,10 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
      */
     private List<Contributor> parseContributors(List<Metadata> metadata)
     {
-        List<Contributor> contributors = new LinkedList<>();
+        final List<Contributor> contributors = new LinkedList<>();
 
-        Contributor contactPerson = new Contributor("", ContributorType.ContactPerson);
+        PersonName name = null;
+        final List<String> affiliations = new LinkedList<>();
 
         for (Metadata m : metadata) {
             if (!m.getMetadata_group_code().equals("1"))
@@ -335,11 +335,11 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
 
             switch (m.getMetadata_label()) {
                 case FaoDataCiteConstants.METADATA_CONTACT_NAME:
-                    contactPerson.setName(new PersonName(m.getMetadata_text(), NameType.Personal));
+                    name = new PersonName(m.getMetadata_text(), NameType.Personal);
                     break;
 
                 case FaoDataCiteConstants.METADATA_CONTACT_ORGANISATION:
-                    contactPerson.addAffiliations(Arrays.asList(m.getMetadata_text()));
+                    affiliations.add(m.getMetadata_text());
                     break;
 
                 default:
@@ -347,8 +347,11 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
             }
         }
 
-        if (!contactPerson.getName().getValue().isEmpty())
+        if (name != null) {
+            final Contributor contactPerson = new Contributor(name, ContributorType.ContactPerson);
+            contactPerson.addAffiliations(affiliations);
             contributors.add(contactPerson);
+        }
 
         return contributors;
     }

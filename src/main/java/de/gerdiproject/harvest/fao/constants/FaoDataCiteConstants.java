@@ -61,7 +61,7 @@ public class FaoDataCiteConstants
     // CONTRIBUTORS
     public static final String METADATA_CONTACT_NAME = "Contact name";
     public static final String METADATA_CONTACT_ORGANISATION = "Contact organisation";
-    public static final short EARLIEST_PUBLICATION_YEAR = 1961;
+    public static final int EARLIEST_PUBLICATION_YEAR = 1961;
 
     // WEB LINKS
     public static final String VIEW_URL = "http://www.fao.org/faostat/en/#data/%s";
