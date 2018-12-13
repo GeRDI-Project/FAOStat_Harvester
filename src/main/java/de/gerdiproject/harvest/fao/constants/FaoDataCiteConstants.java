@@ -28,10 +28,10 @@ import de.gerdiproject.json.datacite.ResourceType;
 import de.gerdiproject.json.datacite.enums.DescriptionType;
 import de.gerdiproject.json.datacite.enums.NameType;
 import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
-import de.gerdiproject.json.datacite.extension.WebLink;
-import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
-import de.gerdiproject.json.datacite.extension.constants.ResearchDisciplineConstants;
-import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
+import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
+import de.gerdiproject.json.datacite.extension.generic.WebLink;
+import de.gerdiproject.json.datacite.extension.generic.constants.ResearchDisciplineConstants;
+import de.gerdiproject.json.datacite.extension.generic.enums.WebLinkType;
 import de.gerdiproject.json.datacite.nested.PersonName;
 
 /**
@@ -61,7 +61,7 @@ public class FaoDataCiteConstants
     // CONTRIBUTORS
     public static final String METADATA_CONTACT_NAME = "Contact name";
     public static final String METADATA_CONTACT_ORGANISATION = "Contact organisation";
-    public static final short EARLIEST_PUBLICATION_YEAR = 1961;
+    public static final int EARLIEST_PUBLICATION_YEAR = 1961;
 
     // WEB LINKS
     public static final String VIEW_URL = "http://www.fao.org/faostat/en/#data/%s";
@@ -84,9 +84,6 @@ public class FaoDataCiteConstants
 
     // DOCUMENTS
     public static final String DOCUMENT_URL = "http://fenixservices.fao.org/faostat/static/documents/%s";
-
-    // DIMENSIONS
-    public static final String DIMENSION_URL = "http://fenixservices.fao.org/faostat/api/%s/%s%s%s/?show_lists=true";
 
 
     /**
