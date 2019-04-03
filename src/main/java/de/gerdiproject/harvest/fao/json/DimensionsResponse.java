@@ -18,7 +18,6 @@ package de.gerdiproject.harvest.fao.json;
 
 import com.google.gson.JsonArray;
 
-import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
 
 
@@ -40,17 +39,6 @@ public final class DimensionsResponse extends GenericJsonResponse<Dimension>
         // these contain data that is irrelevant to the harvest.
         private JsonArray subdimensions;
 
-
-        /**
-         * Retrieves the URL that points to the JSON data of this dimension.
-         * e.g. http://fenixservices.fao.org/faostat/api/v1/en/codes/countries/QC/?show_lists=true
-         *
-         * @return the URL that points to the JSON data of this dimension
-         */
-        public String getDimensionUrl(String version, String language, String domainCode)
-        {
-            return String.format(FaoDataCiteConstants.DIMENSION_URL, version, language, href, domainCode);
-        }
 
         public String getId()
         {
