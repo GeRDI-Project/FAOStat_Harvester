@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 /**
- * This package contains utility classes for getting and processing FAOSTAT source data.
+ * This package contains classes and packages that are related to the {@linkplain de.gerdiproject.harvest.etls.FaoStatETL}.
  *
  * @author Robin Weiss
  */
-package de.gerdiproject.harvest.fao.utils;
+package de.gerdiproject.harvest.etls;

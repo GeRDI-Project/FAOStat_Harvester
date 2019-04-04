@@ -22,12 +22,13 @@ package de.gerdiproject.harvest.fao.constants;
  */
 public class FaoDownloaderConstants
 {
-    public static final String BASE_URL = "http://fenixservices.fao.org/faostat/api/%s/%s/";
+    public static final String BASE_URL = "http://fenixservices.fao.org/faostat/api/v1/%s/";
     public static final String GROUPS_AND_DOMAINS_URL = "groupsanddomains?section=download";
     public static final String DOCUMENTS_URL = "%sdocuments/%s/";
     public static final String BULK_DOWNLOADS_URL = "%sbulkdownloads/%s/";
     public static final String METADATA_URL = "%smetadata/%s/";
     public static final String DIMENSIONS_URL = "%sdimensions/%s/?full=true";
+    public static final String SHOW_LIST_SUFFIX = "/?show_lists=true";
 
 
     /**

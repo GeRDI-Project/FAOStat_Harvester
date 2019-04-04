@@ -15,15 +15,14 @@
  */
 package de.gerdiproject.harvest;
 
-import de.gerdiproject.harvest.config.parameters.AbstractParameter;
-import de.gerdiproject.harvest.config.parameters.StringParameter;
-import de.gerdiproject.harvest.fao.constants.FaoParameterConstants;
-import de.gerdiproject.harvest.harvester.FaoStatHarvester;
-
 import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.annotation.WebListener;
+
+import de.gerdiproject.harvest.application.ContextListener;
+import de.gerdiproject.harvest.etls.AbstractETL;
+import de.gerdiproject.harvest.etls.FaoStatETL;
 
 /**
  * This class initializes the FAOSTAT harvester and all objects that are required.
@@ -31,14 +30,11 @@ import javax.servlet.annotation.WebListener;
  * @author Robin Weiss
  */
 @WebListener
-public class FaoStatContextListener extends ContextListener<FaoStatHarvester>
+public class FaoStatContextListener extends ContextListener
 {
     @Override
-    protected List<AbstractParameter<?>> getHarvesterSpecificParameters()
+    protected List<? extends AbstractETL<?, ?>> createETLs()
     {
-        StringParameter versionParam = new StringParameter(FaoParameterConstants.VERSION_KEY, FaoParameterConstants.VERSION_DEFAULT);
-        StringParameter languageParam = new StringParameter(FaoParameterConstants.LANGUAGE_KEY, FaoParameterConstants.LANGUAGE_DEFAULT);
-
-        return Arrays.asList(versionParam, languageParam);
+        return Arrays.asList(new FaoStatETL());
     }
 }
