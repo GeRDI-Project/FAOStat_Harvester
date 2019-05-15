@@ -32,6 +32,8 @@ import de.gerdiproject.json.datacite.extension.generic.WebLink;
 import de.gerdiproject.json.datacite.extension.generic.constants.ResearchDisciplineConstants;
 import de.gerdiproject.json.datacite.extension.generic.enums.WebLinkType;
 import de.gerdiproject.json.datacite.nested.PersonName;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * This static class contains constants that are used for creating DataCite
@@ -39,6 +41,7 @@ import de.gerdiproject.json.datacite.nested.PersonName;
  *
  * @author Robin Weiss
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FaoDataCiteConstants
 {
     // source id
@@ -83,14 +86,6 @@ public class FaoDataCiteConstants
 
     // DOCUMENTS
     public static final String DOCUMENT_URL = "http://fenixservices.fao.org/faostat/static/documents/%s";
-
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private FaoDataCiteConstants()
-    {
-    }
 
 
     /**

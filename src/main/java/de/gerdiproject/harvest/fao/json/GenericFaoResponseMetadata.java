@@ -15,38 +15,21 @@
  */
 package de.gerdiproject.harvest.fao.json;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
+
+import lombok.Value;
 
 /**
- * This class represents a generic FaoSTAT JSON response.
- *
- * @param <T> the type of data, carried by the response
+ * This class represents the the metadata object, that is part of every JSON response from FaoSTAT.
  *
  * @author Robin Weiss
  */
-public class GenericJsonResponse <T>
+@Value
+public final class GenericFaoResponseMetadata
 {
-    private GenericJsonResponseMetadata metadata;
-    private List<T> data;
+    @SerializedName("processing_time")
+    private final double processingTime;
 
-
-    public GenericJsonResponseMetadata getMetadata()
-    {
-        return metadata;
-    }
-
-    public void setMetadata(final GenericJsonResponseMetadata metadata)
-    {
-        this.metadata = metadata;
-    }
-
-    public List<T> getData()
-    {
-        return data;
-    }
-
-    public void setData(final List<T> data)
-    {
-        this.data = data;
-    }
+    @SerializedName("output_type")
+    private final String outputType;
 }

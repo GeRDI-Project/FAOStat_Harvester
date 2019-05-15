@@ -22,14 +22,14 @@ import java.util.List;
 
 import de.gerdiproject.harvest.etls.AbstractETL;
 import de.gerdiproject.harvest.etls.FaoStatETL;
-import de.gerdiproject.harvest.fao.constants.FaoDownloaderConstants;
+import de.gerdiproject.harvest.fao.constants.FaoExtractorConstants;
 import de.gerdiproject.harvest.fao.json.FaoBulkDownload;
 import de.gerdiproject.harvest.fao.json.FaoDimension;
 import de.gerdiproject.harvest.fao.json.FaoDocument;
 import de.gerdiproject.harvest.fao.json.FaoDomain;
 import de.gerdiproject.harvest.fao.json.FaoFilter;
 import de.gerdiproject.harvest.fao.json.FaoMetadata;
-import de.gerdiproject.harvest.fao.json.GenericJsonResponse;
+import de.gerdiproject.harvest.fao.json.GenericFaoResponse;
 import de.gerdiproject.harvest.utils.data.HttpRequester;
 
 /**
@@ -56,14 +56,14 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
 
         this.httpRequester.setCharset(etl.getCharset());
         this.baseUrl = String.format(
-                           FaoDownloaderConstants.BASE_URL,
+                           FaoExtractorConstants.BASE_URL,
                            ((FaoStatETL)etl).getLanguage()
                        );
 
         // get list of all domains
-        final GenericJsonResponse<FaoDomain> domainsResponse = httpRequester.getObjectFromUrl(
-                                                                   baseUrl + FaoDownloaderConstants.GROUPS_AND_DOMAINS_URL,
-                                                                   FaoDownloaderConstants.DOMAIN_RESPONSE_TYPE);
+        final GenericFaoResponse<FaoDomain> domainsResponse = httpRequester.getObjectFromUrl(
+                                                                  baseUrl + FaoExtractorConstants.GROUPS_AND_DOMAINS_URL,
+                                                                  FaoExtractorConstants.DOMAIN_RESPONSE_TYPE);
 
         this.version = getVersion(domainsResponse.getData());
         this.size = domainsResponse.getData().size();
@@ -136,11 +136,11 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
                 continue;
 
             // assemble filter URL
-            final String filterUrl = filterUrlPrefix + d.getHref() + domainCode + FaoDownloaderConstants.SHOW_LIST_SUFFIX;
+            final String filterUrl = filterUrlPrefix + d.getHref() + domainCode + FaoExtractorConstants.SHOW_LIST_SUFFIX;
 
             // get filters from URL
-            final GenericJsonResponse<FaoFilter> response =
-                httpRequester.getObjectFromUrl(filterUrl, FaoDownloaderConstants.FILTER_RESPONSE_TYPE);
+            final GenericFaoResponse<FaoFilter> response =
+                httpRequester.getObjectFromUrl(filterUrl, FaoExtractorConstants.FILTER_RESPONSE_TYPE);
 
             if (response != null)
                 filters.addAll(response.getData());
@@ -191,9 +191,9 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          */
         private List<FaoDocument> getDocuments(final String domainCode)
         {
-            final String url = String.format(FaoDownloaderConstants.DOCUMENTS_URL, baseUrl, domainCode);
-            final GenericJsonResponse<FaoDocument> response =
-                httpRequester.getObjectFromUrl(url, FaoDownloaderConstants.DOCUMENT_RESPONSE_TYPE);
+            final String url = String.format(FaoExtractorConstants.DOCUMENTS_URL, baseUrl, domainCode);
+            final GenericFaoResponse<FaoDocument> response =
+                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.DOCUMENT_RESPONSE_TYPE);
             return response.getData();
         }
 
@@ -208,9 +208,9 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          */
         private List<FaoBulkDownload> getBulkDownloads(final String domainCode)
         {
-            final String url = String.format(FaoDownloaderConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
-            final GenericJsonResponse<FaoBulkDownload> response =
-                httpRequester.getObjectFromUrl(url, FaoDownloaderConstants.DIMENSION_RESPONSE_TYPE);
+            final String url = String.format(FaoExtractorConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
+            final GenericFaoResponse<FaoBulkDownload> response =
+                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.DIMENSION_RESPONSE_TYPE);
             return response.getData();
         }
 
@@ -224,9 +224,9 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          */
         private List<FaoMetadata> getMetaData(final String domainCode)
         {
-            final String url = String.format(FaoDownloaderConstants.METADATA_URL, baseUrl, domainCode);
-            final GenericJsonResponse<FaoMetadata> response =
-                httpRequester.getObjectFromUrl(url, FaoDownloaderConstants.METADATA_RESPONSE_TYPE);
+            final String url = String.format(FaoExtractorConstants.METADATA_URL, baseUrl, domainCode);
+            final GenericFaoResponse<FaoMetadata> response =
+                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.METADATA_RESPONSE_TYPE);
             return response.getData();
         }
 
@@ -241,9 +241,9 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          */
         private List<FaoDimension> getDimensions(final String domainCode)
         {
-            final String url = String.format(FaoDownloaderConstants.DIMENSIONS_URL, baseUrl, domainCode);
-            final GenericJsonResponse<FaoDimension> response =
-                httpRequester.getObjectFromUrl(url, FaoDownloaderConstants.DIMENSION_RESPONSE_TYPE);
+            final String url = String.format(FaoExtractorConstants.DIMENSIONS_URL, baseUrl, domainCode);
+            final GenericFaoResponse<FaoDimension> response =
+                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.DIMENSION_RESPONSE_TYPE);
             return response.getData();
         }
     }

@@ -15,21 +15,17 @@
  */
 package de.gerdiproject.harvest.fao.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * This static class contains constants of FAO harvester parameters.
  *
  * @author Robin Weiss
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FaoParameterConstants
 {
     public static final String LANGUAGE_KEY = "language";
     public static final String LANGUAGE_DEFAULT = "en";
-
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private FaoParameterConstants()
-    {
-    }
 }
