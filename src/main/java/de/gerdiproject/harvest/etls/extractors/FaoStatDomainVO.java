@@ -19,7 +19,7 @@ package de.gerdiproject.harvest.etls.extractors;
 import java.util.List;
 
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
-import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
+import de.gerdiproject.harvest.fao.json.FaoDimension;
 import de.gerdiproject.harvest.fao.json.FaoDocument;
 import de.gerdiproject.harvest.fao.json.FaoDomain;
 import de.gerdiproject.harvest.fao.json.FaoFilter;
@@ -40,6 +40,6 @@ public class FaoStatDomainVO
     private final List<BulkDownload> bulkDownloads;
     private final List<FaoMetadata> metadata;
     private final List<FaoDocument> documents;
-    private final List<Dimension> dimensions;
+    private final List<FaoDimension> dimensions;
     private final List<FaoFilter> filters;
 }

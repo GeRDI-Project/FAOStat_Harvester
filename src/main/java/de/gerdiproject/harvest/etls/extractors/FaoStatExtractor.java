@@ -25,8 +25,7 @@ import de.gerdiproject.harvest.etls.FaoStatETL;
 import de.gerdiproject.harvest.fao.constants.FaoDownloaderConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
-import de.gerdiproject.harvest.fao.json.DimensionsResponse;
-import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
+import de.gerdiproject.harvest.fao.json.FaoDimension;
 import de.gerdiproject.harvest.fao.json.FaoDocument;
 import de.gerdiproject.harvest.fao.json.FaoDomain;
 import de.gerdiproject.harvest.fao.json.FaoFilter;
@@ -125,13 +124,13 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
      *
      * @return an object representation of the JSON server response to a request of the filterUrl
      */
-    private List<FaoFilter> getFilters(final List<Dimension> dimensions, final String domainCode)
+    private List<FaoFilter> getFilters(final List<FaoDimension> dimensions, final String domainCode)
     {
         final List<FaoFilter> filters = new LinkedList<>();
 
         final String filterUrlPrefix = baseUrl.substring(0, baseUrl.length() - 1);
 
-        for (final Dimension d : dimensions) {
+        for (final FaoDimension d : dimensions) {
 
             // exclude the pure numbers of the years filter
             if (d.getId().equals("year"))
@@ -172,7 +171,7 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
         {
             final FaoDomain domain = domainIterator.next();
             final String domainCode = domain.getDomainCode();
-            final List<Dimension> dimensions = getDimensions(domainCode);
+            final List<FaoDimension> dimensions = getDimensions(domainCode);
 
             return new FaoStatDomainVO(
                        domain,
@@ -240,10 +239,11 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          *
          * @return an object representation of the JSON server response to a dimensions request
          */
-        private List<Dimension> getDimensions(final String domainCode)
+        private List<FaoDimension> getDimensions(final String domainCode)
         {
             final String url = String.format(FaoDownloaderConstants.DIMENSIONS_URL, baseUrl, domainCode);
-            final DimensionsResponse response = httpRequester.getObjectFromUrl(url, DimensionsResponse.class);
+            final GenericJsonResponse<FaoDimension> response =
+                httpRequester.getObjectFromUrl(url, FaoDownloaderConstants.DIMENSION_RESPONSE_TYPE);
             return response.getData();
         }
     }
