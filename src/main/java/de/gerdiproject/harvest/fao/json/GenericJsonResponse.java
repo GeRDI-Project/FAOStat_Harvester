@@ -35,7 +35,7 @@ public class GenericJsonResponse <T>
         return metadata;
     }
 
-    public void setMetadata(GenericJsonResponseMetadata metadata)
+    public void setMetadata(final GenericJsonResponseMetadata metadata)
     {
         this.metadata = metadata;
     }
@@ -45,7 +45,7 @@ public class GenericJsonResponse <T>
         return data;
     }
 
-    public void setData(List<T> data)
+    public void setData(final List<T> data)
     {
         this.data = data;
     }

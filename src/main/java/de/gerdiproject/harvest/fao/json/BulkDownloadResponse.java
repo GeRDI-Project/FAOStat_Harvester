@@ -42,7 +42,7 @@ public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload
             return DomainCode;
         }
 
-        public void setDomainCode(String domainCode)
+        public void setDomainCode(final String domainCode)
         {
             DomainCode = domainCode;
         }
@@ -52,7 +52,7 @@ public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload
             return Source;
         }
 
-        public void setSource(String source)
+        public void setSource(final String source)
         {
             Source = source;
         }
@@ -62,7 +62,7 @@ public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload
             return FileName;
         }
 
-        public void setFileName(String fileName)
+        public void setFileName(final String fileName)
         {
             FileName = fileName;
         }
@@ -72,7 +72,7 @@ public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload
             return FileContent;
         }
 
-        public void setFileContent(String fileContent)
+        public void setFileContent(final String fileContent)
         {
             FileContent = fileContent;
         }
@@ -81,7 +81,7 @@ public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload
             return CreatedDate;
         }
 
-        public void setCreatedDate(String createdDate)
+        public void setCreatedDate(final String createdDate)
         {
             CreatedDate = createdDate;
         }
@@ -91,7 +91,7 @@ public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload
             return FileSize;
         }
 
-        public void setFileSize(int fileSize)
+        public void setFileSize(final int fileSize)
         {
             FileSize = fileSize;
         }
@@ -101,7 +101,7 @@ public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload
             return FileSizeUnit;
         }
 
-        public void setFileSizeUnit(String fileSizeUnit)
+        public void setFileSizeUnit(final String fileSizeUnit)
         {
             FileSizeUnit = fileSizeUnit;
         }
@@ -111,7 +111,7 @@ public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload
             return Type;
         }
 
-        public void setType(String type)
+        public void setType(final String type)
         {
             Type = type;
         }
@@ -121,7 +121,7 @@ public final class BulkDownloadResponse extends GenericJsonResponse<BulkDownload
             return URL;
         }
 
-        public void setURL(String uRL)
+        public void setURL(final String uRL)
         {
             URL = uRL;
         }

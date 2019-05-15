@@ -30,7 +30,7 @@ public final class GenericJsonResponseMetadata
         return processing_time;
     }
 
-    public void setProcessing_time(double processing_time)
+    public void setProcessing_time(final double processing_time)
     {
         this.processing_time = processing_time;
     }
@@ -40,7 +40,7 @@ public final class GenericJsonResponseMetadata
         return output_type;
     }
 
-    public void setOutput_type(String output_type)
+    public void setOutput_type(final String output_type)
     {
         this.output_type = output_type;
     }

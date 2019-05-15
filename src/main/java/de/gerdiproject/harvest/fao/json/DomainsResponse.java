@@ -48,7 +48,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setGroup_code(String group_code)
+        public void setGroup_code(final String group_code)
         {
             this.group_code = group_code;
         }
@@ -60,7 +60,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setGroup_name(String group_name)
+        public void setGroup_name(final String group_name)
         {
             this.group_name = group_name;
         }
@@ -72,7 +72,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setDomain_code(String domain_code)
+        public void setDomain_code(final String domain_code)
         {
             this.domain_code = domain_code;
         }
@@ -84,7 +84,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setDomain_name(String domain_name)
+        public void setDomain_name(final String domain_name)
         {
             this.domain_name = domain_name;
         }
@@ -96,7 +96,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setDate_update(String date_update)
+        public void setDate_update(final String date_update)
         {
             this.date_update = date_update;
         }
@@ -108,7 +108,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setNote_update(String note_update)
+        public void setNote_update(final String note_update)
         {
             this.note_update = note_update;
         }
@@ -120,7 +120,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setRelease_current(String release_current)
+        public void setRelease_current(final String release_current)
         {
             this.release_current = release_current;
         }
@@ -132,7 +132,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setState_current(String state_current)
+        public void setState_current(final String state_current)
         {
             this.state_current = state_current;
         }
@@ -144,7 +144,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setYear_current(String year_current)
+        public void setYear_current(final String year_current)
         {
             this.year_current = year_current;
         }
@@ -156,7 +156,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setRelease_next(String release_next)
+        public void setRelease_next(final String release_next)
         {
             this.release_next = release_next;
         }
@@ -168,7 +168,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setState_next(String state_next)
+        public void setState_next(final String state_next)
         {
             this.state_next = state_next;
         }
@@ -180,7 +180,7 @@ public final class DomainsResponse extends GenericJsonResponse<Domain>
         }
 
 
-        public void setYear_next(String year_next)
+        public void setYear_next(final String year_next)
         {
             this.year_next = year_next;
         }

@@ -22,8 +22,8 @@ import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
 import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
+import de.gerdiproject.harvest.fao.json.FaoStatMetadata;
 import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
-import de.gerdiproject.harvest.fao.json.MetadataResponse.Metadata;
 
 /**
  * This class is a value object that contains all elements of FAOSTAT server
@@ -36,7 +36,7 @@ public class FaoStatDomainVO
 {
     private final Domain domain;
     private final List<BulkDownload> bulkDownloads;
-    private final List<Metadata> metadata;
+    private final List<FaoStatMetadata> metadata;
     private final List<Document> documents;
     private final List<Dimension> dimensions;
     private final List<Filter> filters;
@@ -51,7 +51,7 @@ public class FaoStatDomainVO
      * @param dimensions a list of dimensions of the domain
      * @param filters a list of filters of the domain
      */
-    public FaoStatDomainVO(Domain domain, List<BulkDownload> bulkdownloads, List<Metadata> metadata, List<Document> documents, List<Dimension> dimensions, List<Filter> filters)
+    public FaoStatDomainVO(final Domain domain, final List<BulkDownload> bulkdownloads, final List<FaoStatMetadata> metadata, final List<Document> documents, final List<Dimension> dimensions, final List<Filter> filters)
     {
         this.domain = domain;
         this.bulkDownloads = bulkdownloads;
@@ -74,7 +74,7 @@ public class FaoStatDomainVO
     }
 
 
-    public List<Metadata> getMetadata()
+    public List<FaoStatMetadata> getMetadata()
     {
         return metadata;
     }

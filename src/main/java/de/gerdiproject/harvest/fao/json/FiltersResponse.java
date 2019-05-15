@@ -36,7 +36,7 @@ public final class FiltersResponse extends GenericJsonResponse<Filter>
             return code;
         }
 
-        public void setCode(String code)
+        public void setCode(final String code)
         {
             this.code = code;
         }
@@ -46,7 +46,7 @@ public final class FiltersResponse extends GenericJsonResponse<Filter>
             return label;
         }
 
-        public void setLabel(String label)
+        public void setLabel(final String label)
         {
             this.label = label;
         }
@@ -56,7 +56,7 @@ public final class FiltersResponse extends GenericJsonResponse<Filter>
             return aggregate_type;
         }
 
-        public void setAggregate_type(String aggregate_type)
+        public void setAggregate_type(final String aggregate_type)
         {
             this.aggregate_type = aggregate_type;
         }

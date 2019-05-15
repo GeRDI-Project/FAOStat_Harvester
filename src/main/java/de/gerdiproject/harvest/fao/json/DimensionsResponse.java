@@ -45,7 +45,7 @@ public final class DimensionsResponse extends GenericJsonResponse<Dimension>
             return id;
         }
 
-        public void setId(String id)
+        public void setId(final String id)
         {
             this.id = id;
         }
@@ -55,7 +55,7 @@ public final class DimensionsResponse extends GenericJsonResponse<Dimension>
             return label;
         }
 
-        public void setLabel(String label)
+        public void setLabel(final String label)
         {
             this.label = label;
         }
@@ -65,7 +65,7 @@ public final class DimensionsResponse extends GenericJsonResponse<Dimension>
             return href;
         }
 
-        public void setHref(String href)
+        public void setHref(final String href)
         {
             this.href = href;
         }
@@ -75,7 +75,7 @@ public final class DimensionsResponse extends GenericJsonResponse<Dimension>
             return parameter;
         }
 
-        public void setParameter(String parameter)
+        public void setParameter(final String parameter)
         {
             this.parameter = parameter;
         }
@@ -85,7 +85,7 @@ public final class DimensionsResponse extends GenericJsonResponse<Dimension>
             return subdimensions;
         }
 
-        public void setSubdimensions(JsonArray subdimensions)
+        public void setSubdimensions(final JsonArray subdimensions)
         {
             this.subdimensions = subdimensions;
         }

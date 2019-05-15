@@ -15,6 +15,13 @@
  */
 package de.gerdiproject.harvest.fao.constants;
 
+import java.lang.reflect.Type;
+
+import com.google.gson.reflect.TypeToken;
+
+import de.gerdiproject.harvest.fao.json.FaoStatMetadata;
+import de.gerdiproject.harvest.fao.json.GenericJsonResponse;
+
 /**
  * This static class contains download URLs that are used for downloading (meta-) data from FAOSTAT.
  *
@@ -30,6 +37,7 @@ public class FaoDownloaderConstants
     public static final String DIMENSIONS_URL = "%sdimensions/%s/?full=true";
     public static final String SHOW_LIST_SUFFIX = "/?show_lists=true";
 
+    public static final Type METADATA_RESPONSE_TYPE = new TypeToken<GenericJsonResponse<FaoStatMetadata>>() {}.getType();
 
     /**
      * Private constructor, because this is a static class.

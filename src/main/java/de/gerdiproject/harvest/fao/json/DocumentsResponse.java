@@ -50,7 +50,7 @@ public final class DocumentsResponse extends GenericJsonResponse<Document>
             return DomainCode;
         }
 
-        public void setDomainCode(String domainCode)
+        public void setDomainCode(final String domainCode)
         {
             DomainCode = domainCode;
         }
@@ -60,7 +60,7 @@ public final class DocumentsResponse extends GenericJsonResponse<Document>
             return CreatedDate;
         }
 
-        public void setCreatedDate(String createdDate)
+        public void setCreatedDate(final String createdDate)
         {
             CreatedDate = createdDate;
         }
@@ -70,7 +70,7 @@ public final class DocumentsResponse extends GenericJsonResponse<Document>
             return FileName;
         }
 
-        public void setFileName(String fileName)
+        public void setFileName(final String fileName)
         {
             FileName = fileName;
         }
@@ -80,7 +80,7 @@ public final class DocumentsResponse extends GenericJsonResponse<Document>
             return FileTitle;
         }
 
-        public void setFileTitle(String fileTitle)
+        public void setFileTitle(final String fileTitle)
         {
             FileTitle = fileTitle;
         }
@@ -90,7 +90,7 @@ public final class DocumentsResponse extends GenericJsonResponse<Document>
             return FilePath;
         }
 
-        public void setFilePath(String filePath)
+        public void setFilePath(final String filePath)
         {
             FilePath = filePath;
         }

@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.ResourceType;
 import de.gerdiproject.json.datacite.enums.DescriptionType;
@@ -116,7 +115,7 @@ public class FaoDataCiteConstants
      */
     private static Map<String, DescriptionType> createRelevantDescriptions()
     {
-        Map<String, DescriptionType> relavantDescriptions = new HashMap<>();
+        final Map<String, DescriptionType> relavantDescriptions = new HashMap<>();
         relavantDescriptions.put("Data description", DescriptionType.Abstract);
         relavantDescriptions.put("Statistical concepts and definitions", DescriptionType.TechnicalInfo);
         relavantDescriptions.put("Documentation on methodology", DescriptionType.Methods);
@@ -132,7 +131,7 @@ public class FaoDataCiteConstants
      */
     private static WebLink createLogoWebLink()
     {
-        WebLink logoLink = new WebLink(
+        final WebLink logoLink = new WebLink(
             "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/FAO_logo.svg/257px-FAO_logo.svg.png");
         logoLink.setType(WebLinkType.ProviderLogoURL);
         return logoLink;
@@ -146,7 +145,7 @@ public class FaoDataCiteConstants
      */
     private static List<Creator> createCreators()
     {
-        Creator creator = new Creator(new PersonName(PROVIDER, NameType.Organisational));
+        final Creator creator = new Creator(new PersonName(PROVIDER, NameType.Organisational));
         return Arrays.asList(creator);
     }
 
@@ -158,7 +157,7 @@ public class FaoDataCiteConstants
      */
     private static ResourceType createResourceType()
     {
-        ResourceType resType = new ResourceType("CSV", ResourceTypeGeneral.Dataset);
+        final ResourceType resType = new ResourceType("CSV", ResourceTypeGeneral.Dataset);
         return resType;
     }
 }
