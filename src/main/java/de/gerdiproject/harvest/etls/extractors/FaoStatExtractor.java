@@ -27,8 +27,7 @@ import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
-import de.gerdiproject.harvest.fao.json.DocumentsResponse;
-import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
+import de.gerdiproject.harvest.fao.json.FaoDocument;
 import de.gerdiproject.harvest.fao.json.FaoDomain;
 import de.gerdiproject.harvest.fao.json.FaoFilter;
 import de.gerdiproject.harvest.fao.json.FaoMetadata;
@@ -192,10 +191,11 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          *
          * @return an object representation of the JSON server response to a documents request
          */
-        private List<Document> getDocuments(final String domainCode)
+        private List<FaoDocument> getDocuments(final String domainCode)
         {
             final String url = String.format(FaoDownloaderConstants.DOCUMENTS_URL, baseUrl, domainCode);
-            final DocumentsResponse response = httpRequester.getObjectFromUrl(url, DocumentsResponse.class);
+            final GenericJsonResponse<FaoDocument> response =
+                httpRequester.getObjectFromUrl(url, FaoDownloaderConstants.DOCUMENT_RESPONSE_TYPE);
             return response.getData();
         }
 

@@ -20,7 +20,7 @@ import java.util.List;
 
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
-import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
+import de.gerdiproject.harvest.fao.json.FaoDocument;
 import de.gerdiproject.harvest.fao.json.FaoDomain;
 import de.gerdiproject.harvest.fao.json.FaoFilter;
 import de.gerdiproject.harvest.fao.json.FaoMetadata;
@@ -39,7 +39,7 @@ public class FaoStatDomainVO
     private final FaoDomain domain;
     private final List<BulkDownload> bulkDownloads;
     private final List<FaoMetadata> metadata;
-    private final List<Document> documents;
+    private final List<FaoDocument> documents;
     private final List<Dimension> dimensions;
     private final List<FaoFilter> filters;
 }

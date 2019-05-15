@@ -25,7 +25,7 @@ import de.gerdiproject.harvest.etls.FaoStatETL;
 import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
 import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
-import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
+import de.gerdiproject.harvest.fao.json.FaoDocument;
 import de.gerdiproject.harvest.fao.json.FaoDomain;
 import de.gerdiproject.harvest.fao.json.FaoFilter;
 import de.gerdiproject.harvest.fao.json.FaoMetadata;
@@ -274,7 +274,7 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
         webLinks.add(FaoDataCiteConstants.LOGO_WEB_LINK);
 
         // add related documents
-        for (final Document d : source.getDocuments()) {
+        for (final FaoDocument d : source.getDocuments()) {
 
             // filter out the dummy document
             if (d.getFileTitle().equals(FaoDataCiteConstants.TEMPLATE_DOCUMENT_NAME))
