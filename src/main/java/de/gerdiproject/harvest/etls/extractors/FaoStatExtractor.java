@@ -23,8 +23,7 @@ import java.util.List;
 import de.gerdiproject.harvest.etls.AbstractETL;
 import de.gerdiproject.harvest.etls.FaoStatETL;
 import de.gerdiproject.harvest.fao.constants.FaoDownloaderConstants;
-import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
-import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
+import de.gerdiproject.harvest.fao.json.FaoBulkDownload;
 import de.gerdiproject.harvest.fao.json.FaoDimension;
 import de.gerdiproject.harvest.fao.json.FaoDocument;
 import de.gerdiproject.harvest.fao.json.FaoDomain;
@@ -207,10 +206,11 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          *
          * @return an object representation of the JSON server response to a bulkDownloads request
          */
-        private List<BulkDownload> getBulkDownloads(final String domainCode)
+        private List<FaoBulkDownload> getBulkDownloads(final String domainCode)
         {
             final String url = String.format(FaoDownloaderConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
-            final BulkDownloadResponse response = httpRequester.getObjectFromUrl(url, BulkDownloadResponse.class);
+            final GenericJsonResponse<FaoBulkDownload> response =
+                httpRequester.getObjectFromUrl(url, FaoDownloaderConstants.DIMENSION_RESPONSE_TYPE);
             return response.getData();
         }
 

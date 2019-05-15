@@ -24,7 +24,7 @@ import de.gerdiproject.harvest.etls.AbstractETL;
 import de.gerdiproject.harvest.etls.FaoStatETL;
 import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
 import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
-import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
+import de.gerdiproject.harvest.fao.json.FaoBulkDownload;
 import de.gerdiproject.harvest.fao.json.FaoDocument;
 import de.gerdiproject.harvest.fao.json.FaoDomain;
 import de.gerdiproject.harvest.fao.json.FaoFilter;
@@ -226,19 +226,19 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
 
 
     /**
-     * Parses a list of{@linkplain BulkDownload}s, converting each
+     * Parses a list of{@linkplain FaoBulkDownload}s, converting each
      * to a {@linkplain ResearchData}.
      *
      * @param bulkDownloads the bulk downloads of the domain
      *
      * @return a list of downloadable files of a domain
      */
-    private List<ResearchData> parseFiles(final List<BulkDownload> bulkDownloads)
+    private List<ResearchData> parseFiles(final List<FaoBulkDownload> bulkDownloads)
     {
         final List<ResearchData> files = new LinkedList<>();
 
-        for (final BulkDownload bdl : bulkDownloads) {
-            final String url = bdl.getURL();
+        for (final FaoBulkDownload bdl : bulkDownloads) {
+            final String url = bdl.getUrl();
             final String label = bdl.getFileContent();
             final String type = bdl.getFileName().substring(bdl.getFileName().lastIndexOf('.') + 1);
 
