@@ -26,25 +26,25 @@ import lombok.Value;
  * @author Robin Weiss
  */
 @Value
-public final class FaoMetadata 
+public final class FaoMetadata
 {
-        @SerializedName("domain_code")
-        private final String domainCode;
-        
-        @SerializedName("metadata_group_code")
-        private final String metadataGroupCode;
-        
-        @SerializedName("metadata_group_label")
-        private final String metadataGroupLabel;
-        
-        @SerializedName("metadata_code")
-        private final String metadataCode;
-        
-        @SerializedName("metadata_label")
-        private final String metadataLabel;
-        
-        @SerializedName("metadata_text")
-        private final String metadataText;
-        
-        private final int ord;
+    @SerializedName("domain_code")
+    private final String domainCode;
+
+    @SerializedName("metadata_group_code")
+    private final String metadataGroupCode;
+
+    @SerializedName("metadata_group_label")
+    private final String metadataGroupLabel;
+
+    @SerializedName("metadata_code")
+    private final String metadataCode;
+
+    @SerializedName("metadata_label")
+    private final String metadataLabel;
+
+    @SerializedName("metadata_text")
+    private final String metadataText;
+
+    private final int ord;
 }

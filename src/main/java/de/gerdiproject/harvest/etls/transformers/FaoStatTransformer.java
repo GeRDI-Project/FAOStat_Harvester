@@ -26,7 +26,7 @@ import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
 import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
-import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
+import de.gerdiproject.harvest.fao.json.FaoDomain;
 import de.gerdiproject.harvest.fao.json.FaoFilter;
 import de.gerdiproject.harvest.fao.json.FaoMetadata;
 import de.gerdiproject.json.datacite.Contributor;
@@ -116,12 +116,12 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
      *
      * @return a unique identifier of this domain within FAOSTAT
      */
-    private String createIdentifier(final Domain domain)
+    private String createIdentifier(final FaoDomain domain)
     {
         return String.format(
                    FaoDataCiteConstants.SOURCE_ID,
-                   domain.getGroup_code(),
-                   domain.getDomain_code(),
+                   domain.getGroupCode(),
+                   domain.getDomainCode(),
                    language);
     }
 
@@ -201,22 +201,22 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
 
 
     /**
-     * Parses a {@linkplain Domain} object, looking for relevant titles and returning
+     * Parses a {@linkplain FaoDomain} object, looking for relevant titles and returning
      * them in a list.
      *
      * @param domain the domain that is to be parsed
      *
      * @return a list of titles of a domain
      */
-    private List<Title> parseTitles(final Domain domain)
+    private List<Title> parseTitles(final FaoDomain domain)
     {
         final List<Title> titles = new LinkedList<>();
 
-        final Title domainTitle = new Title(domain.getDomain_name());
+        final Title domainTitle = new Title(domain.getDomainName());
         domainTitle.setLang(language);
         titles.add(domainTitle);
 
-        final Title groupTitle = new Title(domain.getGroup_name());
+        final Title groupTitle = new Title(domain.getGroupName());
         groupTitle.setLang(language);
         groupTitle.setType(TitleType.Other);
         titles.add(groupTitle);
@@ -264,9 +264,9 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
     {
         final List<WebLink> webLinks = new LinkedList<>();
         // add view url
-        final String viewUrl = String.format(FaoDataCiteConstants.VIEW_URL, source.getDomain().getDomain_code());
+        final String viewUrl = String.format(FaoDataCiteConstants.VIEW_URL, source.getDomain().getDomainCode());
         final WebLink viewLink = new WebLink(viewUrl);
-        viewLink.setName(source.getDomain().getDomain_name());
+        viewLink.setName(source.getDomain().getDomainName());
         viewLink.setType(WebLinkType.ViewURL);
         webLinks.add(viewLink);
 

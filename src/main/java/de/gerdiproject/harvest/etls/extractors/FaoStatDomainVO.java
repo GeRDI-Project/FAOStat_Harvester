@@ -21,14 +21,14 @@ import java.util.List;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
-import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
+import de.gerdiproject.harvest.fao.json.FaoDomain;
 import de.gerdiproject.harvest.fao.json.FaoFilter;
 import de.gerdiproject.harvest.fao.json.FaoMetadata;
 import lombok.Value;
 
 /**
  * This class is a value object that contains all elements of FAOSTAT server
- * responses regarding a {@linkplain Domain}.
+ * responses regarding a {@linkplain FaoDomain}.
  *
  * @author Robin Weiss
  *
@@ -36,7 +36,7 @@ import lombok.Value;
 @Value
 public class FaoStatDomainVO
 {
-    private final Domain domain;
+    private final FaoDomain domain;
     private final List<BulkDownload> bulkDownloads;
     private final List<FaoMetadata> metadata;
     private final List<Document> documents;

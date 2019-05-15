@@ -28,9 +28,9 @@ import lombok.Value;
 @Value
 public final class FaoFilter
 {
-        private final String code;
-        private final String label;
-        
-        @SerializedName("aggregate_type")
-        private final String aggregate_type;
+    private final String code;
+    private final String label;
+
+    @SerializedName("aggregate_type")
+    private final String aggregate_type;
 }
