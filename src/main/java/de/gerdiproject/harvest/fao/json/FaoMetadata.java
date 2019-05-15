@@ -26,7 +26,7 @@ import lombok.Value;
  * @author Robin Weiss
  */
 @Value
-public final class FaoStatMetadata 
+public final class FaoMetadata 
 {
         @SerializedName("domain_code")
         private final String domainCode;

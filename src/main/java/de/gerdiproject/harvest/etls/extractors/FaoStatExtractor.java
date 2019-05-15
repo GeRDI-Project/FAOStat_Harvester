@@ -31,9 +31,8 @@ import de.gerdiproject.harvest.fao.json.DocumentsResponse;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
 import de.gerdiproject.harvest.fao.json.DomainsResponse;
 import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
-import de.gerdiproject.harvest.fao.json.FaoStatMetadata;
-import de.gerdiproject.harvest.fao.json.FiltersResponse;
-import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
+import de.gerdiproject.harvest.fao.json.FaoFilter;
+import de.gerdiproject.harvest.fao.json.FaoMetadata;
 import de.gerdiproject.harvest.fao.json.GenericJsonResponse;
 import de.gerdiproject.harvest.utils.data.HttpRequester;
 
@@ -128,9 +127,9 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
      *
      * @return an object representation of the JSON server response to a request of the filterUrl
      */
-    private List<Filter> getFilters(final List<Dimension> dimensions, final String domainCode)
+    private List<FaoFilter> getFilters(final List<Dimension> dimensions, final String domainCode)
     {
-        final List<Filter> filters = new LinkedList<>();
+        final List<FaoFilter> filters = new LinkedList<>();
 
         final String filterUrlPrefix = baseUrl.substring(0, baseUrl.length() - 1);
 
@@ -144,7 +143,8 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
             final String filterUrl = filterUrlPrefix + d.getHref() + domainCode + FaoDownloaderConstants.SHOW_LIST_SUFFIX;
 
             // get filters from URL
-            final FiltersResponse response = httpRequester.getObjectFromUrl(filterUrl, FiltersResponse.class);
+            final GenericJsonResponse<FaoFilter> response = 
+                    httpRequester.getObjectFromUrl(filterUrl, FaoDownloaderConstants.FILTER_RESPONSE_TYPE);
 
             if (response != null)
                 filters.addAll(response.getData());
@@ -224,10 +224,10 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          *
          * @return an object representation of the JSON server response to a metadata request
          */
-        private List<FaoStatMetadata> getMetaData(final String domainCode)
+        private List<FaoMetadata> getMetaData(final String domainCode)
         {
             final String url = String.format(FaoDownloaderConstants.METADATA_URL, baseUrl, domainCode);
-            final GenericJsonResponse<FaoStatMetadata> response = 
+            final GenericJsonResponse<FaoMetadata> response = 
                     httpRequester.getObjectFromUrl(url, FaoDownloaderConstants.METADATA_RESPONSE_TYPE);
             return response.getData();
         }

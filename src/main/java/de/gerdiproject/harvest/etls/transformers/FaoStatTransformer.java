@@ -27,8 +27,8 @@ import de.gerdiproject.harvest.fao.constants.FaoDataCiteConstants;
 import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
 import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
-import de.gerdiproject.harvest.fao.json.FaoStatMetadata;
-import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
+import de.gerdiproject.harvest.fao.json.FaoFilter;
+import de.gerdiproject.harvest.fao.json.FaoMetadata;
 import de.gerdiproject.json.datacite.Contributor;
 import de.gerdiproject.json.datacite.DataCiteJson;
 import de.gerdiproject.json.datacite.Date;
@@ -134,11 +134,11 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
      *
      * @return a list of descriptions of a domain
      */
-    private List<Description> parseDescriptions(final List<FaoStatMetadata> metadata)
+    private List<Description> parseDescriptions(final List<FaoMetadata> metadata)
     {
         final List<Description> descriptions = new LinkedList<>();
 
-        for (final FaoStatMetadata m : metadata) {
+        for (final FaoMetadata m : metadata) {
             final String label = m.getMetadataLabel();
             final DescriptionType type = FaoDataCiteConstants.RELEVANT_DESCRIPTIONS.get(label);
 
@@ -162,11 +162,11 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
      *
      * @return a list of dates of a domain
      */
-    private List<AbstractDate> parseDates(final List<FaoStatMetadata> metadata)
+    private List<AbstractDate> parseDates(final List<FaoMetadata> metadata)
     {
         final List<AbstractDate> dates = new LinkedList<>();
 
-        for (final FaoStatMetadata m : metadata) {
+        for (final FaoMetadata m : metadata) {
             final String dateText = m.getMetadataText();
 
             if (dateText == null || dateText.isEmpty())
@@ -291,18 +291,18 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
 
 
     /**
-     * Parses a list of {@linkplain Filter} object, converting each filter term to a {@linkplain Subject}
+     * Parses a list of {@linkplain FaoFilter} object, converting each filter term to a {@linkplain Subject}
      * and returning them in a list.
      *
      * @param filters a list of domain filter categories
      *
      * @return a list of subjects of a domain filter category
      */
-    private List<Subject> parseSubjects(final List<Filter> filters)
+    private List<Subject> parseSubjects(final List<FaoFilter> filters)
     {
         final List<Subject> subjects = new LinkedList<>();
 
-        for (final Filter f : filters) {
+        for (final FaoFilter f : filters) {
             final Subject sub = new Subject(f.getLabel());
             sub.setLang(language);
             subjects.add(sub);
@@ -320,14 +320,14 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
      *
      * @return a list of contributors of a domain
      */
-    private List<Contributor> parseContributors(final List<FaoStatMetadata> metadata)
+    private List<Contributor> parseContributors(final List<FaoMetadata> metadata)
     {
         final List<Contributor> contributors = new LinkedList<>();
 
         PersonName name = null;
         final List<String> affiliations = new LinkedList<>();
 
-        for (final FaoStatMetadata m : metadata) {
+        for (final FaoMetadata m : metadata) {
             if (!m.getMetadataGroupCode().equals("1"))
                 continue;
 

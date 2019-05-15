@@ -19,7 +19,8 @@ import java.lang.reflect.Type;
 
 import com.google.gson.reflect.TypeToken;
 
-import de.gerdiproject.harvest.fao.json.FaoStatMetadata;
+import de.gerdiproject.harvest.fao.json.FaoFilter;
+import de.gerdiproject.harvest.fao.json.FaoMetadata;
 import de.gerdiproject.harvest.fao.json.GenericJsonResponse;
 
 /**
@@ -37,7 +38,8 @@ public class FaoDownloaderConstants
     public static final String DIMENSIONS_URL = "%sdimensions/%s/?full=true";
     public static final String SHOW_LIST_SUFFIX = "/?show_lists=true";
 
-    public static final Type METADATA_RESPONSE_TYPE = new TypeToken<GenericJsonResponse<FaoStatMetadata>>() {}.getType();
+    public static final Type METADATA_RESPONSE_TYPE = new TypeToken<GenericJsonResponse<FaoMetadata>>() {}.getType();
+    public static final Type FILTER_RESPONSE_TYPE = new TypeToken<GenericJsonResponse<FaoFilter>>() {}.getType();
 
     /**
      * Private constructor, because this is a static class.

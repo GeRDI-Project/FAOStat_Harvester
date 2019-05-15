@@ -22,8 +22,9 @@ import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
 import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
 import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
 import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
-import de.gerdiproject.harvest.fao.json.FaoStatMetadata;
-import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
+import de.gerdiproject.harvest.fao.json.FaoFilter;
+import de.gerdiproject.harvest.fao.json.FaoMetadata;
+import lombok.Value;
 
 /**
  * This class is a value object that contains all elements of FAOSTAT server
@@ -32,68 +33,13 @@ import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
  * @author Robin Weiss
  *
  */
+@Value
 public class FaoStatDomainVO
 {
     private final Domain domain;
     private final List<BulkDownload> bulkDownloads;
-    private final List<FaoStatMetadata> metadata;
+    private final List<FaoMetadata> metadata;
     private final List<Document> documents;
     private final List<Dimension> dimensions;
-    private final List<Filter> filters;
-
-    /**
-     * Constructor that requires all values.
-     *
-     * @param domain the domain to which the rest of the values belong
-     * @param bulkdownloads a list of bulk downloads of the domain
-     * @param metadata a list of metadata of the domain
-     * @param documents a list of documents of the domain
-     * @param dimensions a list of dimensions of the domain
-     * @param filters a list of filters of the domain
-     */
-    public FaoStatDomainVO(final Domain domain, final List<BulkDownload> bulkdownloads, final List<FaoStatMetadata> metadata, final List<Document> documents, final List<Dimension> dimensions, final List<Filter> filters)
-    {
-        this.domain = domain;
-        this.bulkDownloads = bulkdownloads;
-        this.metadata = metadata;
-        this.documents = documents;
-        this.dimensions = dimensions;
-        this.filters = filters;
-    }
-
-
-    public Domain getDomain()
-    {
-        return domain;
-    }
-
-
-    public List<BulkDownload> getBulkDownloads()
-    {
-        return bulkDownloads;
-    }
-
-
-    public List<FaoStatMetadata> getMetadata()
-    {
-        return metadata;
-    }
-
-
-    public List<Document> getDocuments()
-    {
-        return documents;
-    }
-
-
-    public List<Dimension> getDimensions()
-    {
-        return dimensions;
-    }
-
-
-    public List<Filter> getFilters()
-    {
-        return filters;
-    }
+    private final List<FaoFilter> filters;
 }
