@@ -41,12 +41,13 @@ import de.gerdiproject.harvest.utils.data.HttpRequester;
  */
 public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
 {
-    private final HttpRequester httpRequester = new HttpRequester();
+    // these protected fields are used by the inner iterator class
+    protected final HttpRequester httpRequester = new HttpRequester();
+    protected Iterator<FaoDomain> domainIterator;
+    protected String baseUrl;
 
     private String version;
-    private Iterator<FaoDomain> domainIterator;
-    private String baseUrl;
-    private int size = -1;
+    private int domainCount = -1;
 
 
     @Override
@@ -66,7 +67,7 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
                                                                   FaoExtractorConstants.DOMAIN_RESPONSE_TYPE);
 
         this.version = getVersion(domainsResponse.getData());
-        this.size = domainsResponse.getData().size();
+        this.domainCount = domainsResponse.getData().size();
         this.domainIterator = domainsResponse.getData().iterator();
     }
 
@@ -82,7 +83,7 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
     @Override
     public int size()
     {
-        return size;
+        return domainCount;
     }
 
 
@@ -114,39 +115,10 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
     }
 
 
-    /**
-     * Retrieves an array of "filters". Each filter is a term that can be used to filter the
-     * dataset of a domain.
-     *
-     * @param dimensions the dimensions of the domain
-     * @param domainCode a unique ID of the domain of which the metadata is to be retrieved
-     *
-     * @return an object representation of the JSON server response to a request of the filterUrl
-     */
-    private List<FaoFilter> getFilters(final List<FaoDimension> dimensions, final String domainCode)
+    @Override
+    public void clear()
     {
-        final List<FaoFilter> filters = new LinkedList<>();
-
-        final String filterUrlPrefix = baseUrl.substring(0, baseUrl.length() - 1);
-
-        for (final FaoDimension d : dimensions) {
-
-            // exclude the pure numbers of the years filter
-            if (d.getId().equals("year"))
-                continue;
-
-            // assemble filter URL
-            final String filterUrl = filterUrlPrefix + d.getHref() + domainCode + FaoExtractorConstants.SHOW_LIST_SUFFIX;
-
-            // get filters from URL
-            final GenericFaoResponse<FaoFilter> response =
-                httpRequester.getObjectFromUrl(filterUrl, FaoExtractorConstants.FILTER_RESPONSE_TYPE);
-
-            if (response != null)
-                filters.addAll(response.getData());
-        }
-
-        return filters;
+        // nothing to clean up
     }
 
 
@@ -246,11 +218,41 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
                 httpRequester.getObjectFromUrl(url, FaoExtractorConstants.DIMENSION_RESPONSE_TYPE);
             return response.getData();
         }
-    }
 
 
-    @Override
-    public void clear()
-    {
+        /**
+         * Retrieves an array of "filters". Each filter is a term that can be used to filter the
+         * dataset of a domain.
+         *
+         * @param dimensions the dimensions of the domain
+         * @param domainCode a unique ID of the domain of which the metadata is to be retrieved
+         *
+         * @return an object representation of the JSON server response to a request of the filterUrl
+         */
+        private List<FaoFilter> getFilters(final List<FaoDimension> dimensions, final String domainCode)
+        {
+            final List<FaoFilter> filters = new LinkedList<>();
+
+            final String filterUrlPrefix = baseUrl.substring(0, baseUrl.length() - 1);
+
+            for (final FaoDimension d : dimensions) {
+
+                // exclude the pure numbers of the years filter
+                if (d.getId().equals("year"))
+                    continue;
+
+                // assemble filter URL
+                final String filterUrl = filterUrlPrefix + d.getHref() + domainCode + FaoExtractorConstants.SHOW_LIST_SUFFIX;
+
+                // get filters from URL
+                final GenericFaoResponse<FaoFilter> response =
+                    httpRequester.getObjectFromUrl(filterUrl, FaoExtractorConstants.FILTER_RESPONSE_TYPE);
+
+                if (response != null)
+                    filters.addAll(response.getData());
+            }
+
+            return filters;
+        }
     }
 }

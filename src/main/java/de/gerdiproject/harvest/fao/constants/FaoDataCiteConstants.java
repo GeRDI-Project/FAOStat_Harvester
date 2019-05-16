@@ -152,7 +152,6 @@ public class FaoDataCiteConstants
      */
     private static ResourceType createResourceType()
     {
-        final ResourceType resType = new ResourceType("CSV", ResourceTypeGeneral.Dataset);
-        return resType;
+        return new ResourceType("CSV", ResourceTypeGeneral.Dataset);
     }
 }

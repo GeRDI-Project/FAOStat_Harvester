@@ -32,5 +32,5 @@ public final class FaoFilter
     private final String label;
 
     @SerializedName("aggregate_type")
-    private final String aggregate_type;
+    private final String aggregateType;
 }
