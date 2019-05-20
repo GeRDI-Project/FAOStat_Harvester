@@ -182,7 +182,7 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
         {
             final String url = String.format(FaoExtractorConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
             final GenericFaoResponse<FaoBulkDownload> response =
-                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.DIMENSION_RESPONSE_TYPE);
+                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.BULK_DOWNLOAD_RESPONSE_TYPE);
             return response.getData();
         }
 
