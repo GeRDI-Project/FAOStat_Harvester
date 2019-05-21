@@ -65,16 +65,4 @@ public final class FaoDomain
 
     @SerializedName("year_next")
     private final String yearNext;
-
-
-    /**
-     * The string is only used to uniquely identify the domain inside a list
-     * to guarantee proper functionality of the
-     * {@linkplain AbstractListHarvester}'s initHash() function.
-     */
-    @Override
-    public String toString()
-    {
-        return groupCode + domainCode + dateUpdate;
-    }
 }

@@ -355,13 +355,9 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
     }
 
 
-    /* (non-Javadoc)
-     * @see de.gerdiproject.harvest.etls.transformers.ITransformer#clear()
-     */
     @Override
     public void clear()
     {
-        // TODO Auto-generated method stub
-
+        // nothing to clean up
     }
 }
