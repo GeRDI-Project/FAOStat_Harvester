@@ -15,33 +15,21 @@
  */
 package de.gerdiproject.harvest.fao.json;
 
+import com.google.gson.annotations.SerializedName;
+
+import lombok.Value;
+
 /**
  * This class represents the the metadata object, that is part of every JSON response from FaoSTAT.
  *
  * @author Robin Weiss
  */
-public final class GenericJsonResponseMetadata
+@Value
+public final class GenericFaoResponseMetadata
 {
-    private double processing_time;
-    private String output_type;
+    @SerializedName("processing_time")
+    private final double processingTime;
 
-    public double getProcessing_time()
-    {
-        return processing_time;
-    }
-
-    public void setProcessing_time(double processing_time)
-    {
-        this.processing_time = processing_time;
-    }
-
-    public String getOutput_type()
-    {
-        return output_type;
-    }
-
-    public void setOutput_type(String output_type)
-    {
-        this.output_type = output_type;
-    }
+    @SerializedName("output_type")
+    private final String outputType;
 }

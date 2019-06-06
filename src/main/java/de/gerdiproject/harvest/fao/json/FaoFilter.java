@@ -15,7 +15,9 @@
  */
 package de.gerdiproject.harvest.fao.json;
 
-import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
+import com.google.gson.annotations.SerializedName;
+
+import lombok.Value;
 
 /**
  * This class represents the JSON response of a FaoSTAT codes request.
@@ -23,42 +25,12 @@ import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
  *
  * @author Robin Weiss
  */
-public final class FiltersResponse extends GenericJsonResponse<Filter>
+@Value
+public final class FaoFilter
 {
-    public final static class Filter
-    {
-        private String code;
-        private String label;
-        private String aggregate_type;
+    private final String code;
+    private final String label;
 
-        public String getCode()
-        {
-            return code;
-        }
-
-        public void setCode(String code)
-        {
-            this.code = code;
-        }
-
-        public String getLabel()
-        {
-            return label;
-        }
-
-        public void setLabel(String label)
-        {
-            this.label = label;
-        }
-
-        public String getAggregate_type()
-        {
-            return aggregate_type;
-        }
-
-        public void setAggregate_type(String aggregate_type)
-        {
-            this.aggregate_type = aggregate_type;
-        }
-    }
+    @SerializedName("aggregate_type")
+    private final String aggregateType;
 }
