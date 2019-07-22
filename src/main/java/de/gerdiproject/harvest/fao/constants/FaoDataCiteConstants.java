@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import de.gerdiproject.harvest.fao.json.MetadataResponse;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.ResourceType;
 import de.gerdiproject.json.datacite.enums.DescriptionType;
@@ -33,6 +32,8 @@ import de.gerdiproject.json.datacite.extension.generic.WebLink;
 import de.gerdiproject.json.datacite.extension.generic.constants.ResearchDisciplineConstants;
 import de.gerdiproject.json.datacite.extension.generic.enums.WebLinkType;
 import de.gerdiproject.json.datacite.nested.PersonName;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * This static class contains constants that are used for creating DataCite
@@ -40,6 +41,7 @@ import de.gerdiproject.json.datacite.nested.PersonName;
  *
  * @author Robin Weiss
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FaoDataCiteConstants
 {
     // source id
@@ -87,14 +89,6 @@ public class FaoDataCiteConstants
 
 
     /**
-     * Private constructor, because this is a static class.
-     */
-    private FaoDataCiteConstants()
-    {
-    }
-
-
-    /**
      * @return
      */
     private static List<AbstractResearch> createResearchDisciplines()
@@ -116,7 +110,7 @@ public class FaoDataCiteConstants
      */
     private static Map<String, DescriptionType> createRelevantDescriptions()
     {
-        Map<String, DescriptionType> relavantDescriptions = new HashMap<>();
+        final Map<String, DescriptionType> relavantDescriptions = new HashMap<>();
         relavantDescriptions.put("Data description", DescriptionType.Abstract);
         relavantDescriptions.put("Statistical concepts and definitions", DescriptionType.TechnicalInfo);
         relavantDescriptions.put("Documentation on methodology", DescriptionType.Methods);
@@ -132,7 +126,7 @@ public class FaoDataCiteConstants
      */
     private static WebLink createLogoWebLink()
     {
-        WebLink logoLink = new WebLink(
+        final WebLink logoLink = new WebLink(
             "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/FAO_logo.svg/257px-FAO_logo.svg.png");
         logoLink.setType(WebLinkType.ProviderLogoURL);
         return logoLink;
@@ -146,7 +140,7 @@ public class FaoDataCiteConstants
      */
     private static List<Creator> createCreators()
     {
-        Creator creator = new Creator(new PersonName(PROVIDER, NameType.Organisational));
+        final Creator creator = new Creator(new PersonName(PROVIDER, NameType.Organisational));
         return Arrays.asList(creator);
     }
 
@@ -158,7 +152,6 @@ public class FaoDataCiteConstants
      */
     private static ResourceType createResourceType()
     {
-        ResourceType resType = new ResourceType("CSV", ResourceTypeGeneral.Dataset);
-        return resType;
+        return new ResourceType("CSV", ResourceTypeGeneral.Dataset);
     }
 }

@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.harvest.fao.constants;
+package de.gerdiproject.harvest.fao.json;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import java.util.List;
+
+import lombok.Value;
 
 /**
- * This static class contains constants of FAO harvester parameters.
+ * This class represents a generic FaoSTAT JSON response.
+ *
+ * @param <T> the type of data, carried by the response
  *
  * @author Robin Weiss
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FaoParameterConstants
+@Value
+public class GenericFaoResponse <T>
 {
-    public static final String LANGUAGE_KEY = "language";
-    public static final String LANGUAGE_DEFAULT = "en";
+    private final GenericFaoResponseMetadata metadata;
+    private final List<T> data;
 }

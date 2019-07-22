@@ -15,38 +15,26 @@
  */
 package de.gerdiproject.harvest.fao.json;
 
-import java.util.List;
+
+import com.google.gson.JsonArray;
+
+import lombok.Value;
+
 
 /**
- * This class represents a generic FaoSTAT JSON response.
- *
- * @param <T> the type of data, carried by the response
+ * This class represents the JSON response of a FaoSTAT dimensions request.
+ * e.g. http://fenixservices.fao.org/faostat/api/v1/en/dimensions/QC/?full=true
  *
  * @author Robin Weiss
  */
-public class GenericJsonResponse <T>
+@Value
+public final class FaoDimension
 {
-    private GenericJsonResponseMetadata metadata;
-    private List<T> data;
+    private final String id;
+    private final String label;
+    private final String href;
+    private final String parameter;
 
-
-    public GenericJsonResponseMetadata getMetadata()
-    {
-        return metadata;
-    }
-
-    public void setMetadata(GenericJsonResponseMetadata metadata)
-    {
-        this.metadata = metadata;
-    }
-
-    public List<T> getData()
-    {
-        return data;
-    }
-
-    public void setData(List<T> data)
-    {
-        this.data = data;
-    }
+    // these contain data that is irrelevant to the harvest.
+    private final JsonArray subdimensions;
 }

@@ -15,12 +15,27 @@
  */
 package de.gerdiproject.harvest.fao.constants;
 
+import java.lang.reflect.Type;
+
+import com.google.gson.reflect.TypeToken;
+
+import de.gerdiproject.harvest.fao.json.FaoBulkDownload;
+import de.gerdiproject.harvest.fao.json.FaoDimension;
+import de.gerdiproject.harvest.fao.json.FaoDocument;
+import de.gerdiproject.harvest.fao.json.FaoDomain;
+import de.gerdiproject.harvest.fao.json.FaoFilter;
+import de.gerdiproject.harvest.fao.json.FaoMetadata;
+import de.gerdiproject.harvest.fao.json.GenericFaoResponse;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * This static class contains download URLs that are used for downloading (meta-) data from FAOSTAT.
  *
  * @author Robin Weiss
  */
-public class FaoDownloaderConstants
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class FaoExtractorConstants
 {
     public static final String BASE_URL = "http://fenixservices.fao.org/faostat/api/v1/%s/";
     public static final String GROUPS_AND_DOMAINS_URL = "groupsanddomains?section=download";
@@ -30,11 +45,10 @@ public class FaoDownloaderConstants
     public static final String DIMENSIONS_URL = "%sdimensions/%s/?full=true";
     public static final String SHOW_LIST_SUFFIX = "/?show_lists=true";
 
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private FaoDownloaderConstants()
-    {
-    }
+    public static final Type METADATA_RESPONSE_TYPE = new TypeToken<GenericFaoResponse<FaoMetadata>>() {} .getType();
+    public static final Type FILTER_RESPONSE_TYPE = new TypeToken<GenericFaoResponse<FaoFilter>>() {} .getType();
+    public static final Type DOMAIN_RESPONSE_TYPE = new TypeToken<GenericFaoResponse<FaoDomain>>() {} .getType();
+    public static final Type DOCUMENT_RESPONSE_TYPE = new TypeToken<GenericFaoResponse<FaoDocument>>() {} .getType();
+    public static final Type DIMENSION_RESPONSE_TYPE = new TypeToken<GenericFaoResponse<FaoDimension>>() {} .getType();
+    public static final Type BULK_DOWNLOAD_RESPONSE_TYPE = new TypeToken<GenericFaoResponse<FaoBulkDownload>>() {} .getType();
 }
