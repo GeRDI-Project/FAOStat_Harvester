@@ -22,56 +22,52 @@ import java.util.List;
 
 import de.gerdiproject.harvest.etls.AbstractETL;
 import de.gerdiproject.harvest.etls.FaoStatETL;
-import de.gerdiproject.harvest.fao.constants.FaoDownloaderConstants;
-import de.gerdiproject.harvest.fao.json.BulkDownloadResponse;
-import de.gerdiproject.harvest.fao.json.BulkDownloadResponse.BulkDownload;
-import de.gerdiproject.harvest.fao.json.DimensionsResponse;
-import de.gerdiproject.harvest.fao.json.DimensionsResponse.Dimension;
-import de.gerdiproject.harvest.fao.json.DocumentsResponse;
-import de.gerdiproject.harvest.fao.json.DocumentsResponse.Document;
-import de.gerdiproject.harvest.fao.json.DomainsResponse;
-import de.gerdiproject.harvest.fao.json.DomainsResponse.Domain;
-import de.gerdiproject.harvest.fao.json.FiltersResponse;
-import de.gerdiproject.harvest.fao.json.FiltersResponse.Filter;
-import de.gerdiproject.harvest.fao.json.MetadataResponse;
-import de.gerdiproject.harvest.fao.json.MetadataResponse.Metadata;
+import de.gerdiproject.harvest.fao.constants.FaoExtractorConstants;
+import de.gerdiproject.harvest.fao.json.FaoBulkDownload;
+import de.gerdiproject.harvest.fao.json.FaoDimension;
+import de.gerdiproject.harvest.fao.json.FaoDocument;
+import de.gerdiproject.harvest.fao.json.FaoDomain;
+import de.gerdiproject.harvest.fao.json.FaoFilter;
+import de.gerdiproject.harvest.fao.json.FaoMetadata;
+import de.gerdiproject.harvest.fao.json.GenericFaoResponse;
 import de.gerdiproject.harvest.utils.data.HttpRequester;
 
 /**
  * This {@linkplain JsonArrayExtractor} implementation extracts all
- * {@linkplain Domain}s of FAOSTAT.<br>
+ * {@linkplain FaoDomain}s of FAOSTAT.<br>
  * (http://fenixservices.fao.org/faostat/api/v1/en/groupsanddomains)
  *
  * @author Robin Weiss
  */
 public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
 {
-    private final HttpRequester httpRequester = new HttpRequester();
+    // these protected fields are used by the inner iterator class
+    protected final HttpRequester httpRequester = new HttpRequester();
+    protected Iterator<FaoDomain> domainIterator;
+    protected String baseUrl;
 
     private String version;
-    private Iterator<Domain> domainIterator;
-    private String baseUrl;
-    private int size = -1;
+    private int domainCount = -1;
 
 
     @Override
-    public void init(AbstractETL<?, ?> etl)
+    public void init(final AbstractETL<?, ?> etl)
     {
         super.init(etl);
 
         this.httpRequester.setCharset(etl.getCharset());
         this.baseUrl = String.format(
-                           FaoDownloaderConstants.BASE_URL,
+                           FaoExtractorConstants.BASE_URL,
                            ((FaoStatETL)etl).getLanguage()
                        );
 
         // get list of all domains
-        final DomainsResponse domainsResponse = httpRequester.getObjectFromUrl(
-                                                    baseUrl + FaoDownloaderConstants.GROUPS_AND_DOMAINS_URL,
-                                                    DomainsResponse.class);
+        final GenericFaoResponse<FaoDomain> domainsResponse = httpRequester.getObjectFromUrl(
+                                                                  baseUrl + FaoExtractorConstants.GROUPS_AND_DOMAINS_URL,
+                                                                  FaoExtractorConstants.DOMAIN_RESPONSE_TYPE);
 
         this.version = getVersion(domainsResponse.getData());
-        this.size = domainsResponse.getData().size();
+        this.domainCount = domainsResponse.getData().size();
         this.domainIterator = domainsResponse.getData().iterator();
     }
 
@@ -87,7 +83,7 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
     @Override
     public int size()
     {
-        return size;
+        return domainCount;
     }
 
 
@@ -106,56 +102,28 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
      *
      * @return a unique version string for all domains
      */
-    private String getVersion(List<Domain> domains)
+    private String getVersion(final List<FaoDomain> domains)
     {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
 
-        for (Domain d : domains) {
-            if (d.getDate_update() != null)
-                sb.append(d.getDate_update());
+        for (final FaoDomain d : domains) {
+            if (d.getDateUpdate() != null)
+                sb.append(d.getDateUpdate());
         }
 
         return sb.toString();
     }
 
 
-    /**
-     * Retrieves an array of "filters". Each filter is a term that can be used to filter the
-     * dataset of a domain.
-     *
-     * @param dimensions the dimensions of the domain
-     * @param domainCode a unique ID of the domain of which the metadata is to be retrieved
-     *
-     * @return an object representation of the JSON server response to a request of the filterUrl
-     */
-    private List<Filter> getFilters(List<Dimension> dimensions, String domainCode)
+    @Override
+    public void clear()
     {
-        final List<Filter> filters = new LinkedList<>();
-
-        final String filterUrlPrefix = baseUrl.substring(0, baseUrl.length() - 1);
-
-        for (Dimension d : dimensions) {
-
-            // exclude the pure numbers of the years filter
-            if (d.getId().equals("year"))
-                continue;
-
-            // assemble filter URL
-            final String filterUrl = filterUrlPrefix + d.getHref() + domainCode + FaoDownloaderConstants.SHOW_LIST_SUFFIX;
-
-            // get filters from URL
-            final FiltersResponse response = httpRequester.getObjectFromUrl(filterUrl, FiltersResponse.class);
-
-            if (response != null)
-                filters.addAll(response.getData());
-        }
-
-        return filters;
+        // nothing to clean up
     }
 
 
     /**
-     * This Iterator iterates through {@linkplain Domain}s and downloads additional metadata
+     * This Iterator iterates through {@linkplain FaoDomain}s and downloads additional metadata
      * in order to assemble a {@linkplain FaoStatDomainVO}.
      *
      * @author Robin Weiss
@@ -172,9 +140,9 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
         @Override
         public FaoStatDomainVO next()
         {
-            final Domain domain = domainIterator.next();
-            final String domainCode = domain.getDomain_code();
-            final List<Dimension> dimensions = getDimensions(domainCode);
+            final FaoDomain domain = domainIterator.next();
+            final String domainCode = domain.getDomainCode();
+            final List<FaoDimension> dimensions = getDimensions(domainCode);
 
             return new FaoStatDomainVO(
                        domain,
@@ -193,10 +161,11 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          *
          * @return an object representation of the JSON server response to a documents request
          */
-        private List<Document> getDocuments(String domainCode)
+        private List<FaoDocument> getDocuments(final String domainCode)
         {
-            String url = String.format(FaoDownloaderConstants.DOCUMENTS_URL, baseUrl, domainCode);
-            DocumentsResponse response = httpRequester.getObjectFromUrl(url, DocumentsResponse.class);
+            final String url = String.format(FaoExtractorConstants.DOCUMENTS_URL, baseUrl, domainCode);
+            final GenericFaoResponse<FaoDocument> response =
+                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.DOCUMENT_RESPONSE_TYPE);
             return response.getData();
         }
 
@@ -209,10 +178,11 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          *
          * @return an object representation of the JSON server response to a bulkDownloads request
          */
-        private List<BulkDownload> getBulkDownloads(String domainCode)
+        private List<FaoBulkDownload> getBulkDownloads(final String domainCode)
         {
-            String url = String.format(FaoDownloaderConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
-            BulkDownloadResponse response = httpRequester.getObjectFromUrl(url, BulkDownloadResponse.class);
+            final String url = String.format(FaoExtractorConstants.BULK_DOWNLOADS_URL, baseUrl, domainCode);
+            final GenericFaoResponse<FaoBulkDownload> response =
+                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.BULK_DOWNLOAD_RESPONSE_TYPE);
             return response.getData();
         }
 
@@ -224,10 +194,11 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          *
          * @return an object representation of the JSON server response to a metadata request
          */
-        private List<Metadata> getMetaData(String domainCode)
+        private List<FaoMetadata> getMetaData(final String domainCode)
         {
-            String url = String.format(FaoDownloaderConstants.METADATA_URL, baseUrl, domainCode);
-            MetadataResponse response = httpRequester.getObjectFromUrl(url, MetadataResponse.class);
+            final String url = String.format(FaoExtractorConstants.METADATA_URL, baseUrl, domainCode);
+            final GenericFaoResponse<FaoMetadata> response =
+                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.METADATA_RESPONSE_TYPE);
             return response.getData();
         }
 
@@ -240,11 +211,48 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
          *
          * @return an object representation of the JSON server response to a dimensions request
          */
-        private List<Dimension> getDimensions(String domainCode)
+        private List<FaoDimension> getDimensions(final String domainCode)
         {
-            String url = String.format(FaoDownloaderConstants.DIMENSIONS_URL, baseUrl, domainCode);
-            DimensionsResponse response = httpRequester.getObjectFromUrl(url, DimensionsResponse.class);
+            final String url = String.format(FaoExtractorConstants.DIMENSIONS_URL, baseUrl, domainCode);
+            final GenericFaoResponse<FaoDimension> response =
+                httpRequester.getObjectFromUrl(url, FaoExtractorConstants.DIMENSION_RESPONSE_TYPE);
             return response.getData();
+        }
+
+
+        /**
+         * Retrieves an array of "filters". Each filter is a term that can be used to filter the
+         * dataset of a domain.
+         *
+         * @param dimensions the dimensions of the domain
+         * @param domainCode a unique ID of the domain of which the metadata is to be retrieved
+         *
+         * @return an object representation of the JSON server response to a request of the filterUrl
+         */
+        private List<FaoFilter> getFilters(final List<FaoDimension> dimensions, final String domainCode)
+        {
+            final List<FaoFilter> filters = new LinkedList<>();
+
+            final String filterUrlPrefix = baseUrl.substring(0, baseUrl.length() - 1);
+
+            for (final FaoDimension d : dimensions) {
+
+                // exclude the pure numbers of the years filter
+                if (d.getId().equals("year"))
+                    continue;
+
+                // assemble filter URL
+                final String filterUrl = filterUrlPrefix + d.getHref() + domainCode + FaoExtractorConstants.SHOW_LIST_SUFFIX;
+
+                // get filters from URL
+                final GenericFaoResponse<FaoFilter> response =
+                    httpRequester.getObjectFromUrl(filterUrl, FaoExtractorConstants.FILTER_RESPONSE_TYPE);
+
+                if (response != null)
+                    filters.addAll(response.getData());
+            }
+
+            return filters;
         }
     }
 }
