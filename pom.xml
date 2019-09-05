@@ -3,22 +3,21 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 		 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
 		<groupId>de.gerdi-project</groupId>
 		<artifactId>GeRDI-parent</artifactId>
-		<version>4.0.2-SNAPSHOT</version>
+		<version>4.0.2</version>
 	</parent>
 
 	<artifactId>FaoStat-HarvesterService</artifactId>
-	<version>8.0.0-SNAPSHOT</version>
+	<version>8.0.0</version>
 	<packaging>war</packaging>
 	<name>FAOSTAT Harvester Service</name>
 	<description>This is a restful harvester for retrieving data from: www.fao.org/faostat/en/#data</description>
 	<inceptionYear>2017</inceptionYear>
 
 	<properties>
-		<restfulharvester.dependency.version>8.0.0-SNAPSHOT</restfulharvester.dependency.version>
+		<restfulharvester.dependency.version>8.0.0</restfulharvester.dependency.version>
 	</properties>
 
 	<dependencies>
