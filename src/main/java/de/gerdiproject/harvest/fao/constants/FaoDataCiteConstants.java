@@ -48,18 +48,17 @@ public class FaoDataCiteConstants
     // source id
     public static final String SOURCE_ID = "%s_%s_%s";
 
+    // SOURCE
+    public static final Publisher PROVIDER = new Publisher("Food and Agriculture Organization of the United Nations (FAO)", "en");
+    public static final String PROVIDER_URI = "http://www.fao.org/faostat/en/#home";
+    public static final String REPOSITORY_ID = "FAOSTAT";
+    public static final List<AbstractResearch> DISCIPLINES = createResearchDisciplines();
 
     // RESOURCE TYPE
     public static final ResourceType RESOURCE_TYPE = createResourceType();
 
     // CREATOR
     public static final List<Creator> CREATORS = createCreators();
-
-    // SOURCE
-    public static final Publisher PROVIDER = new Publisher("Food and Agriculture Organization of the United Nations (FAO)", "en");
-    public static final String PROVIDER_URI = "http://www.fao.org/faostat/en/#home";
-    public static final String REPOSITORY_ID = "FAOSTAT";
-    public static final List<AbstractResearch> DISCIPLINES = createResearchDisciplines();
 
     // CONTRIBUTORS
     public static final String METADATA_CONTACT_NAME = "Contact name";
