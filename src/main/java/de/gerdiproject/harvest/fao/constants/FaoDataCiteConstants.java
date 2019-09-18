@@ -32,6 +32,7 @@ import de.gerdiproject.json.datacite.extension.generic.WebLink;
 import de.gerdiproject.json.datacite.extension.generic.constants.ResearchDisciplineConstants;
 import de.gerdiproject.json.datacite.extension.generic.enums.WebLinkType;
 import de.gerdiproject.json.datacite.nested.PersonName;
+import de.gerdiproject.json.datacite.nested.Publisher;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -47,18 +48,17 @@ public class FaoDataCiteConstants
     // source id
     public static final String SOURCE_ID = "%s_%s_%s";
 
+    // SOURCE
+    public static final Publisher PROVIDER = new Publisher("Food and Agriculture Organization of the United Nations (FAO)", "en");
+    public static final String PROVIDER_URI = "http://www.fao.org/faostat/en/#home";
+    public static final String REPOSITORY_ID = "FAOSTAT";
+    public static final List<AbstractResearch> DISCIPLINES = createResearchDisciplines();
 
     // RESOURCE TYPE
     public static final ResourceType RESOURCE_TYPE = createResourceType();
 
     // CREATOR
     public static final List<Creator> CREATORS = createCreators();
-
-    // SOURCE
-    public static final String PROVIDER = "Food and Agriculture Organization of the United Nations (FAO)";
-    public static final String PROVIDER_URI = "http://www.fao.org/faostat/en/#home";
-    public static final String REPOSITORY_ID = "FAOSTAT";
-    public static final List<AbstractResearch> DISCIPLINES = createResearchDisciplines();
 
     // CONTRIBUTORS
     public static final String METADATA_CONTACT_NAME = "Contact name";
@@ -140,7 +140,7 @@ public class FaoDataCiteConstants
      */
     private static List<Creator> createCreators()
     {
-        final Creator creator = new Creator(new PersonName(PROVIDER, NameType.Organisational));
+        final Creator creator = new Creator(new PersonName(PROVIDER.getValue(), NameType.Organisational));
         return Arrays.asList(creator);
     }
 

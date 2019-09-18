@@ -45,6 +45,7 @@ import de.gerdiproject.json.datacite.enums.TitleType;
 import de.gerdiproject.json.datacite.extension.generic.ResearchData;
 import de.gerdiproject.json.datacite.extension.generic.WebLink;
 import de.gerdiproject.json.datacite.extension.generic.enums.WebLinkType;
+import de.gerdiproject.json.datacite.nested.Affiliation;
 import de.gerdiproject.json.datacite.nested.PersonName;
 
 /**
@@ -325,7 +326,7 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
         final List<Contributor> contributors = new LinkedList<>();
 
         PersonName name = null;
-        final List<String> affiliations = new LinkedList<>();
+        final List<Affiliation> affiliations = new LinkedList<>();
 
         for (final FaoMetadata m : metadata) {
             if (!m.getMetadataGroupCode().equals("1"))
@@ -337,7 +338,7 @@ public class FaoStatTransformer extends AbstractIteratorTransformer<FaoStatDomai
                     break;
 
                 case FaoDataCiteConstants.METADATA_CONTACT_ORGANISATION:
-                    affiliations.add(m.getMetadataText());
+                    affiliations.add(new Affiliation(m.getMetadataText()));
                     break;
 
                 default:
