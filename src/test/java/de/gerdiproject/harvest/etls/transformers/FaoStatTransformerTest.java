@@ -25,6 +25,7 @@ import de.gerdiproject.harvest.FaoStatContextListener;
 import de.gerdiproject.harvest.application.ContextListener;
 import de.gerdiproject.harvest.etls.FaoStatETL;
 import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
+import de.gerdiproject.harvest.etls.transformers.FaoStatTransformer;
 import de.gerdiproject.harvest.utils.data.DiskIO;
 import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.DataCiteJson;
@@ -65,7 +66,7 @@ public class FaoStatTransformerTest extends AbstractIteratorTransformerTest<FaoS
     @Override
     protected FaoStatDomainVO getMockedInput()
     {
-        final File resource = new File(getResourceDirectory(), "FaoStatTransformer_input.json");
+        final File resource = new File(getResourceDirectory(), "input.json");
         return diskReader.getObject(resource, FaoStatDomainVO.class);
     }
 
@@ -73,7 +74,7 @@ public class FaoStatTransformerTest extends AbstractIteratorTransformerTest<FaoS
     @Override
     protected DataCiteJson getExpectedOutput()
     {
-        final File resource = new File(getResourceDirectory(), "FaoStatTransformer_output.json");
+        final File resource = new File(getResourceDirectory(), "output.json");
         return diskReader.getObject(resource, DataCiteJson.class);
     }
 }
