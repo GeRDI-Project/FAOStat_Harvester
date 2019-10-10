@@ -17,7 +17,7 @@
 	<inceptionYear>2017</inceptionYear>
 
 	<properties>
-		<restfulharvester.dependency.version>8.1.1</restfulharvester.dependency.version>
+		<restfulharvester.dependency.version>8.1.5</restfulharvester.dependency.version>
 	</properties>
 
 	<dependencies>
@@ -25,6 +25,13 @@
 			<groupId>de.gerdi-project</groupId>
 			<artifactId>RestfulHarvester-Library</artifactId>
 			<version>${restfulharvester.dependency.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.gerdi-project</groupId>
+			<artifactId>RestfulHarvester-Library</artifactId>
+			<version>${restfulharvester.dependency.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
