@@ -89,7 +89,9 @@ public class FaoDataCiteConstants
 
 
     /**
-     * @return
+     * Retrieves a list of research disciplines to which FAOSTAT belongs.
+     *
+     * @return a list of research disciplines to which FAOSTAT belongs
      */
     private static List<AbstractResearch> createResearchDisciplines()
     {

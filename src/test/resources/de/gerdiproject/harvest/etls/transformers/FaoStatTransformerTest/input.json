@@ -1,601 +1,181 @@
 {
 	"domain" : {
-		"group_code" : "Q",
-		"group_name" : "Production",
-		"domain_code" : "QC",
-		"domain_name" : "Crops",
-		"date_update" : "2018-05-28",
-		"note_update" : "minor revision",
-		"release_current" : "2017-12-15 / 2018-05-28",
-		"state_current" : "final",
-		"year_current" : "2016",
-		"release_next" : "2018-12-31",
-		"state_next" : "preliminary",
-		"year_next" : "2017"
+		"group_code" : "X",
+		"group_name" : "MockedGroup",
+		"domain_code" : "ABC",
+		"domain_name" : "MockedDomain",
+		"date_update" : "2121-12-21",
+		"note_update" : "mocked update",
+		"release_current" : "2000-01-01 / 2020-02-02",
+		"state_current" : "currentMockedState",
+		"year_current" : "2020",
+		"release_next" : "3000-03-03",
+		"state_next" : "nextMockedState",
+		"year_next" : "3000"
 	},
 	"bulkDownloads" : [
 		{
-			"DomainCode":"QC",
-			"Source":"Production/Crops",
-			"FileName":"Production_Crops_E_All_Data.zip",
-			"FileContent":"All Data",
-			"CreatedDate":"2018-05-28 13:07:11.04",
-			"FileSize":7556,"FileSizeUnit":"KB",
-			"Type":"All",
-			"URL":"http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Data.zip"
+			"DomainCode" : "ABC",
+			"Source" : "MockedGroup/MockedDomain",
+			"FileName" : "MockedData.zip",
+			"FileContent" : "Mocked Data",
+			"CreatedDate" : "2001-02-03 04:05:06.07",
+			"FileSize":12345,"FileSizeUnit" : "MB",
+			"Type" : "Mock",
+			"URL" : "http://www.mock.ed/bulkdownloads/MockedData.zip"
 		},
 		{
-			"DomainCode":"QC",
-			"Source":"Production/Crops",
-			"FileName":"Production_Crops_E_All_Data_(Normalized).zip",
-			"FileContent":"All Data Normalized",
-			"CreatedDate":"2018-05-28 12:23:10.043",
-			"FileSize":18393,"FileSizeUnit":"KB",
-			"Type":"AllNorm",
-			"URL":"http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Data_(Normalized).zip"
-		},
-		{
-			"DomainCode":"QC",
-			"Source":"Production/Crops",
-			"FileName":"Production_Crops_E_All_Area_Groups.zip",
-			"FileContent":"All Area Groups",
-			"CreatedDate":"2018-05-28 13:06:51.647",
-			"FileSize":2384,"FileSizeUnit":"KB",
-			"Type":"Group",
-			"URL":"http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Area_Groups.zip"
+			"DomainCode" : "ABC",
+			"Source" : "MockedGroup/MockedDomain",
+			"FileName" : "MoreMockedData.zip",
+			"FileContent" : "Moar Mocked Data",
+			"CreatedDate" : "2003-02-01 01:02:03.04",
+			"FileSize":54321,"FileSizeUnit" : "MB",
+			"Type" : "Mockingbird",
+			"URL" : "http://www.mock.ed/bulkdownloads/MoreMockedData.zip"
 		}
 	],
 	"metadata" : [
 		{
-			"domain_code":"QC",
-			"metadata_group_code":"1",
-			"metadata_group_label":"Contacts",
-			"metadata_code":"1.1",
-			"metadata_label":"Contact organisation",
-			"metadata_text":"Food and Agriculture Organization of the United Nations (FAO)",
+			"domain_code" : "ABC",
+			"metadata_group_code" : "1",
+			"metadata_group_label" : "Contacts",
+			"metadata_code" : "1.1",
+			"metadata_label" : "Contact organisation",
+			"metadata_text" : "Mocked Contact Organisation",
 			"ord":110
 		},
 		{
-			"domain_code":"QC",
-			"metadata_group_code":"1",
-			"metadata_group_label":"Contacts",
-			"metadata_code":"1.2",
-			"metadata_label":"Contact organisation unit",
-			"metadata_text":"Statistics Division (ESS)",
+			"domain_code" : "ABC",
+			"metadata_group_code" : "1",
+			"metadata_group_label" : "Contacts",
+			"metadata_code" : "1.2",
+			"metadata_label" : "Contact organisation unit",
+			"metadata_text" : "Mocked Contact Division",
 			"ord":120
 		},
 		{
-			"domain_code":"QC",
-			"metadata_group_code":"1",
-			"metadata_group_label":"Contacts",
-			"metadata_code":"1.3",
-			"metadata_label":"Contact name",
-			"metadata_text":"Mr. Salar Tayyib",
+			"domain_code" : "ABC",
+			"metadata_group_code" : "1",
+			"metadata_group_label" : "Contacts",
+			"metadata_code" : "1.3",
+			"metadata_label" : "Contact name",
+			"metadata_text" : "Mr. Mock van Mockmock",
 			"ord":130
 		},
 		{
-			"domain_code":"QC",
-			"metadata_group_code":"1",
-			"metadata_group_label":"Contacts",
-			"metadata_code":"1.4",
-			"metadata_label":"Contact person function",
-			"metadata_text":"Team Leader/Senior Statistician",
+			"domain_code" : "ABC",
+			"metadata_group_code" : "1",
+			"metadata_group_label" : "Contacts",
+			"metadata_code" : "1.4",
+			"metadata_label" : "Contact person function",
+			"metadata_text" : "Junior Mockperson",
 			"ord":140
 		},
 		{
-			"domain_code":"QC",
-			"metadata_group_code":"3",
-			"metadata_group_label":"Main Characteristics data",
-			"metadata_code":"3.8",
-			"metadata_label":"Time coverage",
-			"metadata_text":"1961 – 2014 (up to 2013 for Seed)",
+			"domain_code" : "ABC",
+			"metadata_group_code" : "3",
+			"metadata_group_label" : "Main Characteristics data",
+			"metadata_code" : "3.8",
+			"metadata_label" : "Time coverage",
+			"metadata_text" : "2000 – 3000 (oh yeah!)",
 			"ord":380
 		},
 		{
-			"domain_code":"QC",
-			"metadata_group_code":"3",
-			"metadata_group_label":"Main Characteristics data",
-			"metadata_code":"3.4",
-			"metadata_label":"Statistical concepts and definitions",
-			"metadata_text":"\u003cp\u003e\u003cstrong\u003eAreas\u003c/strong\u003e refer to the area under cultivation. Area under cultivation means the area that corresponds to the total sown area, but after the harvest it excludes ruined areas (e.g. due to natural disasters). If the same land parcel is used twice in the same year, the area of this parcel can be counted twice. For tree crops, some countries provide data in terms of number of trees instead of in area. This number is then converted to an area estimate using typical planting density conversions.\r\n\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eProduction\u003c/strong\u003e means the harvested production. Harvested production means production including on-holding losses and wastage, quantities consumed directly on the farm and marketed quantities, indicated in units of basic product weight. Harvest year means the calendar year in which the harvest begins. \u003c/p\u003e\u003cp\u003e\r\n\u003cstrong\u003eYield\u003c/strong\u003e means the harvested production per ha for the area under cultivation. \u003c/p\u003e\u003cp\u003e\r\n\u003cstrong\u003eSeed quantity\u003c/strong\u003e comprises all amounts of the commodity in question used during the reference period for reproductive purposes, such as seed or seedlings. Whenever official data are not available, seed figures can be estimated either as a percentage of production or by multiplying a seed rate (the average amount of seed needed per hectare planted) with the planted area of the particular crop of the subsequent year. Usually, the average seed rate in any given country does not vary greatly from year to year.\u003c/p\u003e",
+			"domain_code" : "ABC",
+			"metadata_group_code" : "3",
+			"metadata_group_label" : "Main Characteristics data",
+			"metadata_code" : "3.4",
+			"metadata_label" : "Statistical concepts and definitions",
+			"metadata_text" : "Mocked Characteristics, etc.",
 			"ord":340
 		},
 		{
-			"domain_code":"QC",
-			"metadata_group_code":"3",
-			"metadata_group_label":"Main Characteristics data",
-			"metadata_code":"3.1",
-			"metadata_label":"Data description",
-			"metadata_text":"\u003cp class\u003d\"MsoNormal\" style\u003d\"margin-bottom:7.5pt\"\u003eCrop statistics are recorded for\r\n173 products, covering the following categories: Crops Primary, Fibre Crops\r\nPrimary, Cereals, Coarse Grain,\u003cspan style\u003d\"background:white\"\u003e Citrus Fruit\u003c/span\u003e,\r\nFruit, Jute \u0026amp; Jute-like Fibres, Oilcakes Equivalent, Oil crops Primary, Pulses,\r\nRoots and Tubers, Treenuts and Vegetables and Melons. Data are expressed in\r\nterms of area harvested, production quantity and yield. The objective is to\r\ncomprehensively cover production of all primary crops for all countries and\r\nregions in the world.\u003cspan style\u003d\"font-size:11.0pt\"\u003e\u003co:p\u003e\u003c/o:p\u003e\u003c/span\u003e\u003c/p\u003e\u003cp class\u003d\"MsoNormal\" style\u003d\"margin-bottom:7.5pt\"\u003e\u003cb\u003eCereals:\u003c/b\u003e Area and\r\nproduction data on cereals relate to crops harvested for dry grain only. Cereal\r\ncrops harvested for hay or harvested green for food, feed or silage or used for\r\ngrazing are therefore excluded\u003cspan style\u003d\"background:white\"\u003e.\u003c/span\u003e Area data\r\nrelate to harvested area. Some countries report sown or cultivated area only;\r\nhowever, in these countries the sown or cultivated area does not differ\r\nsignificantly in normal years from the area actually harvested, either because\r\npractically the whole area sown is harvested or because the area surveys are\r\nconducted around the harvest period.\u003co:p\u003e\u003c/o:p\u003e\u003c/p\u003e\u003cp class\u003d\"MsoNormal\" style\u003d\"margin-bottom:7.5pt\"\u003e\u003cb\u003eVegetables, total (including\r\nmelons):\u003c/b\u003e Data relate to vegetable crops grown mainly for human consumption.\r\nCrops such as cabbages, pumpkins and carrots, when explicitly cultivated for\r\nanimal feed, are therefore excluded. Statistics on vegetables are not available\r\nin many countries, and the coverage of the reported data differs from country\r\nto country. In general, it appears that the data refer to crops grown in field\r\nand market gardens mainly for sale, thus excluding crops cultivated in kitchen\r\ngardens or small family gardens mainly for household consumption.\u003co:p\u003e\u003c/o:p\u003e\u003c/p\u003e\u003cp class\u003d\"MsoNormal\" style\u003d\"margin-bottom:7.5pt\"\u003e\u003cb\u003eFruit, total (excluding\r\nmelons): \u003c/b\u003eData refer to total production of fresh fruit, whether finally\r\nused for direct consumption for food or feed, or processed into different\r\nproducts: dry fruit, juice, jam, alcohol, etc. Generally, production data\r\nrelate to plantation crops or orchard crops grown mainly for sale. Data on\r\nproduction from scattered trees used mainly for home consumption are not\r\nusually collected. Production from wild plants, particularly berries, which is\r\nof some importance in certain countries, is generally disregarded by national\r\nstatistical services. Therefore, the data for the various fruits and berries\r\nare rather incomplete. Bananas and plantains: Figures on bananas refer, as far\r\nas possible, to all edible fruit-bearing species of the genus Musa except Musa\r\nparadisiaca, commonly known as plantain. Unfortunately, several countries make\r\nno distinction in their statistics between bananas and plantains and publish\r\nonly overall estimates. When this occurs and there is some indication or\r\nassumption that the data reported refer mainly to bananas, the data are\r\nincluded. The production data on bananas and plantains reported by the various\r\ncountries are also difficult to compare because a number of countries report in\r\nterms of bunches, which generally means that the stalk is included in the\r\nweight. Dates, plantains and total grapes are included in the “total fruit”\r\naggregated figures, while olives are excluded.\u003co:p\u003e\u003c/o:p\u003e\u003c/p\u003e\u003cp\u003e\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\u003c/p\u003e\u003cp class\u003d\"MsoNormal\" style\u003d\"margin-bottom:7.5pt\"\u003e\u003cb\u003eTreenuts, aggregated:\u003c/b\u003e Production\r\nof nuts (including chestnuts) relates to nuts in the shell or in the husk.\r\nStatistics are very scanty and generally refer only to crops for sale. In\r\naddition to the kind of nuts shown separately, production data include all\r\nother treenuts mainly used as dessert or table nuts, such as pecan nuts, pili\r\nnuts, sapucaia nuts and macadamia nuts. Nuts mainly used for flavouring\r\nbeverages are excluded\u0026nbsp;as are masticatory and stimulant nuts and nuts used\r\nmainly for the extraction of oil or butter, including areca/betel nuts, cola\r\nnuts, illipe nuts, karate nuts, coconuts, tung nuts, oilpalm nuts etc.\u003co:p\u003e\u003c/o:p\u003e\u003c/p\u003e",
+			"domain_code" : "ABC",
+			"metadata_group_code" : "3",
+			"metadata_group_label" : "Main Characteristics data",
+			"metadata_code" : "3.1",
+			"metadata_label" : "Data description",
+			"metadata_text" : "Mocked Data Description",
 			"ord":310
 		},
 		{
-			"domain_code":"QC",
-			"metadata_group_code":"11",
-			"metadata_group_label":"Availability of National Reference",
-			"metadata_code":"11.1",
-			"metadata_label":"Documentation on methodology",
-			"metadata_text":"National reference metadata are submitted by some countries, but these are not yet disseminated by FAO. No methodological papers, except the classification scheme, have been produced to date.",
+			"domain_code" : "ABC",
+			"metadata_group_code" : "11",
+			"metadata_group_label" : "Availability of National Reference",
+			"metadata_code" : "11.1",
+			"metadata_label" : "Documentation on methodology",
+			"metadata_text" : "The methodology is well documented!",
 			"ord":1110
 		}
 	],
 	"documents" : [
 		{
-			"DomainCode":"QC",
-			"CreatedDate":"2015-12-15 09:56:00.0",
-			"FileName":"download_template_e.html",
-			"FileTitle":"About",
-			"FilePath":""
+			"DomainCode" : "ABC",
+			"CreatedDate" : "2000-01-01 00:00:00.0",
+			"FileName" : "download_template_e.html",
+			"FileTitle" : "About",
+			"FilePath" : ""
 		},
 		{
-			"DomainCode":"QC",
-			"CreatedDate":"2016-12-07 00:00:00.0",
-			"FileName":"Q\\Q_Revision_Note_e.pdf",
-			"FileTitle":"Revision of the agriculture production data domain",
-			"FilePath":"Q"
+			"DomainCode" : "ABC",
+			"CreatedDate" : "2000-02-01 12:34:56.7",
+			"FileName" : "X\\Mocked_Note.pdf",
+			"FileTitle" : "The Mocking of a Mocked Note",
+			"FilePath" : "X"
 		}
 	],
 	"dimensions" : [
 		{
-			"id":"area",
-			"href":"/codes/area/",
-			"parameter":"List1Codes",
+			"id" : "area",
+			"href" : "/codes/area/",
+			"parameter" : "MockedArea",
 			"subdimensions":[]
 		},
 		{
-			"id":"element",
-			"href":"/codes/element/",
-			"parameter":"List2Codes",
+			"id" : "element",
+			"href" : "/codes/element/",
+			"parameter" : "MockedElement",
 			"subdimensions":[]
 		},
 		{
-			"id":"item",
-			"href":"/codes/item/",
-			"parameter":"List3Codes",
+			"id" : "item",
+			"href" : "/codes/item/",
+			"parameter" : "MockedCodes",
 			"subdimensions":[]
 		},
 		{
-			"id":"year",
-			"href":"/codes/year/",
-			"parameter":"List4Codes",
+			"id" : "year",
+			"href" : "/codes/year/",
+			"parameter" : "MockedYears",
 			"subdimensions":[]
 		}
 	],
 	"filters" : [
 		{
-			"code":"2",
-			"label":"Afghanistan",
-			"aggregate_type":"0"
+			"code" : "2",
+			"label" : "Mocktanistan",
+			"aggregate_type" : "0"
 		},
 		{
-			"code":"3",
-			"label":"Albania",
-			"aggregate_type":"0"
+			"code" : "4",
+			"label" : "Mockeria",
+			"aggregate_type" : "0"
 		},
 		{
-			"code":"4",
-			"label":"Algeria",
-			"aggregate_type":"0"
+			"code" : "800",
+			"label" : "Mocked food",
+			"aggregate_type" : "0"
 		},
 		{
-			"code":"5",
-			"label":"American Samoa",
-			"aggregate_type":"0"
+			"code" : "221",
+			"label" : "Mocked produce",
+			"aggregate_type" : "0"
 		},
 		{
-			"code":"6",
-			"label":"Andorra",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"7",
-			"label":"Angola",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"258",
-			"label":"Anguilla",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"8",
-			"label":"Antigua and Barbuda",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"9",
-			"label":"Argentina",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"1",
-			"label":"Armenia",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"22",
-			"label":"Aruba",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"10",
-			"label":"Australia",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"11",
-			"label":"Austria",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"52",
-			"label":"Azerbaijan",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"12",
-			"label":"Bahamas",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"13",
-			"label":"Bahrain",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"16",
-			"label":"Bangladesh",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"14",
-			"label":"Barbados",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"57",
-			"label":"Belarus",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"255",
-			"label":"Belgium",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"15",
-			"label":"Belgium-Luxembourg",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"23",
-			"label":"Belize",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"53",
-			"label":"Benin",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"17",
-			"label":"Bermuda",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"18",
-			"label":"Bhutan",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"19",
-			"label":"Bolivia (Plurinational State of)",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"80",
-			"label":"Bosnia and Herzegovina",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"20",
-			"label":"Botswana",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"21",
-			"label":"Brazil",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"239",
-			"label":"British Virgin Islands",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"26",
-			"label":"Brunei Darussalam",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"27",
-			"label":"Bulgaria",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"233",
-			"label":"Burkina Faso",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"29",
-			"label":"Burundi",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"35",
-			"label":"Cabo Verde",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"115",
-			"label":"Cambodia",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"32",
-			"label":"Cameroon",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"33",
-			"label":"Canada",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"36",
-			"label":"Cayman Islands",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"37",
-			"label":"Central African Republic",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"39",
-			"label":"Chad",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"259",
-			"label":"Channel Islands",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"40",
-			"label":"Chile",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"351",
-			"label":"China",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"96",
-			"label":"China, Hong Kong SAR",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"128",
-			"label":"China, Macao SAR",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"41",
-			"label":"China, mainland",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"214",
-			"label":"China, Taiwan Province of",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"44",
-			"label":"Colombia",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"800",
-			"label":"Agave fibres nes",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"221",
-			"label":"Almonds, with shell",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"711",
-			"label":"Anise, badian, fennel, coriander",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"515",
-			"label":"Apples",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"526",
-			"label":"Apricots",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"226",
-			"label":"Areca nuts",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"366",
-			"label":"Artichokes",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"367",
-			"label":"Asparagus",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"572",
-			"label":"Avocados",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"203",
-			"label":"Bambara beans",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"486",
-			"label":"Bananas",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"44",
-			"label":"Barley",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"782",
-			"label":"Bastfibres, other",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"176",
-			"label":"Beans, dry",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"414",
-			"label":"Beans, green",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"558",
-			"label":"Berries nes",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"552",
-			"label":"Blueberries",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"216",
-			"label":"Brazil nuts, with shell",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"181",
-			"label":"Broad beans, horse beans, dry",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"89",
-			"label":"Buckwheat",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"358",
-			"label":"Cabbages and other brassicas",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"101",
-			"label":"Canary seed",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"461",
-			"label":"Carobs",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"426",
-			"label":"Carrots and turnips",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"217",
-			"label":"Cashew nuts, with shell",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"591",
-			"label":"Cashewapple",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"125",
-			"label":"Cassava",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"378",
-			"label":"Cassava leaves",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"265",
-			"label":"Castor oil seed",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"393",
-			"label":"Cauliflowers and broccoli",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"108",
-			"label":"Cereals, nes",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"531",
-			"label":"Cherries",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"530",
-			"label":"Cherries, sour",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"220",
-			"label":"Chestnut",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"191",
-			"label":"Chick peas",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"459",
-			"label":"Chicory roots",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"689",
-			"label":"Chillies and peppers, dry",
-			"aggregate_type":"0"
-		},
-		{
-			"code":"401",
-			"label":"Chillies and peppers, green",
-			"aggregate_type":"0"
+			"code" : "711",
+			"label" : "Mocked spices",
+			"aggregate_type" : "0"
 		}
 	]
 }
