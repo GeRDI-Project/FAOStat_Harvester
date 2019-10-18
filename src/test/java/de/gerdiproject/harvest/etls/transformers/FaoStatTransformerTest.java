@@ -18,14 +18,12 @@ package de.gerdiproject.harvest.etls.transformers;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
-import de.gerdiproject.harvest.AbstractIteratorTransformerTest;
 import de.gerdiproject.harvest.FaoStatContextListener;
 import de.gerdiproject.harvest.application.ContextListener;
+import de.gerdiproject.harvest.etls.AbstractIteratorETL;
 import de.gerdiproject.harvest.etls.FaoStatETL;
 import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
-import de.gerdiproject.harvest.etls.transformers.FaoStatTransformer;
 import de.gerdiproject.harvest.utils.data.DiskIO;
 import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.DataCiteJson;
@@ -35,31 +33,22 @@ import de.gerdiproject.json.datacite.DataCiteJson;
  *
  * @author Robin Weiss
  */
-public class FaoStatTransformerTest extends AbstractIteratorTransformerTest<FaoStatTransformer, FaoStatDomainVO, DataCiteJson>
+public class FaoStatTransformerTest extends AbstractIteratorTransformerTest<FaoStatDomainVO, DataCiteJson>
 {
     final DiskIO diskReader = new DiskIO(GsonUtils.createGerdiDocumentGsonBuilder().create(), StandardCharsets.UTF_8);
-
-
-    /**
-     * Default Test Constructor.
-     */
-    public FaoStatTransformerTest()
-    {
-        super(new FaoStatETL(), new FaoStatTransformer());
-    }
-
-
-    @Override
-    protected Map<String, String> getParameterValues()
-    {
-        return null;
-    }
 
 
     @Override
     protected ContextListener getContextListener()
     {
         return new FaoStatContextListener();
+    }
+
+
+    @Override
+    protected AbstractIteratorETL<FaoStatDomainVO, DataCiteJson> getEtl()
+    {
+        return new FaoStatETL();
     }
 
 
