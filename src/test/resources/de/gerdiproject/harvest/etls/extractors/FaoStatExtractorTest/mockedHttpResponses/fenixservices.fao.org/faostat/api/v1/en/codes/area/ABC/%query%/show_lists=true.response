@@ -1,0 +1,18 @@
+{
+	"metadata":{
+		"processing_time" : 131.0,
+		"output_type" : "OBJECTS"
+	},
+	"data" : [
+		{
+			"code" : "2",
+			"label" : "Mocktanistan",
+			"aggregate_type" : "0"
+		},
+		{
+			"code" : "4",
+			"label" : "Mockeria",
+			"aggregate_type" : "0"
+		}
+	]
+}

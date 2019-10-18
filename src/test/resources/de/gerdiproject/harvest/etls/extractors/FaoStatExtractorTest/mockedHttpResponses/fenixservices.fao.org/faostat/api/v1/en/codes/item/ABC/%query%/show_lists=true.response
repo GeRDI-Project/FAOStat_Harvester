@@ -1,0 +1,23 @@
+{
+	"metadata" : {
+		"processing_time" : 75.0,
+		"output_type" : "OBJECTS"
+	},
+	"data" : [
+		{
+			"code" : "800",
+			"label" : "Mocked food",
+			"aggregate_type" : "0"
+		},
+		{
+			"code" : "221",
+			"label" : "Mocked produce",
+			"aggregate_type" : "0"
+		},
+		{
+			"code" : "711",
+			"label" : "Mocked spices",
+			"aggregate_type" : "0"
+		}
+	]
+}

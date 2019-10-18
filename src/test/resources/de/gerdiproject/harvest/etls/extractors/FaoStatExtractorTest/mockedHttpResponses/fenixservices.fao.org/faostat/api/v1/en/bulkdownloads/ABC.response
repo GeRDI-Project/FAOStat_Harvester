@@ -1,0 +1,28 @@
+{
+	"metadata" : {
+		"processing_time" : 42.0,
+		"output_type" : "OBJECTS"
+	},
+	"data" : [
+		{
+			"DomainCode" : "ABC",
+			"Source" : "MockedGroup/MockedDomain",
+			"FileName" : "MockedData.zip",
+			"FileContent" : "Mocked Data",
+			"CreatedDate" : "2001-02-03 04:05:06.07",
+			"FileSize":12345,"FileSizeUnit" : "MB",
+			"Type" : "Mock",
+			"URL" : "http://www.mock.ed/bulkdownloads/MockedData.zip"
+		},
+		{
+			"DomainCode" : "ABC",
+			"Source" : "MockedGroup/MockedDomain",
+			"FileName" : "MoreMockedData.zip",
+			"FileContent" : "Moar Mocked Data",
+			"CreatedDate" : "2003-02-01 01:02:03.04",
+			"FileSize":54321,"FileSizeUnit" : "MB",
+			"Type" : "Mockingbird",
+			"URL" : "http://www.mock.ed/bulkdownloads/MoreMockedData.zip"
+		}
+	]
+}
