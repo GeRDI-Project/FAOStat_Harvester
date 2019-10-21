@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest.etls.transformers;
+package de.gerdiproject.harvest.etls.extractors;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -23,17 +23,16 @@ import de.gerdiproject.harvest.FaoStatContextListener;
 import de.gerdiproject.harvest.application.ContextListener;
 import de.gerdiproject.harvest.etls.AbstractIteratorETL;
 import de.gerdiproject.harvest.etls.FaoStatETL;
-import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
 import de.gerdiproject.harvest.utils.data.DiskIO;
 import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.DataCiteJson;
 
 /**
- * This class provides Unit Tests for the {@linkplain FaoStatTransformer}.
+ * This class provides Unit Tests for the {@linkplain FaoStatExtractor}.
  *
  * @author Robin Weiss
  */
-public class FaoStatTransformerTest extends AbstractIteratorTransformerTest<FaoStatDomainVO, DataCiteJson>
+public class FaoStatExtractorTest extends AbstractIteratorExtractorTest<FaoStatDomainVO>
 {
     final DiskIO diskReader = new DiskIO(GsonUtils.createGerdiDocumentGsonBuilder().create(), StandardCharsets.UTF_8);
 
@@ -51,19 +50,25 @@ public class FaoStatTransformerTest extends AbstractIteratorTransformerTest<FaoS
         return new FaoStatETL();
     }
 
+    
+    @Override
+    protected File getConfigFile()
+    {
+        return getResource("config.json");
+    }
+    
 
     @Override
-    protected FaoStatDomainVO getMockedInput()
+    protected File getMockedHttpResponseFolder()
     {
-        final File resource = getResource("input.json");
-        return diskReader.getObject(resource, FaoStatDomainVO.class);
+        return getResource("mockedHttpResponses");
     }
 
 
     @Override
-    protected DataCiteJson getExpectedOutput()
+    protected FaoStatDomainVO getExpectedOutput()
     {
         final File resource = getResource("output.json");
-        return diskReader.getObject(resource, DataCiteJson.class);
+        return diskReader.getObject(resource, FaoStatDomainVO.class);
     }
 }
