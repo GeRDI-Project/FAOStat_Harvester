@@ -1,0 +1,22 @@
+{
+	"metadata":{
+		"processing_time":1337.0,
+		"output_type" : "OBJECTS"
+	},
+	"data":[
+		{
+			"group_code" : "X",
+			"group_name" : "MockedGroup",
+			"domain_code" : "ABC",
+			"domain_name" : "MockedDomain",
+			"date_update" : "2121-12-21",
+			"note_update" : "mocked update",
+			"release_current" : "2000-01-01 / 2020-02-02",
+			"state_current" : "currentMockedState",
+			"year_current" : "2020",
+			"release_next" : "3000-03-03",
+			"state_next" : "nextMockedState",
+			"year_next" : "3000"
+		}
+	]
+}

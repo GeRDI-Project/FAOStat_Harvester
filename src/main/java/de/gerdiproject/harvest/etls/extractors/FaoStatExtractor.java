@@ -62,9 +62,10 @@ public class FaoStatExtractor extends AbstractIteratorExtractor<FaoStatDomainVO>
                        );
 
         // get list of all domains
-        final GenericFaoResponse<FaoDomain> domainsResponse = httpRequester.getObjectFromUrl(
-                                                                  baseUrl + FaoExtractorConstants.GROUPS_AND_DOMAINS_URL,
-                                                                  FaoExtractorConstants.DOMAIN_RESPONSE_TYPE);
+        final GenericFaoResponse<FaoDomain> domainsResponse =
+            httpRequester.getObjectFromUrl(
+                baseUrl + FaoExtractorConstants.GROUPS_AND_DOMAINS_URL,
+                FaoExtractorConstants.DOMAIN_RESPONSE_TYPE);
 
         this.version = getVersion(domainsResponse.getData());
         this.domainCount = domainsResponse.getData().size();

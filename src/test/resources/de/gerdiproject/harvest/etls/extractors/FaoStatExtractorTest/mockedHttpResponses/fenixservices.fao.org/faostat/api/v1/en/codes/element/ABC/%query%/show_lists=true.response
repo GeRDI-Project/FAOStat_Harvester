@@ -1,0 +1,13 @@
+{
+	"metadata" : {
+		"processing_time" : 59.0,
+		"output_type" : "OBJECTS"
+	},
+	"data" : [
+		{
+			"code" : "2510",
+			"label" : "Mocked Quantity",
+			"aggregate_type" : "0"
+		}
+	]
+}

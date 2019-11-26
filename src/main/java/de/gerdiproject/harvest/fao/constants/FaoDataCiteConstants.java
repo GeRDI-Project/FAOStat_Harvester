@@ -78,7 +78,7 @@ public class FaoDataCiteConstants
     public static final String DATE_PARSE_ERROR = "Could not parse date: %s";
 
     // DESCRIPTIONS
-    public static final String DESCRIPTION_FORMAT = "%s:%n%s";
+    public static final String DESCRIPTION_FORMAT = "%s: %s";
     public static final Map<String, DescriptionType> RELEVANT_DESCRIPTIONS = createRelevantDescriptions();
 
     // FORMATS
@@ -89,7 +89,9 @@ public class FaoDataCiteConstants
 
 
     /**
-     * @return
+     * Retrieves a list of research disciplines to which FAOSTAT belongs.
+     *
+     * @return a list of research disciplines to which FAOSTAT belongs
      */
     private static List<AbstractResearch> createResearchDisciplines()
     {

@@ -1,0 +1,32 @@
+{ 
+	"metadata" : {
+		"processing_time" : 23.8,
+		"output_type" : "OBJECTS"
+	},
+	"data":[
+		{
+			"id" : "area",
+			"href" : "/codes/area/",
+			"parameter" : "MockedArea",
+			"subdimensions":[]
+		},
+		{
+			"id" : "element",
+			"href" : "/codes/element/",
+			"parameter" : "MockedElement",
+			"subdimensions":[]
+		},
+		{
+			"id" : "item",
+			"href" : "/codes/item/",
+			"parameter" : "MockedCodes",
+			"subdimensions":[]
+		},
+		{
+			"id" : "year",
+			"href" : "/codes/year/",
+			"parameter" : "MockedYears",
+			"subdimensions":[]
+		}
+	]
+}

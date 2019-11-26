@@ -1,0 +1,148 @@
+{
+	"creators" : [
+		{
+			"creatorName" : {
+				"value" : "Food and Agriculture Organization of the United Nations (FAO)",
+				"nameType" : "Organisational"
+			}
+		}
+	],
+	"titles" : [
+		{
+			"value" : "MockedGroup",
+			"titleType" : "Other",
+			"lang" : "en"
+		},
+		{
+			"value" : "MockedDomain",
+			"lang" : "en"
+		}
+	],
+	"publisher" : {
+		"value" : "Food and Agriculture Organization of the United Nations (FAO)",
+		"lang" : "en"
+	},
+	"publicationYear":1961,
+	"resourceType" : {
+		"value" : "CSV",
+		"resourceTypeGeneral" : "Dataset"
+	},
+	"subjects" : [
+		{
+			"value" : "Mocked produce",
+			"lang" : "en"
+		},
+		{
+			"value" : "Mocktanistan",
+			"lang" : "en"
+		},
+		{
+			"value" : "Mocked Quantity",
+			"lang" : "en"
+		},
+		{
+			"value" : "Mocked food",
+			"lang" : "en"
+		},
+		{
+			"value" : "Mockeria",
+			"lang" : "en"
+		},
+		{
+			"value" : "Mocked spices",
+			"lang" : "en"
+		}
+	],
+	"contributors" : [
+		{
+			"contributorName" : {
+				"value" : "Mr. Mock van Mockmock",
+				"nameType" : "Personal"
+			},
+			"contributorType" : "ContactPerson",
+			"affiliation" : [
+				{
+					"value" : "Mocked Contact Organisation"
+				}
+			]
+		}
+	],
+	"dates" : [
+		{
+			"value" : "3000-01-01T00:00:00Z",
+			"dateType" : "Other"
+		}
+	],
+	"language" : "en",
+	"formats" : [
+		"CSV"
+	],
+	"descriptions" : [
+		{
+			"value" : "Statistical concepts and definitions: Mocked Characteristics, etc.",
+			"descriptionType" : "TechnicalInfo",
+			"lang" : "en"
+		},
+		{
+			"value" : "Data description: Mocked Data Description",
+			"descriptionType" : "Abstract",
+			"lang" : "en"
+		},
+		{
+			"value" : "Documentation on methodology: The methodology is well documented!",
+			"descriptionType" : "Methods",
+			"lang" : "en"
+		}
+	],
+	"repositoryIdentifier" : "FAOSTAT",
+	"webLinks" : [
+		{
+			"webLinkURI" : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/FAO_logo.svg/257px-FAO_logo.svg.png",
+			"webLinkType" : "ProviderLogoURL"
+		},
+		{
+			"webLinkURI" : "http://www.fao.org/faostat/en/#data/ABC",
+			"webLinkName" : "MockedDomain",
+			"webLinkType" : "ViewURL"
+		},
+		{
+			"webLinkURI" : "http://fenixservices.fao.org/faostat/static/documents/X\\Mocked_Note.pdf",
+			"webLinkName" : "The Mocking of a Mocked Note",
+			"webLinkType" : "Related"
+		}
+	],
+	"researchDataList" : [
+		{
+			"researchDataURL" : "http://www.mock.ed/bulkdownloads/MoreMockedData.zip",
+			"researchDataLabel" : "Moar Mocked Data",
+			"researchDataIdentifier" : "-854818618",
+			"researchDataType" : "zip"
+		},
+		{
+			"researchDataURL" : "http://www.mock.ed/bulkdownloads/MockedData.zip",
+			"researchDataLabel" : "Mocked Data",
+			"researchDataIdentifier" : "-884842607",
+			"researchDataType" : "zip"
+		}
+	],
+	"researchDisciplines" : [
+		{
+			"area" : "Agriculture, Forestry and Veterinary Medicine",
+			"category" : "Life Sciences",
+			"rnbr" : "207-04",
+			"discipline" : "Ecology of Agricultural Landscapes"
+		},
+		{
+			"area" : "Agriculture, Forestry and Veterinary Medicine",
+			"category" : "Life Sciences",
+			"rnbr" : "207-07",
+			"discipline" : "Agricultural Economics and Sociology"
+		},
+		{
+			"area" : "Economics",
+			"category" : "Humanities and Social Sciences",
+			"rnbr" : "112-04",
+			"discipline" : "Statistics and Econometrics"
+		}
+	]
+}
