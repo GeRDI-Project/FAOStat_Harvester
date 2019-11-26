@@ -21,10 +21,13 @@ import java.nio.charset.StandardCharsets;
 
 import de.gerdiproject.harvest.FaoStatContextListener;
 import de.gerdiproject.harvest.application.ContextListener;
+import de.gerdiproject.harvest.application.MainContextUtils;
 import de.gerdiproject.harvest.etls.AbstractIteratorETL;
 import de.gerdiproject.harvest.etls.FaoStatETL;
 import de.gerdiproject.harvest.etls.extractors.FaoStatDomainVO;
 import de.gerdiproject.harvest.utils.data.DiskIO;
+import de.gerdiproject.harvest.utils.data.constants.DataOperationConstants;
+import de.gerdiproject.harvest.utils.file.FileUtils;
 import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.DataCiteJson;
 
@@ -42,6 +45,21 @@ public class FaoStatTransformerTest extends AbstractIteratorTransformerTest<FaoS
     protected ContextListener getContextListener()
     {
         return new FaoStatContextListener();
+    }
+
+
+    @Override
+    protected AbstractIteratorTransformer<FaoStatDomainVO, DataCiteJson> setUpTestObjects()
+    {
+        // copy mocked HTTP responses to the cache folder to drastically speed up the testing
+        final File httpResourceFolder = getResource("mockedHttpResponses");
+        final File httpCacheFolder = new File(
+            MainContextUtils.getCacheDirectory(getClass()),
+            DataOperationConstants.CACHE_FOLDER_PATH);
+
+            FileUtils.copyFile(httpResourceFolder, httpCacheFolder);
+        
+        return super.setUpTestObjects();
     }
 
 
